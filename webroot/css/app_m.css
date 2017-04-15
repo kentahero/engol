@@ -1,0 +1,1804 @@
+@charset "UTF-8";
+/**
+ *
+ * カラー定義用CSS(ユーザー側)
+ * 各装飾で定義するカラーを管理するCSS
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+/**
+ *
+ * カラー定義用CSS(ユーザー側)
+ * 各装飾で定義するカラーを管理するCSS
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+/* 汎用色：白色 */
+/* 承認色 */
+/* 未承認色 */
+/* 否認色 */
+/*
+ *
+ * メインカラー
+ * （ユーザー毎に色を変更する場合はこの部分の箇所を変更する）
+ *
+ */
+/* ヘッダーカラー */
+/* グラデーション用カラー(現在未使用) */
+/* nav-link カラー */
+/*
+ *
+ * アクセントカラー
+ *
+ */
+/*
+ *
+ * 可変にする箇所の色を指定
+ *
+ */
+/* ヘッダーの背景色 */
+/* フッターの背景色 */
+/* 一覧のボーダー色 */
+/* タイトルカラー */
+/**
+ *
+ * bulma.css 上書き用CSS
+ * Baseのbulma.css上で定義されている装飾内容を
+ * 変更したい定義を再記載（上書きする）
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-weight: normal;
+  vertical-align: baseline;
+  background: transparent;
+}
+
+/* フォーカス、 アクティブ状態の装飾のカスタマイズ */
+.input:active,
+.textarea:active,
+.input:focus,
+.textarea:focus,
+.input.is-active,
+.is-active.textarea {
+  border-color: #990000;
+  outline: none;
+}
+
+/* ボタンクラスを定義していないaタグ */
+.content a:not(.button) {
+  border-bottom: 1px solid #69707a;
+}
+
+.content a:not(.button):visited {
+  color: inherit;
+}
+
+.content a:not(.button):hover {
+  color: #990000;
+  border-bottom-color: #990000;
+}
+
+/* ボタンに関するカスタマイズ */
+.button:hover,
+.button:focus,
+.button.is-active {
+  color: #fff;
+}
+
+.textarea {
+  font-size: 16px;
+  line-height: 1.8em;
+  height: auto;
+}
+
+.select {
+  line-height: 1;
+}
+
+.select select {
+  font-size: 18px;
+  height: 40px;
+  padding: 0 50px;
+  width: 100%;
+}
+
+.select option {
+  font-size: 18px;
+}
+
+.select:after {
+  /* bulma 設定をいったん初期化 */
+  border: inherit;
+  border-right: inherit;
+  border-top: inherit;
+  content: inherit;
+  display: inherit;
+  height: inherit;
+  pointer-events: none;
+  position: inherit;
+  -webkit-transform: inherit;
+  -ms-transform: inherit;
+  transform: inherit;
+  width: inherit;
+  margin-top: inherit;
+  right: inherit;
+  top: inherit;
+  /* 再設定 */
+  position: absolute;
+  content: "\f0d7";
+  font-family: FontAwesome;
+  font-size: 22px;
+  top: 10px;
+  right: 10px;
+  color: #666;
+}
+
+.table thead th {
+  color: inherit;
+}
+
+.table tr:hover {
+  background-color: #f5f7fa;
+  color: inherit;
+}
+
+.button {
+  font-size: 18px;
+  line-height: 18px;
+  margin: 0 auto;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  position: relative;
+  display: inline-block;
+  padding: 3px 3px 3px 50px !important;
+  cursor: pointer;
+  font-size: 20px;
+  min-height: 40px;
+  line-height: 40px;
+  font-weight: bold;
+}
+
+input[type="checkbox"] + label:before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  margin-top: -18px;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+input[type="checkbox"]:checked + label:after {
+  position: absolute;
+  content: url("../img/icon-check-32.png");
+  top: 3px;
+  left: 5px;
+  width: 35px;
+  height: 15px;
+  /*
+  border-left: 5px solid #3498db;
+  border-bottom: 5px solid #3498db;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+*/
+}
+
+.title {
+  color: inherit;
+  font-size: inherit;
+  line-height: 1;
+}
+
+.nav-item a:hover, a.nav-item:hover {
+  color: inherit;
+}
+
+.checkbox:hover {
+  color: #990000;
+}
+
+.select select:active,
+.select select:focus,
+.select select:hover,
+.select select.is-active {
+  border-color: #006ebb;
+  outline: none;
+}
+
+.nav-left {
+  overflow: inherit;
+  overflow-x: inherit;
+}
+
+/**
+ *
+ * アプリケーション個別CSS
+ * アプリケーションのデザインを行う上での装飾定義
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+body * {
+  padding: 0;
+  font-size: 16px;
+}
+
+.contents {
+  min-width: 1024px;
+  margin: 0 auto;
+}
+
+a {
+  color: #666666;
+}
+
+a.link {
+  font-weight: bold;
+  color: #69707a;
+}
+
+.none {
+  display: none;
+}
+
+.nav-link {
+  -webkit-transition: .2s;
+  transition: .2s;
+  border-radius: 3px;
+}
+
+.nav-link:hover {
+  border-radius: 3px;
+  padding: 6px 10px;
+  margin-top: -5px;
+  -webkit-transition: .1s;
+  transition: .1s;
+  -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, .4);
+          box-shadow: 3px 3px 3px rgba(0, 0, 0, .4);
+  background-color: #d44b4b;
+}
+
+.wrap {
+  padding: 20px 50px;
+}
+
+.approval-wait-color {
+  color: #000 !important;
+}
+
+.approval-color {
+  color: #f15a24 !important;
+}
+
+.denial-color {
+  color: #111 !important;
+}
+
+.approval-bg-color {
+  background-color: #006ebb;
+  color: #fff;
+}
+
+.unapproval-bg-color {
+  background-color: #727272;
+  color: #fff;
+}
+
+.denial-bg-color {
+  background-color: #c43333;
+  color: #fff;
+}
+
+.already-color {
+  color: #69707a !important;
+}
+
+.manage-color {
+  color: #c43333;
+}
+
+.date-icon {
+  background-color: #666;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+}
+
+.button-radio input[type="radio"] {
+  display: none;
+}
+
+.button-radio label {
+  background-color: #e6e6e6;
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.button-radio input[type="radio"] + label {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 26px;
+  letter-spacing: .2em;
+  min-height: 40px;
+  line-height: 40px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.button-radio input[type="radio"] + label.approval:hover {
+  color: #fff;
+  background-color: #006ebb;
+}
+
+.button-radio input[type="radio"] + label.denial:hover {
+  color: #fff;
+  background-color: #c43333;
+}
+
+.button-radio input[type="radio"]:checked + label {
+  color: #fff;
+}
+
+.button-radio input[type="radio"]:checked + label.approval {
+  background-color: #006ebb;
+}
+
+.button-radio input[type="radio"]:checked + label.denial {
+  background-color: #c43333;
+}
+
+.top-area {
+  width: 70%;
+  margin: 0 auto;
+  background-image: url("../img/top.png");
+  background-size: contain;
+  background-position: left;
+  background-repeat: no-repeat;
+  min-height: 20vw;
+  /*  background-repeat: no-repeat;
+  background-position: center center;
+  width: 80%;
+  margin: 15%;*/
+}
+
+.login-form {
+  background-color: inherit;
+  font-size: 20px;
+}
+
+.login-form table th {
+  color: #990000;
+  font-size: 1.4em;
+  font-weight: normal;
+  padding: 5px 0;
+  width: 20%;
+  text-align: right;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+
+.login-form table td {
+  padding: 5px 0;
+}
+
+.top-area .title,
+.author-select .title {
+  color: #00329a;
+  font-size: 48px;
+  font-weight: bold;
+  margin: 80px 0;
+  padding: 0;
+}
+
+.top-area .title-border,
+.author-select .title-border {
+  font-weight: bold;
+  border-bottom: 10px solid #00329a;
+  display: inline-block;
+}
+
+.top-area .title {
+  font-size: 48px;
+  margin-top: 130px;
+  margin-left: 130px;
+}
+
+/* 利用者権限選択時のcss */
+.author-select {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.author-select .menu-area {
+  padding: 10px;
+}
+
+.author-select .author-select-area {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.login,
+.author-select {
+  background-color: #e6e6e6;
+  padding-bottom: 80px;
+}
+
+.content-center {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  /*width: 60%;
+  min-height: 400px;
+  margin: 0 auto;*/
+}
+
+.is-base-color {
+  background-color: #e6e6e6;
+}
+
+/*
+ * ボタン関連定義
+ */
+a.button, button.button, input[type=submit].button {
+  background-color: #990000;
+  color: #fff;
+  display: block;
+  font-weight: bold;
+  margin: 0 auto;
+  height: 50px;
+  width: 100%;
+  line-height: 50px;
+  -webkit-transition: .4s;
+  transition: .4s;
+  width: 80%;
+}
+
+a.button:hover, button.button:hover, input[type=submit].button:hover {
+  color: #990000;
+  background-color: #fff;
+  border: 1px solid #990000;
+}
+
+a.button.color-user, button.button.color-user, input[type=submit].button.color-user {
+  background-color: #146cad;
+}
+
+a.button.color-user:hover, button.button.color-user:hover, input[type=submit].button.color-user:hover {
+  color: #006ebb;
+  background-color: #fff;
+  border: 1px solid #006ebb;
+}
+
+a.button.color-manager, button.button.color-manager, input[type=submit].button.color-manager {
+  background-color: #990000;
+}
+
+a.button.color-manager:hover, button.button.color-manager:hover, input[type=submit].button.color-manager:hover {
+  color: #c43333;
+  background-color: #fff;
+  border: 1px solid #c43333;
+}
+
+a.button.color-gray, button.button.color-gray, input[type=submit].button.color-gray {
+  background-color: #666;
+}
+
+a.button.color-gray:hover, button.button.color-gray:hover, input[type=submit].button.color-gray:hover {
+  color: #666;
+  background-color: #fff;
+  border: 1px solid #666;
+}
+
+a.button.color-light-gray, button.button.color-light-gray, input[type=submit].button.color-light-gray {
+  background-color: #999999;
+}
+
+a.button.color-light-gray:hover, button.button.color-light-gray:hover, input[type=submit].button.color-light-gray:hover {
+  color: #999999;
+  background-color: #fff;
+  border: 1px solid #999999;
+}
+
+a.button.is-large, button.button.is-large, input[type=submit].button.is-large {
+  height: 80px;
+  line-height: 80px;
+  font-size: 26px;
+  letter-spacing: .1em;
+}
+
+.buttontn-tag {
+  text-align: center;
+}
+
+/*
+ * Header関連定義
+ */
+header {
+  padding: 3px 5px;
+  font-size: 18px;
+}
+
+header.header {
+  background-color: #990000;
+  color: #fff;
+  padding: 0 30px;
+  font-size: 14px;
+}
+
+header.header a {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #fff;
+}
+
+header.header .nav {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  /*padding: 10px 10px 0px;*/
+  min-height: 46px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header.header .nav-left {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  vertical-align: middle;
+}
+
+header.header .main-mark {
+  background-color: #990000;
+  border-bottom: 3px solid #990000;
+  border-radius: 50%;
+  position: absolute;
+  margin-top: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  left: 50%;
+  margin-right: -50%;
+  -webkit-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+
+header.header .nav-right {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+header.header .nav-item {
+  display: inline;
+}
+
+/*
+ * content部分に関する定義
+ */
+.main-content {
+  font-size: 14px;
+  min-height: 700px;
+  padding-top: 15px;
+  padding: 15px 50px;
+  /* 各ページのタイトル */
+  /* 各セクション毎のタイトル */
+}
+
+.main-content .content-title {
+  color: #c43333;
+  font-weight: bold;
+  font-size: 34px;
+  line-height: 40px;
+}
+
+.main-content .section-title {
+  color: #c43333;
+  margin-bottom: 15px;
+  font-weight: bold;
+  line-height: 32px;
+  display: inline-block;
+}
+
+.main-content .section-title .title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.main-content .pdf-file {
+  padding-right: 10px;
+  margin-bottom: 15px;
+}
+
+.main-content .pdf-file.main-file {
+  margin-left: 20px;
+  line-height: 45px;
+}
+
+.main-content .pdf-file:before {
+  background: url("../img/icon_pdf.png");
+  background-repeat: no-repeat;
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  line-height: 20px;
+  background-size: contain;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.main-content .file-area {
+  display: inline-block;
+}
+
+.main-content .file-area .pdf-file span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.main-content .agenda-sec .status table {
+  width: 20vw;
+  min-width: 200px;
+  max-width: 220px;
+  margin: 0 10px;
+  color: #fff;
+}
+
+.main-content .agenda-sec .status .approval {
+  position: relative;
+}
+
+.main-content .agenda-sec .status .approval table th {
+  background-color: #006ebb;
+}
+
+.main-content .agenda-sec .status .approval table td {
+  background-color: #1a78b7;
+}
+
+.main-content .agenda-sec .status .unapproved {
+  position: relative;
+}
+
+.main-content .agenda-sec .status .unapproved table th {
+  background-color: #727272;
+}
+
+.main-content .agenda-sec .status .unapproved table td {
+  background-color: #a0a0a0;
+}
+
+.main-content .agenda-sec .status .denial {
+  position: relative;
+}
+
+.main-content .agenda-sec .status .denial table th {
+  background-color: #c43333;
+}
+
+.main-content .agenda-sec .status .denial table td {
+  background-color: #d84545;
+}
+
+/*
+ * Footer関連定義
+ */
+footer.footer {
+  background-color: #990000;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 20px;
+  min-height: 25px;
+  max-height: 25px;
+  line-height: 21px;
+}
+
+.modal-footer {
+  padding-top: 20px;
+}
+
+/*
+ * Table 一覧表示関連定義
+ */
+.scroll-table {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.scroll-table table.table {
+  margin-bottom: 0px;
+}
+
+.scroll-table.h300 {
+  height: 300px;
+}
+
+.scroll-table.h500 {
+  height: 500px;
+}
+
+.table thead tr:hover {
+  background-color: inherit;
+}
+
+.table thead tr th {
+  font-weight: normal;
+  text-align: center;
+  padding: 10px 5px;
+}
+
+.table tbody tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table.list {
+  width: 100%;
+  border-top: 2px solid #990000;
+  border-bottom: 2px solid #990000;
+  table-layout: fixed;
+}
+
+.table.list td, .table.list th {
+  border: 1px solid #990000;
+  border-width: 0 0 1px;
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+.table.list thead {
+  background: -webkit-gradient(linear, left top, left bottom, from(#0070bd), to(#0052a3));
+  background: -webkit-linear-gradient(#0070bd, #0052a3);
+  background: linear-gradient(#0070bd, #0052a3);
+}
+
+.table.list thead tr th {
+  color: #fff;
+}
+
+.table.list tbody tr td {
+  padding: 16px 5px;
+}
+
+/* 一覧用の detail-link定義*/
+.detail-link {
+  padding: 0 5px !important;
+}
+
+.detail-link a {
+  color: inherit;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 14px 5px;
+  padding-right: 30px;
+}
+
+.detail-link a:after {
+  position: absolute;
+  content: "\f105";
+  font-family: FontAwesome;
+  font-size: 32px;
+  top: 1px;
+  right: 10px;
+  color: #666666;
+}
+
+/*
+ * table header固定用CSS
+ * 固定用ヘッダ側のTableにfixheader,
+ * 一覧表示用のTableにsheetを定義する
+ */
+.table.fixheader {
+  z-index: 400;
+}
+
+.table.sheet {
+  z-index: 300;
+}
+
+/* ページ先頭への遷移用 */
+.pagetop {
+  display: none;
+  position: fixed;
+  bottom: 35px;
+  right: 15px;
+}
+
+.pagetop a {
+  border-radius: 5px;
+  display: block;
+  background-color: #e6e6e6;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 9px;
+  height: 40px;
+  width: 40px;
+}
+
+.w200 {
+  width: 200px;
+}
+
+/**
+ *
+ * アプリケーション個別CSS
+ * アプリケーションの利用者側のデザインを行う上での装飾定義
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+.main-content .meeting-sec table th,
+.main-content .agenda-sec table th {
+  background-color: #999999;
+  color: #fff;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.main-content .comment {
+  margin-bottom: 20px;
+  padding-top: 3px;
+  color: #000;
+  min-height: 225px;
+}
+
+.main-content .comment .comment-title,
+.main-content .comment .comment-name {
+  padding: 8px;
+  padding-left: 10px;
+  margin-left: 5px;
+  margin-top: 2px;
+  width: 25%;
+}
+
+.main-content .comment .comment-detail {
+  padding: 5px 5px;
+}
+
+.list-header .button,
+.copy-button-area .button {
+  line-height: 40px;
+  height: 40px;
+  font-size: 16px;
+  width: 100%;
+  padding: 0 60px;
+  font-weight: normal;
+}
+
+.join-user-list {
+  line-height: 1.8em;
+  margin-bottom: 10px;
+}
+
+.join-user-list .position {
+  display: inline-block;
+  width: 30%;
+}
+
+.join-user-list-btn {
+  background-color: #e6e6e6;
+  border: 1px solid #a3a1a1;
+  color: #777;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px 0 10px;
+}
+
+.meeting-sec .table tr:hover,
+.agenda-sec .table tr:hover,
+.sign-area .table tr:hover {
+  background-color: inherit;
+}
+
+.sign-area {
+  margin-bottom: 40px;
+}
+
+.sign-area .table th {
+  padding-left: 20px;
+  vertical-align: middle;
+  background-color: #e6e6e6;
+}
+
+.file-select {
+  background-color: #e6e6e6;
+  border: 1px solid #a3a1a1;
+  color: #777;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px 0 10px;
+}
+
+.file-select input[type="file"] {
+  display: none;
+}
+
+.agenda-sec .table th.agenda-result {
+  background-color: #e87413;
+}
+
+button.button.agenda-add-button {
+  background-color: #cc6666;
+}
+
+button.button.agenda-add-button:hover {
+  color: #cc6666;
+  background-color: #fff;
+  border: 1px solid #cc6666;
+}
+
+button.button.agenda-issue-button {
+  background-color: #006ebb;
+  color: #fff;
+  margin-bottom: 10px !important;
+}
+
+button.button.agenda-issue-button:hover {
+  color: #006ebb;
+  background-color: #fff;
+  border: 1px solid #006ebb;
+}
+
+button.button.agenda-add-button,
+button.button.agenda-entry-button,
+button.button.agenda-issue-button,
+button.button.agenda-issue-button span {
+  height: 70px;
+  margin-bottom: 20px;
+  height: 80px;
+  width: 80%;
+  margin-bottom: 30px;
+  font-size: 26px;
+  font-weight: normal;
+  letter-spacing: .2em;
+}
+
+button.button.agenda-add-button.pdf-file:before,
+button.button.agenda-entry-button.pdf-file:before,
+button.button.agenda-issue-button.pdf-file:before,
+button.button.agenda-issue-button span.pdf-file:before {
+  line-height: 37px;
+  width: 37px;
+  height: 37px;
+}
+
+.caution {
+  position: relative;
+  color: #f00;
+  margin: 0 auto;
+  padding-left: 35%;
+  white-space: nowrap;
+}
+
+.caution p {
+  font-size: 18px;
+}
+
+.table.edit-info {
+  table-layout: fixed;
+}
+
+.table thead tr:hover {
+  background-color: inherit;
+}
+
+.table thead tr th {
+  font-weight: normal;
+  text-align: center;
+  padding: 10px 5px;
+}
+
+.table tbody tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.table.user-list {
+  width: 100%;
+  border-top: 2px solid #bcbcbc;
+  border-bottom: 2px solid #bcbcbc;
+  table-layout: fixed;
+}
+
+.table.user-list td, .table.user-list th {
+  border: 1px solid #bcbcbc;
+  border-width: 0 0 1px;
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+.table.user-list thead {
+  background: -webkit-gradient(linear, left top, left bottom, from(#0070bd), to(#0052a3));
+  background: -webkit-linear-gradient(#0070bd, #0052a3);
+  background: linear-gradient(#0070bd, #0052a3);
+}
+
+.table.user-list thead tr th {
+  color: #fff;
+}
+
+.table.user-list tbody tr td {
+  padding: 8px 5px;
+}
+
+/**
+ *
+ * jquery datepicker カスタムクラス
+ * jquery datepicker(カレンダー)の表示イメージ
+ * 変更用CSS定義
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+.ui-datepicker {
+  width: inherit;
+  padding: .2em .2em 0;
+  display: none;
+}
+
+.ui-datepicker * {
+  font-size: 20px;
+  font-family: helvetica, arial, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', 'Meiryo UI', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif !important;
+}
+
+.ui-datepicker table {
+  width: 100%;
+  font-size: .9em;
+  border-collapse: collapse;
+  margin: 0 0 .4em;
+}
+
+.ui-datepicker table th, .ui-datepicker table td {
+  margin: 3px;
+}
+
+.ui-datepicker th {
+  padding: .8em .8em;
+  text-align: center;
+  font-weight: bold;
+  border: 0;
+}
+
+.ui-widget-content {
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #808080;
+}
+
+.ui-widget-header {
+  border: 1px solid #ddd;
+  background: #808080;
+  color: #fff;
+  font-weight: bold;
+}
+
+.ui-widget.ui-widget-content {
+  border: 1px solid #c5c5c5;
+}
+
+.ui-datepicker td span, .ui-datepicker td a {
+  display: block;
+  padding: .7em;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+  border: 1px solid #c5c5c5;
+  background: #f2f2f2;
+  font-weight: normal;
+  color: #454545;
+}
+
+.ui-widget-header .ui-icon {
+  background-image: url("../img/ui-icons_ffffff_256x240.png");
+}
+
+.class-sunday > .ui-state-default {
+  background: #cccccc !important;
+  color: #990000 !important;
+}
+
+.class-saturday > .ui-state-default {
+  background: #cccccc !important;
+  color: #006ebb !important;
+}
+
+.ui-datepicker-calendar th:first-child {
+  color: #990000;
+}
+
+.ui-datepicker-calendar th:last-child {
+  color: #006ebb;
+}
+
+.ui-icon-circle-triangle-w {
+  background-position: 0px 0px;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  margin-right: 5px;
+  vertical-align: middle;
+  background-image: url(../img/icon/ic-angle-left.png) !important;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+}
+
+.ui-icon-circle-triangle-e {
+  background-position: 0px 0px;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  margin-right: 5px;
+  vertical-align: middle;
+  background-image: url(../img/icon/ic-angle-right.png) !important;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+}
+
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {
+  display: block;
+  position: absolute;
+  left: 50%;
+  margin-left: -13px;
+  top: 50%;
+  margin-top: -13px;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+  border: 1px solid #dad55e;
+  background: #fffa90;
+  color: #777620;
+}
+
+/**
+ *
+ * アイコン用CSS定義
+ * 各種アイコン用の画像を管理するCSS
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+i {
+  /*
+   * iタグ共通設定
+   * ci = custom icon
+   */
+  /* ログイン画面 */
+  /* ログイン選択画面 */
+  /* ヘッダー用アイコン */
+  /* 議題詳細 */
+}
+
+i.ci:before {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  content: '';
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+i.img-user:before {
+  background: url("../img/icon/ic-user.png");
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+
+i.img-pass:before {
+  background: url("../img/icon/ic-pass.png");
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+
+i.img-back-gray:before {
+  background: url("../img/icon/ic-back.png");
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+}
+
+i.img-back:before {
+  background: url("../img/icon/ic-back-wh.png");
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+i.img-user-out:before {
+  background: url("../img/icon/ic-user-wh.png");
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+i.img-logout:before {
+  background: url("../img/icon/ic-logout-wh.png");
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+i.img-date:before {
+  background: url("../img/icon/ic-date.png");
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+i.img-place:before {
+  background: url("../img/icon/ic-place.png");
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+i.img-users:before {
+  background: url("../img/icon/ic-users.png");
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+i.img-logo-header:before {
+  background: url("../img/icon/ic-logo-header.png");
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin: 5px;
+  border-radius: 50%;
+}
+
+.icon-calendar {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+  background: url("../img/icon/ic-calendar.png");
+  width: 40px;
+  height: 40px;
+  line-height: 30px;
+  background-color: #666;
+  border: 5px solid #666;
+  margin-left: -5px;
+}
+
+.icon-users {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+  background: url("../img/icon/ic-users-wh.png");
+  width: 40px;
+  height: 40px;
+  line-height: 30px;
+  background-color: #666;
+  border: 5px solid #666;
+  margin-left: -5px;
+}
+
+.icon-agenda-del {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: url("../img/icon/ic-del-wh.png");
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.icon-pdf-del {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: url("../img/icon/ic-del.png");
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  margin-left: -5px;
+  margin-top: -15px;
+}
+
+.icon-clip {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  background-position: 50% 50%;
+  background-attachment: fixed;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+  background: url("../img/icon/ic-clip.png");
+  width: 40px;
+  height: 40px;
+  line-height: 30px;
+  background-color: #666;
+  border: 5px solid #666;
+  margin-left: -5px;
+}
+
+/*
+ * input要素内に配置するアイコン
+ */
+input.input + i.ci:before {
+  display: inline-block;
+  font-size: 14px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  vertical-align: top;
+  width: 24px;
+  color: #aeb1b5;
+  pointer-events: none;
+  position: absolute;
+  top: 9px;
+  left: 9px;
+}
+
+/*
+ * アイコン用文字装飾
+ */
+.ic-char {
+  font-size: 14px;
+  display: inline-block;
+  line-height: 20px;
+}
+
+/**
+ *
+ * アイコン用CSS定義(ユーザー用)
+ * 各種アイコン用の画像を管理するCSS
+ *
+ * @author yanahiro / Media Magic Co.,Ltd.
+ * @since 2016.12.22
+ *
+**/
+i.img-meeting {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+i.img-meeting:before {
+  background: url("../img/meeting-red.png");
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+}
+
+/**
+ *
+ * 汎用CSS
+ * よく利用する装飾用CSS
+ *
+ * @author yanahiro
+ * @since 2016.12.22
+ *
+**/
+/*
+ * padding上下用CSS(5px毎に作成)
+ */
+.mb0 {
+  margin-bottom: 0px !important;
+}
+
+.pt0 {
+  padding-top: 0px !important;
+}
+
+.mb5 {
+  margin-bottom: 5px !important;
+}
+
+.pt5 {
+  padding-top: 5px !important;
+}
+
+.mb10 {
+  margin-bottom: 10px !important;
+}
+
+.pt10 {
+  padding-top: 10px !important;
+}
+
+.mb15 {
+  margin-bottom: 15px !important;
+}
+
+.pt15 {
+  padding-top: 15px !important;
+}
+
+.mb20 {
+  margin-bottom: 20px !important;
+}
+
+.pt20 {
+  padding-top: 20px !important;
+}
+
+.mb25 {
+  margin-bottom: 25px !important;
+}
+
+.pt25 {
+  padding-top: 25px !important;
+}
+
+.mb30 {
+  margin-bottom: 30px !important;
+}
+
+.pt30 {
+  padding-top: 30px !important;
+}
+
+.mb35 {
+  margin-bottom: 35px !important;
+}
+
+.pt35 {
+  padding-top: 35px !important;
+}
+
+.mb40 {
+  margin-bottom: 40px !important;
+}
+
+.pt40 {
+  padding-top: 40px !important;
+}
+
+.mb45 {
+  margin-bottom: 45px !important;
+}
+
+.pt45 {
+  padding-top: 45px !important;
+}
+
+.mb50 {
+  margin-bottom: 50px !important;
+}
+
+.pt50 {
+  padding-top: 50px !important;
+}
+
+.mb55 {
+  margin-bottom: 55px !important;
+}
+
+.pt55 {
+  padding-top: 55px !important;
+}
+
+.mb60 {
+  margin-bottom: 60px !important;
+}
+
+.pt60 {
+  padding-top: 60px !important;
+}
+
+.mb65 {
+  margin-bottom: 65px !important;
+}
+
+.pt65 {
+  padding-top: 65px !important;
+}
+
+.mb70 {
+  margin-bottom: 70px !important;
+}
+
+.pt70 {
+  padding-top: 70px !important;
+}
+
+.mb75 {
+  margin-bottom: 75px !important;
+}
+
+.pt75 {
+  padding-top: 75px !important;
+}
+
+.mb80 {
+  margin-bottom: 80px !important;
+}
+
+.pt80 {
+  padding-top: 80px !important;
+}
+
+.mb85 {
+  margin-bottom: 85px !important;
+}
+
+.pt85 {
+  padding-top: 85px !important;
+}
+
+.mb90 {
+  margin-bottom: 90px !important;
+}
+
+.pt90 {
+  padding-top: 90px !important;
+}
+
+.mb95 {
+  margin-bottom: 95px !important;
+}
+
+.pt95 {
+  padding-top: 95px !important;
+}
+
+.mb100 {
+  margin-bottom: 100px !important;
+}
+
+.pt100 {
+  padding-top: 100px !important;
+}
+
+/*
+ * margin右用CSS(5px毎に作成)
+ */
+.mr0 {
+  margin-right: 0px !important;
+}
+
+.mr5 {
+  margin-right: 5px !important;
+}
+
+.mr10 {
+  margin-right: 10px !important;
+}
+
+.mr15 {
+  margin-right: 15px !important;
+}
+
+.mr20 {
+  margin-right: 20px !important;
+}
+
+.mr25 {
+  margin-right: 25px !important;
+}
+
+.mr30 {
+  margin-right: 30px !important;
+}
+
+.mr35 {
+  margin-right: 35px !important;
+}
+
+.mr40 {
+  margin-right: 40px !important;
+}
+
+.mr45 {
+  margin-right: 45px !important;
+}
+
+.mr50 {
+  margin-right: 50px !important;
+}
+
+.mr55 {
+  margin-right: 55px !important;
+}
+
+.mr60 {
+  margin-right: 60px !important;
+}
+
+.mr65 {
+  margin-right: 65px !important;
+}
+
+.mr70 {
+  margin-right: 70px !important;
+}
+
+.mr75 {
+  margin-right: 75px !important;
+}
+
+.mr80 {
+  margin-right: 80px !important;
+}
+
+.mr85 {
+  margin-right: 85px !important;
+}
+
+.mr90 {
+  margin-right: 90px !important;
+}
+
+.mr95 {
+  margin-right: 95px !important;
+}
+
+.mr100 {
+  margin-right: 100px !important;
+}
+
+/*
+ * 幅指定CSS(5%単位で作成)
+ */
+.wid-per0 {
+  width: 0% !important;
+}
+
+.wid-per5 {
+  width: 5% !important;
+}
+
+.wid-per10 {
+  width: 10% !important;
+}
+
+.wid-per15 {
+  width: 15% !important;
+}
+
+.wid-per20 {
+  width: 20% !important;
+}
+
+.wid-per25 {
+  width: 25% !important;
+}
+
+.wid-per30 {
+  width: 30% !important;
+}
+
+.wid-per35 {
+  width: 35% !important;
+}
+
+.wid-per40 {
+  width: 40% !important;
+}
+
+.wid-per45 {
+  width: 45% !important;
+}
+
+.wid-per50 {
+  width: 50% !important;
+}
+
+.wid-per55 {
+  width: 55% !important;
+}
+
+.wid-per60 {
+  width: 60% !important;
+}
+
+.wid-per65 {
+  width: 65% !important;
+}
+
+.wid-per70 {
+  width: 70% !important;
+}
+
+.wid-per75 {
+  width: 75% !important;
+}
+
+.wid-per80 {
+  width: 80% !important;
+}
+
+.wid-per85 {
+  width: 85% !important;
+}
+
+.wid-per90 {
+  width: 90% !important;
+}
+
+.wid-per95 {
+  width: 95% !important;
+}
+
+.wid-per100 {
+  width: 100% !important;
+}
+
+/*
+ * display inline-block用
+ */
+.disp-ilb {
+  display: inline-block;
+}
+
+/*
+ * display inline-blockの上下中央寄せ用
+ * bvc = block vertical center
+ */
+.bvc {
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+/*# sourceMappingURL=app_m.css.map */
