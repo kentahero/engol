@@ -53,7 +53,7 @@
 
         <section class="container">
           <button class="button">
-            <span>この条件で予約する</span>
+            <span>この条件で検索する</span>
             <span class="icon is-medium right">
               <i class="ci img-search"></i>
             </span>
