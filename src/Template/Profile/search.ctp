@@ -27,15 +27,19 @@
           <span class="select mb10 is-pulled-left">
             <select class="">
               <option value='' disabled selected style='display:none;'>年齢</option>
-              <option value="">～25歳</option>
+              <option value="">20歳～25歳</option>
               <option value="">26歳～30歳</option>
+              <option value="">30歳～35歳</option>
+              <option value="">36歳～40歳</option>
+              <option value="">41歳～</option>
             </select>
           </span>
           <span class="select is-pulled-right">
             <select class="">
               <option value='' disabled selected style='display:none;'>地域</option>
-              <option value="">北海道</option>
-              <option value="">東北</option>
+              <?php foreach($prefs as $pref) {?>
+              <option value="<?=$pref->cd?>"><?=$pref->name?></option>
+              <?php } ?>
             </select>
           </span>
         </section>

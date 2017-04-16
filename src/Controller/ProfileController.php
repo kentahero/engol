@@ -19,8 +19,11 @@ class ProfileController extends AppController
 
 	public function index() {
 	}
-	
+
 	public function search() {
+		$tablePref = TableRegistry::get('Prefectures');
+		$prefs = $tablePref->find();
+		$this->set('prefs',$prefs);
 	}
 
 }
