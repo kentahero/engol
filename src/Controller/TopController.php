@@ -20,15 +20,17 @@ class TopController extends AppController
 {
 
 	public function index() {
-		
+
 		$tableAreas = TableRegistry::get('Areas');
 		$query = $tableAreas->find();
 		foreach ($query as $row) {
 			//debug($row);
 		}
-		
+
 		$tablePref = TableRegistry::get('Prefectures');
 		$prefs = $tablePref->find();
 		$this->set('prefs',$prefs);
+
+		$this->set('title','ゴルフのお相手を探すならエンゴル');
 	}
 }
