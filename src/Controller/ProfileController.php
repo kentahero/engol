@@ -14,6 +14,8 @@
  */
 namespace App\Controller;
 
+use Cake\ORM\TableRegistry;
+
 class ProfileController extends AppController
 {
 
