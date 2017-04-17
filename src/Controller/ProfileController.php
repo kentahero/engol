@@ -15,17 +15,48 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
+use App\Service\CompanionService;
 
+/**
+ * 登録ゴルファーコントローラー
+ * @author toshikazu.matsumoto
+ *
+ */
 class ProfileController extends AppController
 {
+	public $paginate = ['limit' => 5];
 
-	public function index() {
+	public function initialize()	{
+		parent::initialize();
+		$this->loadComponent('Paginator');
 	}
 
+	/**
+	 * プロフィール表示
+	 */
+	public function index($userId) {
+		//ユーザー情報の取得
+		$service = new CompanionService();
+		$user = $service->getCompanionPair($userId);
+		$this->set('user',$user);
+	}
+
+	/**
+	 * お相手検索
+	 */
 	public function search() {
+		$prefCd = $this->request->getParam('pref');
+		$sex = $this->request->getParam('sex');
+		$age = $this->request->getParam('age');
+
+		//登録ゴルファーの検索
+		$service = new CompanionService();
+		$groups= $service->findCompanions(['pref_cd'=>$prefCd,'sex'=>$sex,'age'=>$age]);
+
+		//都道府県リストの生成
 		$tablePref = TableRegistry::get('Prefectures');
 		$prefs = $tablePref->find();
-		$this->set('prefs',$prefs);
-	}
 
+		$this->set(compact('groups','prefs'));
+	}
 }
