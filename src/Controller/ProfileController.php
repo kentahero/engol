@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 use App\Service\CompanionService;
 use Cake\Network\Exception\NotFoundException;
 
@@ -38,6 +39,9 @@ class ProfileController extends AppController
 	public function index($userId = null) {
 		$service = new CompanionService();
 		$user = $service->getCompanionPair($userId);
+		if ($user == null) {
+			throw new NotFoundException('User Not Found');
+		}
 		$this->set('user',$user);
 	}
 
@@ -55,8 +59,7 @@ class ProfileController extends AppController
 
 		//都道府県リストの生成
 		$tablePref = TableRegistry::get('Prefectures');
-		$prefs = $tablePref->find();
-
+		$prefs = $tablePref->find('list');
 		$this->set(compact('groups','prefs'));
 	}
 }

@@ -20,12 +20,21 @@ class CompanionService extends AppService {
 		$GroupsTable = TableRegistry::get('UserGroups');
 		$query = $GroupsTable->find('all')
 			->where(['deleted'=>'0'])
-			->contain(['Users'=> function($query){
+			->contain(['Users'=> function($query) use ($conditions) {
 				$companionCond = ['companion_flg'=>'1','Users.deleted'=>'0'];
 				if (!empty($conditions['pref_cd']))$companionCond['prefecture_cd'] = $conditions['pref_cd'];
 				if (!empty($conditions['sex']))$companionCond['sex'] = $conditions['sex'];
-				if (!empty($conditions['age']))$companionCond['display_age'] = $conditions['age'];
-
+				if (!empty($conditions['age'])) {
+					$ageTable = [
+						'20'=>['lower'=>20,'upper'=>24],
+						'25'=>['lower'=>25,'upper'=>29],
+						'30'=>['lower'=>30,'upper'=>34],
+						'35'=>['lower'=>35,'upper'=>39],
+						'40'=>['lower'=>40,'upper'=>0]
+					];
+					$companionCond['display_age >='] = $ageTable[$conditions['age']]['lower'];
+					if ($ageTable[$conditions['age']]['upper']!=0)$companionCond['display_age <='] = $ageTable[$conditions['age']]['upper'];
+				}
 				return $query->select()->where($companionCond)->contain(['CompanionInfos','Prefectures']);
 			}]);
 		$groups = $query->all();
@@ -56,7 +65,7 @@ class CompanionService extends AppService {
 					'companion_flg'=>'1',
 				])->contain(['CompanionInfos','Prefectures','Cities']);
 		$user = $queryUser->first();
-		if ($queryUser->count() != 1) {
+		if ($user == null) {
 			return null;
 		}
 		$queryPair = $Users->find()->where([

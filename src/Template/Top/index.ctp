@@ -113,6 +113,7 @@
       <h2 class="search-title-content has-text-centered">まずは<b class="strong-color-red">簡単</b>な<b class="strong-color-red">検索</b>から</h2>
       <p class="sub-title has-text-centered strong-color-red mb20">Easy search</p>
       <!-- <p class="section-description">〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</p> -->
+      <?php echo $this->Form->create(null,['valueSources'=>'query','type'=>'get','url' => ['controller' => 'Profile', 'action' => 'search']]) ?>
       <div class="box mb20">
         <p class="search-title mb10">
           <span class="icon left">
@@ -120,21 +121,20 @@
           </span>
           お相手を選ぶ
         </p>
-
-        <section class="container is-clearfix">
+        <section class="container is-clearfix" style="padding:5px">
           <span class="select mb10 is-pulled-left">
-            <select class="">
-              <option value='' disabled selected style='display:none;'>年齢</option>
-              <option value="">20歳～25歳</option>
-              <option value="">26歳～30歳</option>
-              <option value="">30歳～35歳</option>
-              <option value="">36歳～40歳</option>
-              <option value="">41歳～</option>
+            <select class="" name="age">
+              <option value='' disabled selected style='display:none;'>年齢を選択</option>
+              <option value="20">20歳～24歳</option>
+              <option value="25">25歳～29歳</option>
+              <option value="30">30歳～34歳</option>
+              <option value="35">35歳～39歳</option>
+              <option value="40">40歳～</option>
             </select>
           </span>
           <span class="select is-pulled-right">
-            <select class="">
-              <option value='' disabled selected style='display:none;'>地域</option>
+            <select class="" name="pref">
+              <option value='' disabled selected style='display:none;'>地域を選択</option>
               <?php foreach($prefs as $pref) {?>
               <option value="<?=$pref->cd?>"><?=$pref->name?></option>
               <?php } ?>
@@ -142,10 +142,10 @@
           </span>
         </section>
 
-        <section class="container">
+        <section class="container" style="padding:0px">
           <div class="checkbox-block">
-            <input type="checkbox" id="male"/><label for="male">男性</label>
-            <input type="checkbox" id="female"/><label for="female">女性</label>
+            <input type="checkbox" id="male" name="sex" value="1"/><label for="male">男性</label>
+            <input type="checkbox" id="female" name="sex" value="2"/><label for="female">女性</label>
           </div>
         </section>
 
@@ -158,6 +158,7 @@
           </button>
         </section>
       </div>
+      <?=$this->Form->end()?>
 <!--       <p class="section-description">〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇〇</p>
       <div class="box">
         <p class="search-title mb10">

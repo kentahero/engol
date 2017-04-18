@@ -98,9 +98,9 @@
               <td><?=number_format($user->companion_info->amount)?>円</td>
             </tr>
             <tr>
-              <th>ペアリング名</th>
+              <th>ペアリング</th>
               <td>
-                <?=$user->nickname?> & <?=$user->pair->nickname?>
+                <!-- <?=$user->nickname?> & <?=$user->pair->nickname?> -->
                 <div class="container">
                   <div class="card male">
                     <a class="card-link" href="/profile/index/<?=$user->pair->id?>">

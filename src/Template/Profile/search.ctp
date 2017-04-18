@@ -17,35 +17,33 @@
       </div>
       <!-- <h2 class="title-content has-text-centered mb20">お相手プロフィール検索</h2> -->
       <div class="box mb20">
-        <form action="/profile/search" method="GET">
+        <!--<form action="/profile/search" method="GET">-->
+        <?php echo $this->Form->create(null,['valueSources'=>'query','type'=>'get']) ?>
         <p class="search-title mb10">
           <span class="icon left">
             <i class="ci img-ball"></i>
           </span>
-          お相手を選ぶ
+          お相手の条件を入力
         </p>
-        <section class="container is-clearfix">
+        <section class="container is-clearfix" style="padding:5px">
           <span class="select mb10 is-pulled-left">
-            <select class="" name="age">
-              <option value='' disabled selected style='display:none;'>年齢</option>
-              <option value="20">20歳～25歳</option>
-              <option value="26">26歳～30歳</option>
-              <option value="30">30歳～35歳</option>
-              <option value="36">36歳～40歳</option>
-              <option value="41">41歳～</option>
-            </select>
+            <?php echo $this->Form->select('age',
+            	[
+            		['value'=>'20','text'=>'20歳～24歳'],
+            		['value'=>'25','text'=>'25歳～29歳'],
+            		['value'=>'30','text'=>'30歳～34歳'],
+            		['value'=>'35','text'=>'35歳～39歳'],
+            		['value'=>'40','text'=>'40歳～'],
+            	],
+            	['empty'=>'年齢を選択']
+            );?>
           </span>
           <span class="select is-pulled-right">
-            <select class="" name="pref">
-              <option value='' disabled selected style='display:none;'>地域</option>
-              <?php foreach($prefs as $pref) {?>
-              <option value="<?=$pref->cd?>"><?=$pref->name?></option>
-              <?php } ?>
-            </select>
+            <?php echo $this->Form->select('pref',$prefs,['empty'=>'地域を選択'])?>
           </span>
         </section>
 
-        <section class="container">
+        <section class="container" style="padding:0px">
           <div class="checkbox-block">
             <input type="checkbox" id="male" value="1" name="sex"/><label for="male">男性</label>
             <input type="checkbox" id="female" value="2" name="sex"/><label for="female">女性</label>
@@ -67,7 +65,7 @@
             <i class="ci img-clear"></i>
           </a>
         </section>
-        </form>
+        <?=$this->Form->end()?>
       </div>
     </section>
   </div>
@@ -266,7 +264,7 @@
             <span class="icon left">
               <i class="ci img-ball-search"></i>
             </span>
-            <p class="is-pulled-left name"><span class="male"><?=$group->users[0]->nickname?></span> & <span class="female"><?=$group->users[1]->nickname?></span> ペア</p>
+            <p class="is-pulled-left name"><span class="male"><?=$this->Text->truncate($group->users[0]->nickname,9)?></span> & <span class="female"><?=$this->Text->truncate($group->users[1]->nickname,9)?></span> ペア</p>
             <p class="is-pulled-right status">ログイン：本日</p>
           </div>
           <div class="pair-block">

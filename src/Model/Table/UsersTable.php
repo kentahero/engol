@@ -10,12 +10,12 @@ class UsersTable extends Table {
 		$this->hasOne('CompanionInfos');
 		//居住地都道府県情報の結合
 		$this->belongsTo('Prefectures')
-			->setForeignKey('prefecture_cd')
-			->setJoinType('INNER');
+			->setForeignKey('prefecture_cd');
+			//->setJoinType('INNER');
 		//居住地市区町村情報の結合
 			$this->belongsTo('Cities')
-			->setForeignKey('city_cd')
-			->setJoinType('INNER');
+			->setForeignKey('city_cd');
+			//->setJoinType('INNER');
 
 	}
 
