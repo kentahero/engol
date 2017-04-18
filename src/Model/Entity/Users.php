@@ -14,4 +14,12 @@ class Users extends Entity {
 
 		return '';
 	}
+
+	protected function _getCoursePrefecture() {
+		return 'ほげほげ';
+	}
+
+	protected function _getTrainingPrefecture() {
+		return 'トレーニング';
+	}
 }

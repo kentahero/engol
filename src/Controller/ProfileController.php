@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
 use App\Service\CompanionService;
+use Cake\Network\Exception\NotFoundException;
 
 /**
  * 登録ゴルファーコントローラー
@@ -34,8 +35,7 @@ class ProfileController extends AppController
 	/**
 	 * プロフィール表示
 	 */
-	public function index($userId) {
-		//ユーザー情報の取得
+	public function index($userId = null) {
 		$service = new CompanionService();
 		$user = $service->getCompanionPair($userId);
 		$this->set('user',$user);
@@ -45,9 +45,9 @@ class ProfileController extends AppController
 	 * お相手検索
 	 */
 	public function search() {
-		$prefCd = $this->request->getParam('pref');
-		$sex = $this->request->getParam('sex');
-		$age = $this->request->getParam('age');
+		$prefCd = $this->request->getQuery('pref');
+		$sex = $this->request->getQuery('sex');
+		$age = $this->request->getQuery('age');
 
 		//登録ゴルファーの検索
 		$service = new CompanionService();

@@ -5,12 +5,14 @@
       <ul class="brcb">
         <li class="strong"><a href="">トップ</a></li>
         <li class="strong"><a href="">プロフィール検索</a></li>
-        <li><a href="">Hidekiさん</a></li>
+        <li><a href=""><?=$user->nickname?>さん</a></li>
       </ul>
+      <!--
       <a class="bvc" href="./index.html">
         <img class="back-btn bvc" src="/img/icon-back.png">
         <span class="back-btn-name">戻る</span>
       </a>
+      -->
     </section>
 <!--     <section class="detail-title">
       <p class="mb10">
@@ -21,60 +23,23 @@
       </p>
     </section> -->
     <div class="slick-slider-detail mb40">
+      <?php for($i=1;$i<=$user->companion_info->image;$i++) {?>
       <div class="card mrl5">
         <div class="card-image">
           <figure class="image is-square">
-            <img src="/img/pic/sample01.jpg" alt="Image">
+            <img src="/img/pic/pic_<?=$user->id?>_<?=$i?>.jpg" alt="Image">
           </figure>
         </div>
       </div>
-      <div class="card mrl5">
-        <div class="card-image">
-          <figure class="image is-square">
-            <img src="/img/pic/sample02.jpg" alt="Image">
-          </figure>
-        </div>
-      </div>
-
-      <div class="card mrl5">
-        <div class="card-image">
-          <figure class="image is-square">
-            <img src="/img/pic/sample03.jpg" alt="Image">
-          </figure>
-        </div>
-      </div>
-
-      <div class="card mrl5">
-        <div class="card-image">
-          <figure class="image is-square">
-            <img src="/img/pic/sample04.jpg" alt="Image">
-          </figure>
-        </div>
-      </div>
-
-      <div class="card mrl5">
-        <div class="card-image">
-          <figure class="image is-square">
-            <img src="/img/pic/sample05.jpg" alt="Image">
-          </figure>
-        </div>
-      </div>
-
-      <div class="card mrl5">
-        <div class="card-image">
-          <figure class="image is-square">
-            <img src="/img/pic/sample06.jpg" alt="Image">
-          </figure>
-        </div>
-      </div>
+      <?php }?>
     </div>
     <section class="basic-info-block mb20 male">
       <div class="is-clearfix">
         <ul class="is-pulled-left basic-info male">
-          <li class="name">Hidekiさん</li>
-          <li class="sex">(男)</li>
-          <li class="age">32歳</li>
-          <li class="current-pref">大阪府</li>
+          <li class="name"><?=$user->nickname?>さん</li>
+          <li class="sex">(<?=$user->sex?>)</li>
+          <li class="age"><?=$user->display_age?>歳</li>
+          <li class="current-pref"><?=$user->prefecture->name?></li>
         </ul>
         <div class="status bvc is-pulled-right">ログイン：本日</div>
       </div>
@@ -89,9 +54,7 @@
           </span>
           <h2 class="profile-title male bvc">自己PR</h2>
           <p class="summary">
-            山路やまみちを登りながら、こう考えた。
-          　智ちに働けば角かどが立つ。情じょうに棹さおさせば流される。意地を通とおせば窮屈きゅうくつだ。とかくに人の世は住みにくい。
-          　住みにくさが高こうじると、安い所へ引き越したくなる。どこへ越しても住みにくいと悟さとった時、詩が生れて、画えが出来る。 
+            <?=nl2br($user->companion_info->pr)?>
           </p>
         </div>
         <div class="mb20">
@@ -104,15 +67,15 @@
           <tbody>
             <tr>
               <th>平均スコア</th>
-              <td>86</td>
+              <td><?=$user->companion_info->average_score?></td>
             </tr>
             <tr>
               <th>ラウンド(曜日)</th>
-              <td>水, 土, 日</td>
+              <td><?=$user->companion_info->round_week?></td>
             </tr>
             <tr>
               <th>練習場(曜日)</th>
-              <td>月, 水, 金, 土, 日</td>
+              <td><?=$user->companion_info->training_week?></td>
             </tr>
             <tr>
               <th>ゴルフ場エリア</th>
@@ -124,33 +87,33 @@
             </tr>
             <tr>
               <th>ゴルフ歴</th>
-              <td>5年</td>
+              <td><?=$user->companion_info->history?></td>
             </tr>
             <tr>
               <th>職業</th>
-              <td>役員</td>
+              <td><?=$user->companion_info->job?></td>
             </tr>
             <tr>
               <th>設定料金</th>
-              <td>\10,000</td>
+              <td><?=number_format($user->companion_info->amount)?>円</td>
             </tr>
             <tr>
               <th>ペアリング名</th>
               <td>
-                Hideki & リカコペア
+                <?=$user->nickname?> & <?=$user->pair->nickname?>
                 <div class="container">
                   <div class="card male">
-                    <a class="card-link" href="./detail.html">
+                    <a class="card-link" href="/profile/index/<?=$user->pair->id?>">
                       <div class="card-image">
                         <figure class="image is-4by3">
-                          <img src="/img/pic/sample03.jpg" alt="Image">
+                          <img src="/img/pic/pic_<?=$user->pair->id?>_1.jpg" alt="Image">
                         </figure>
                       </div>
                       <div class="user-attr male">
-                        <p class="name">Hidekiさん</p>
-                        <p class="sex">(男)</p>
-                        <p class="age">32歳</p>
-                        <p class="current-pref">大阪府</p>
+                        <p class="name"><?=$user->pair->nickname?>さん</p>
+                        <p class="sex">(<?=$user->pair->sex?>)</p>
+                        <p class="age"><?=$user->pair->display_age?>歳</p>
+                        <p class="current-pref"><?=$user->pair->prefecture->name?></p>
                       </div>
                     </a>
                   </div>

@@ -50,8 +50,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * to use (in this case, src/Template/Pages/home.ctp)...
      */
     $routes->connect('/', ['controller' => 'Top', 'action' => 'index']);
-    $routes->connect('/profie/',['controller'=>'Profile','action'=>'index']);
-    
+    $routes->connect('/profie/:user_id',['controller'=>'Profile','action'=>'index'],['user_id'=>'[0-9]+','pass'=>['user_id']]);
 
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

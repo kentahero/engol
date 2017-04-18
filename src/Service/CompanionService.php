@@ -26,7 +26,7 @@ class CompanionService extends AppService {
 				if (!empty($conditions['sex']))$companionCond['sex'] = $conditions['sex'];
 				if (!empty($conditions['age']))$companionCond['display_age'] = $conditions['age'];
 
-				return $query->select()->where($companionCond)->contain('CompanionInfos');
+				return $query->select()->where($companionCond)->contain(['CompanionInfos','Prefectures']);
 			}]);
 		$groups = $query->all();
 
@@ -50,14 +50,23 @@ class CompanionService extends AppService {
 	public function getCompanionPair($userId) {
 
 		$Users = TableRegistry::get("Users");
-		$user = $Users->find(
-				['conditions'=>[
-					'user_id'=>$userId,
-					'deleted'=>'0',
+		$queryUser = $Users->find()->where([
+					'Users.id'=>$userId,
+					'Users.deleted'=>'0',
 					'companion_flg'=>'1',
-					]
-				]
-			)->contain('CompanionInfos');
+				])->contain(['CompanionInfos','Prefectures','Cities']);
+		$user = $queryUser->first();
+		if ($queryUser->count() != 1) {
+			return null;
+		}
+		$queryPair = $Users->find()->where([
+					'Users.id !='=>$userId,
+					'group_id'=>$user->group_id,
+					'Users.deleted'=>'0',
+					'companion_flg'=>'1',
+				])->contain(['CompanionInfos','Prefectures','Cities']);
+		$pair = $queryPair->first();
+		$user['pair'] = $pair;
 		return $user;
 
 	}

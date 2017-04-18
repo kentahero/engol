@@ -17,6 +17,7 @@
       </div>
       <!-- <h2 class="title-content has-text-centered mb20">お相手プロフィール検索</h2> -->
       <div class="box mb20">
+        <form action="/profile/search" method="GET">
         <p class="search-title mb10">
           <span class="icon left">
             <i class="ci img-ball"></i>
@@ -25,17 +26,17 @@
         </p>
         <section class="container is-clearfix">
           <span class="select mb10 is-pulled-left">
-            <select class="">
+            <select class="" name="age">
               <option value='' disabled selected style='display:none;'>年齢</option>
-              <option value="">20歳～25歳</option>
-              <option value="">26歳～30歳</option>
-              <option value="">30歳～35歳</option>
-              <option value="">36歳～40歳</option>
-              <option value="">41歳～</option>
+              <option value="20">20歳～25歳</option>
+              <option value="26">26歳～30歳</option>
+              <option value="30">30歳～35歳</option>
+              <option value="36">36歳～40歳</option>
+              <option value="41">41歳～</option>
             </select>
           </span>
           <span class="select is-pulled-right">
-            <select class="">
+            <select class="" name="pref">
               <option value='' disabled selected style='display:none;'>地域</option>
               <?php foreach($prefs as $pref) {?>
               <option value="<?=$pref->cd?>"><?=$pref->name?></option>
@@ -46,13 +47,13 @@
 
         <section class="container">
           <div class="checkbox-block">
-            <input type="checkbox" id="male"/><label for="male">男性</label>
-            <input type="checkbox" id="female"/><label for="female">女性</label>
+            <input type="checkbox" id="male" value="1" name="sex"/><label for="male">男性</label>
+            <input type="checkbox" id="female" value="2" name="sex"/><label for="female">女性</label>
           </div>
         </section>
 
         <section class="container">
-          <button class="button">
+          <button class="button" type="submit">
             <span>この条件で検索する</span>
             <span class="icon is-medium right">
               <i class="ci img-search"></i>
@@ -66,6 +67,7 @@
             <i class="ci img-clear"></i>
           </a>
         </section>
+        </form>
       </div>
     </section>
   </div>
@@ -269,7 +271,7 @@
           </div>
           <div class="pair-block">
             <div class="card">
-              <a class="card-link" href="/profile/<?=$group->users[0]->id?>">
+              <a class="card-link" href="/profile/index/<?=$group->users[0]->id?>">
                 <div class="card-image">
                   <figure class="image is-4by3">
                     <img src="/img/pic/pic_<?=$group->users[0]->id?>_1.jpg" alt="Image">
@@ -279,7 +281,7 @@
                   <p class="name"><?=$this->Text->truncate($group->users[0]->nickname,10)?></p>
                   <p class="age"><?=$group->users[0]->display_age?>歳</p>
                   <p class="sex">(<?=$group->users[0]->sex?>)</p>
-                  <p class="current-pref"><?=$group->users[0]->prefecture_cd?></p>
+                  <p class="current-pref"><?=$group->users[0]->prefecture->name?></p>
                 </div>
               </a>
             </div>
@@ -296,8 +298,8 @@
                 <div class="user-attr female">
                   <p class="name"><?=$this->Text->truncate($group->users[1]->nickname,10)?>さん</p>
                   <p class="age"><?=$group->users[1]->display_age?>歳</p>
-                  <p class="sex">(<?=$group->users[1]->sex?>)</p>
-                  <p class="current-pref"><?=$group->users[1]->prefecture_cd?></p>
+                  <p class="sex">(<?=$group->users[1]->sex_name?>)</p>
+                  <p class="current-pref"><?=$group->users[1]->prefecture->name?></p>
                 </div>
               </a>
             </div>
