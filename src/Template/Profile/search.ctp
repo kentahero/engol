@@ -83,12 +83,15 @@
     </div>
   </section>
   <section class="search-list-area container">
-    <div class="columns">
       <?php
+        $i=0;
         foreach($groups as $group) {
           if (count($group->users) != 2) {
             //現在はペア表示のみ対応
             continue;
+          }
+          if ($i%2==0||$i==0) {
+          	echo('<div class="columns">');
           }
       ?>
       <div class="column is-half">
@@ -149,8 +152,10 @@
           </a>
         </div>
       </div>
-      <?php } //group loop end?>
-    </div>
+      <?php if($i%2!=0) {?>
+      </div>
+      <?php } //4つずつのdivタグ挿入?>
+      <?php  $i++; } //group loop end?>
   </section>
   <section class="pagination-area mb20">
     <div class="bvc current-block">
