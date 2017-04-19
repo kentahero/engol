@@ -16,7 +16,7 @@ class CompanionService extends AppService {
 	 * @param unknown $conditions 検索条件
 	 * @return unknown
 	 */
-	public function findCompanions($conditions) {
+	public function findCompanions($conditions,$pagenator) {
 		$GroupsTable = TableRegistry::get('UserGroups');
 		$UsersTable = TableRegistry::get('Users');
 
@@ -40,10 +40,11 @@ class CompanionService extends AppService {
 		//グループテーブルを検索
 		$query = $GroupsTable->find('all')
 			->where(['deleted'=>'0','id IN'=>$userQuery])
-			->contain(['Users'=> function($query) use ($conditions) {
-				return $query->select()->contain(['CompanionInfos','Prefectures']);
+			->contain(['Users'=> function($query) {
+				return $query->select()->where(['companion_flg'=>'1','Users.deleted'=>'0'])->contain(['CompanionInfos','Prefectures']);
 			}]);
-		$groups = $query->all();
+		//$groups = $query->all();
+		$groups = $pagenator->paginate($query,['limit'=>10]);
 
 		//debug($groups);
 
@@ -85,7 +86,24 @@ class CompanionService extends AppService {
 		$pair = $queryPair->first();
 		$user['pair'] = $pair;
 		return $user;
+	}
 
+	/**
+	 * グループIDからペアを取得
+	 * @param unknown $groupId
+	 * @return unknown
+	 */
+	public function getCompanionPairGroup($groupId) {
+		$UsersGroup = TableRegistry::get("UserGroups");
+		$query = $UsersGroup->find('all')->where(
+				[
+					'id'=>$groupId,
+					'UserGroups.deleted'=>'0',
+				])->contain(['Users'=> function($query) {
+					$query->select()->where(['Users.deleted'=>'0','companion_flg'=>'1'])->contain(['CompanionInfos','Prefectures']);
+					return $query;
+				}]);
+		return $query->first();
 	}
 
 }

@@ -15,7 +15,6 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
-use Cake\Utility\Hash;
 use App\Service\CompanionService;
 use Cake\Network\Exception\NotFoundException;
 
@@ -27,6 +26,9 @@ use Cake\Network\Exception\NotFoundException;
 class ProfileController extends AppController
 {
 	public $paginate = ['limit' => 5];
+	public $helpers = [
+			'Paginator' => ['templates' => 'paginator-templates']
+	];
 
 	public function initialize()	{
 		parent::initialize();
@@ -55,7 +57,7 @@ class ProfileController extends AppController
 
 		//登録ゴルファーの検索
 		$service = new CompanionService();
-		$groups= $service->findCompanions(['pref_cd'=>$prefCd,'sex'=>$sex,'age'=>$age]);
+		$groups= $service->findCompanions(['pref_cd'=>$prefCd,'sex'=>$sex,'age'=>$age],$this->Paginator);
 
 		//都道府県リストの生成
 		$tablePref = TableRegistry::get('Prefectures');

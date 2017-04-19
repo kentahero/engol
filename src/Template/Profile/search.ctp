@@ -60,7 +60,7 @@
         </section>
 
         <section class="search-clear-block">
-          <a class="has-text-right bvc" href="#">
+          <a class="has-text-right bvc" href="javascript:document.forms[0].reset();">
             <span class="bvc">検索条件をクリアする</span>
             <i class="ci img-clear"></i>
           </a>
@@ -71,24 +71,15 @@
   </div>
   <section class="pagination-area">
     <div class="bvc current-block">
-      <p class="current-page">9,999名／1～10名表示</p>
+      <p class="current-page"><?php echo $this->Paginator->counter('{{count}}ペア中／{{start}}～{{end}}表示');?></p>
     </div>
     <i class="ci img-golf-cup-search"></i>
     <div class="bvc pagination-block">
-      <i class="ci img-search-left-gray"></i>
+      <?php echo $this->Paginator->prev();?>
       <ul>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li><a href="#">7</a></li>
-        <li><a href="#">8</a></li>
-        <li><a href="#">9</a></li>
-        <li><a href="#">10</a></li>
+        <?php echo $this->Paginator->numbers(['tag'=>'li']);?>
       </ul>
-      <i class="ci img-search-right-gray"></i>
+      <?php echo $this->Paginator->next();?>
     </div>
   </section>
   <section class="search-list-area container">
@@ -121,7 +112,7 @@
                     <?php }?>
                   </figure>
                 </div>
-                <div class="user-attr <?php echo $group->users[0]->sex==1?'male':'female'?>">
+                <div class="user-attr <?=$group->users[0]->sex_class?>">
                   <p class="name"><?=$this->Text->truncate($group->users[0]->nickname,11)?></p>
                   <p class="age"><?=$group->users[0]->display_age?>歳(<?=$group->users[0]->sex_name?>)</p>
                   <p class="current-pref"><?=$group->users[0]->prefecture->name?></p>
@@ -142,7 +133,7 @@
                     <?php }?>
                   </figure>
                 </div>
-                <div class="user-attr <?php echo $group->users[0]->sex==1?'male':'female'?>">
+                <div class="user-attr <?=$group->users[1]->sex_class?>">
                   <p class="name"><?=$this->Text->truncate($group->users[1]->nickname,11)?></p>
                   <p class="age"><?=$group->users[1]->display_age?>歳(<?=$group->users[1]->sex_name?>)</p>
                   <p class="current-pref"><?=$group->users[1]->prefecture->name?></p>
@@ -150,8 +141,8 @@
               </a>
             </div>
           </div>
-          <a href="#" class="button">
-            <span>このペアで予約する</span>
+          <a href="/entry/index?group_id=<?=$group->id?>" class="button">
+            <span>このペアにオファーする</span>
             <span class="icon is-medium right">
                 <i class="ci img-next"></i>
             </span>
@@ -163,24 +154,15 @@
   </section>
   <section class="pagination-area mb20">
     <div class="bvc current-block">
-      <p class="current-page">9,999名／1～10名表示</p>
+      <p class="current-page"><?php echo $this->Paginator->counter('{{count}}ペア中／{{start}}～{{end}}表示');?></p>
     </div>
     <i class="ci img-golf-cup-search"></i>
     <div class="bvc pagination-block">
-      <i class="ci img-search-left-gray"></i>
+      <?php echo $this->Paginator->prev();?>
       <ul>
-        <li class="active"><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li><a href="#">7</a></li>
-        <li><a href="#">8</a></li>
-        <li><a href="#">9</a></li>
-        <li><a href="#">10</a></li>
+        <?php echo $this->Paginator->numbers(['tag'=>'li']);?>
       </ul>
-      <i class="ci img-search-right-gray"></i>
+      <?php echo $this->Paginator->next();?>
     </div>
   </section>
 </section>

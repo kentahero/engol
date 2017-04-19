@@ -23,6 +23,7 @@
       </p>
     </section> -->
     <div class="slick-slider-detail mb40">
+      <?php if($user->companion_info->image != 0) {?>
       <?php for($i=1;$i<=$user->companion_info->image;$i++) {?>
       <div class="card mrl5">
         <div class="card-image">
@@ -32,10 +33,19 @@
         </div>
       </div>
       <?php }?>
+      <?php }else{?>
+      <div class="card mrl5">
+        <div class="card-image">
+          <figure class="image is-square">
+            <img src="/img/pic/nophoto.png" alt="Image">
+          </figure>
+        </div>
+      </div>
+      <?php }?>
     </div>
-    <section class="basic-info-block mb20 male">
+    <section class="basic-info-block mb20 <?=$user->sex_class?>">
       <div class="is-clearfix">
-        <ul class="is-pulled-left basic-info <?echo $user->sex==1?'male':'femail'"?>
+        <ul class="is-pulled-left basic-info <?=$user->sex_class?>>
           <li class="name"><?=$user->nickname?>さん</li>
           <li class="age"><?=$user->display_age?>歳(<?=$user->sex_name?>)</li>
           <li class="current-pref"><?=$user->prefecture->name?></li>
@@ -49,9 +59,9 @@
       <section class="profile-main-block">
         <div class="mb20">
           <span class="">
-            <i class="ci img-flag-male"></i>
+            <i class="ci img-flag-<?=$user->sex_class?>"></i>
           </span>
-          <h2 class="profile-title male bvc">自己PR</h2>
+          <h2 class="profile-title <?=$user->sex_class?> bvc">自己PR</h2>
           <p class="summary">
             <?=nl2br($user->companion_info->pr)?>
           </p>
@@ -60,9 +70,9 @@
           <span class="">
             <i class="ci img-ball"></i>
           </span>
-          <h2 class="profile-title male bvc">プレイヤー情報</h2>
+          <h2 class="profile-title <?=$user->sex_class?> bvc">プレイヤー情報</h2>
         </div>
-        <table class="table male">
+        <table class="table <?=$user->sex_class?>">
           <tbody>
             <tr>
               <th>平均スコア</th>
@@ -101,14 +111,18 @@
               <td>
                 <!-- <?=$user->nickname?> & <?=$user->pair->nickname?> -->
                 <div class="container">
-                  <div class="card male">
+                  <div class="card <?=$user->pair->sex_class?>">
                     <a class="card-link" href="/profile/index/<?=$user->pair->id?>">
                       <div class="card-image">
                         <figure class="image is-4by3">
+                          <?php if($user->pair->companion_info->image != 0) {?>
                           <img src="/img/pic/pic_<?=$user->pair->id?>_1.jpg" alt="Image">
+                          <?php }else{?>
+                          <img src="/img/pic/nophoto.png" alt="Image">
+                          <?php }?>
                         </figure>
                       </div>
-                      <div class="user-attr male">
+                      <div class="user-attr <?=$user->pair->sex_class?>">
                         <p class="name" style="width:100%"><?=$this->Text->truncate($user->pair->nickname,10)?></p>
                         <p class="age"><?=$user->pair->display_age?>歳(<?=$user->pair->sex_name?>)</p>
                         <p class="current-pref"><?=$user->pair->prefecture->name?></p>
@@ -124,3 +138,12 @@
     </div>
   </section>
 </section>
+<p class="reserve-btn">
+  <a href="/entry/?group_id=<?=$user->group_id?>" class="button">
+    <span>このペアにオファーする</span>
+    <span class="icon is-medium right">
+        <i class="ci img-next"></i>
+    </span>
+  </a>
+</p>
+
