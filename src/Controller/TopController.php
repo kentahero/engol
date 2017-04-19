@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
+use App\Service\CompanionService;
 
 class TopController extends AppController
 {
@@ -22,8 +23,13 @@ class TopController extends AppController
 	public function index() {
 
 		$tablePref = TableRegistry::get('Prefectures');
-		$prefs = $tablePref->find();
+		$prefs = $tablePref->find('list');
 		$this->set('prefs',$prefs);
+
+		$service = new CompanionService();
+		$recommend = $service->getReccomend();
+		$this->set('recommend',$recommend);
+
 
 		$this->set('title','ゴルフのお相手を探すならエンゴル');
 	}

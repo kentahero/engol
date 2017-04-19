@@ -35,10 +35,9 @@
     </div>
     <section class="basic-info-block mb20 male">
       <div class="is-clearfix">
-        <ul class="is-pulled-left basic-info male">
+        <ul class="is-pulled-left basic-info <?echo $user->sex==1?'male':'femail'"?>
           <li class="name"><?=$user->nickname?>さん</li>
-          <li class="sex">(<?=$user->sex?>)</li>
-          <li class="age"><?=$user->display_age?>歳</li>
+          <li class="age"><?=$user->display_age?>歳(<?=$user->sex_name?>)</li>
           <li class="current-pref"><?=$user->prefecture->name?></li>
         </ul>
         <div class="status bvc is-pulled-right">ログイン：本日</div>
@@ -110,9 +109,8 @@
                         </figure>
                       </div>
                       <div class="user-attr male">
-                        <p class="name"><?=$user->pair->nickname?>さん</p>
-                        <p class="sex">(<?=$user->pair->sex?>)</p>
-                        <p class="age"><?=$user->pair->display_age?>歳</p>
+                        <p class="name" style="width:100%"><?=$this->Text->truncate($user->pair->nickname,10)?></p>
+                        <p class="age"><?=$user->pair->display_age?>歳(<?=$user->pair->sex_name?>)</p>
                         <p class="current-pref"><?=$user->pair->prefecture->name?></p>
                       </div>
                     </a>

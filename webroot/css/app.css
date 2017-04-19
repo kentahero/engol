@@ -98,8 +98,12 @@ html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquot
 
 .textarea {
   font-size: 16px;
-  line-height: 1.8em;
+  line-height: 1.5em;
   height: auto;
+}
+
+.input {
+  font-size: 16px;
 }
 
 .select {
@@ -897,13 +901,15 @@ header.header .nav-item {
   top: 30%;
 }
 
-.search-list-area .box {
+.search-list-area .box,
+.entry-disp-area .box {
   position: relative;
   margin-bottom: 20px;
   margin: 5px 20px;
 }
 
-.search-list-area .title-block {
+.search-list-area .title-block,
+.entry-disp-area .title-block {
   background-color: #ececec;
   position: absolute;
   top: 0;
@@ -912,74 +918,93 @@ header.header .nav-item {
   width: 100%;
 }
 
-.search-list-area .title-block .name {
+.search-list-area .title-block .name,
+.entry-disp-area .title-block .name {
   padding-left: 30px;
 }
 
-.search-list-area .title-block .name .male {
+.search-list-area .title-block .name .male,
+.entry-disp-area .title-block .name .male {
   color: #006837;
 }
 
-.search-list-area .title-block .name .female {
+.search-list-area .title-block .name .female,
+.entry-disp-area .title-block .name .female {
   color: #d4195d;
 }
 
-.search-list-area .title-block .status {
+.search-list-area .title-block .status,
+.entry-disp-area .title-block .status {
   padding-left: 30px;
 }
 
-.search-list-area .pair-block {
+.search-list-area .pair-block,
+.entry-disp-area .pair-block {
   margin-top: 40px;
   margin-bottom: 10px;
+  text-align: center;
 }
 
-.search-list-area .pair-block .pair-cross {
+.search-list-area .pair-block .pair-cross,
+.entry-disp-area .pair-block .pair-cross {
   display: inline-block;
   margin-top: 20%;
 }
 
-.search-list-area .card {
+.search-list-area .card,
+.entry-disp-area .card {
   width: 45%;
   display: inline-block;
 }
 
-.search-list-area .card .user-attr {
+.search-list-area .card .user-attr,
+.entry-disp-area .card .user-attr {
   padding: 5px 20px;
 }
 
-.search-list-area .card .user-attr.male {
+.search-list-area .card .user-attr.male,
+.entry-disp-area .card .user-attr.male {
   background-color: #d0ede0;
   color: #006837;
 }
 
-.search-list-area .card .user-attr.female {
+.search-list-area .card .user-attr.female,
+.entry-disp-area .card .user-attr.female {
   background-color: #f3cddb;
   color: #d4195d;
 }
 
-.search-list-area .card .user-attr .name {
+.search-list-area .card .user-attr .name,
+.entry-disp-area .card .user-attr .name {
   display: inline-block;
-  width: 70%;
+  width: 100%;
 }
 
-.search-list-area .card .user-attr .sex {
-  display: inline-block;
-  width: 25%;
-}
-
-.search-list-area .card .user-attr .age {
+.search-list-area .card .user-attr .age,
+.entry-disp-area .card .user-attr .age {
   display: inline-block;
   width: 48%;
 }
 
-.search-list-area .card .user-attr .current-pref {
+.search-list-area .card .user-attr .current-pref,
+.entry-disp-area .card .user-attr .current-pref {
   display: inline-block;
   width: 48%;
   text-align: center;
 }
 
+.entry-disp-area {
+  background-color: #d0f0e1;
+  padding: 10px 0;
+}
+
+.entry-disp-area .box {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .profile-pic-area .profile-title-block {
-  padding: 10px 20px;
+  padding: 10px 3px;
 }
 
 .profile-pic-area .basic-info-block {
@@ -1053,6 +1078,10 @@ header.header .nav-item {
   margin: 0 auto;
 }
 
+.profile-area .profile-main-block textarea {
+  font-size: 1em;
+}
+
 .profile-area .profile-title {
   display: block;
   font-size: 1.5em;
@@ -1088,13 +1117,13 @@ header.header .nav-item {
 }
 
 .profile-area .table th {
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 20px 0;
   padding-left: 10%;
 }
 
 .profile-area .table td {
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 20px 0;
 }
 
@@ -1139,6 +1168,86 @@ header.header .nav-item {
   display: inline-block;
   width: 48%;
   text-align: center;
+}
+
+.profile-area .input-table {
+  position: relative;
+}
+
+.profile-area .input-table input, .profile-area .input-table select {
+  font-size: 1.2em;
+}
+
+.profile-area .input-table option {
+  font-size: 1em;
+}
+
+.profile-area .input-table .select {
+  height: 32px;
+}
+
+.profile-area .input-table .select select {
+  border: 1px solid #d3d6db;
+  padding: 0 25px 0 3px;
+  height: 32px;
+}
+
+.profile-area .input-table .select:after {
+  color: #d3d6db;
+  font-size: 10px;
+  left: 75%;
+  top: 10px;
+}
+
+.profile-area .input-table .select.year:after {
+  left: 75%;
+}
+
+.profile-area .input-table .select.month:after {
+  left: 65%;
+}
+
+.profile-area .input-table .select.day:after {
+  left: 65%;
+}
+
+.profile-area .input-table.table td, .profile-area .input-table.table th {
+  border: 0 solid #d3d6db;
+  padding: 10px 5px;
+}
+
+.profile-area .input-table.table th {
+  width: 30%;
+  z-index: 10;
+  vertical-align: middle;
+}
+
+.profile-area .input-table.table td {
+  padding-left: 15px;
+  position: relative;
+}
+
+.profile-area .input-table.table td .control label {
+  font-size: 1.2em;
+  line-height: 32px;
+}
+
+.profile-area .input-table .required:before {
+  position: absolute;
+  content: '*';
+  font-size: 1.5em;
+  color: #c42c30;
+  top: 25%;
+  left: 0;
+}
+
+.profile-area .input-table .ui-datepicker-trigger {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.profile-area input[type="checkbox"] + label {
+  font-weight: normal;
 }
 
 .slick-prev {
@@ -1238,12 +1347,19 @@ header.header .nav-item {
   padding-left: 2%;
 }
 
+.other-content .content-header {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 .other-content .content-body {
   padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .other-content .content-body * {
-  font-size: .9em;
+  font-size: 1em;
 }
 
 .other-content .bold {
@@ -1261,12 +1377,49 @@ header.header .nav-item {
   padding-left: 20px;
 }
 
+.other-content ol li {
+  padding-bottom: 5px;
+}
+
+.other-content ul li {
+  padding-bottom: 5px;
+}
+
+.other-content .table {
+  table-layout: fixed;
+}
+
+.other-content .table th {
+  width: 30%;
+  background-color: #d0f0e1;
+}
+
+.other-content .table td {
+  white-space: normal;
+}
+
 .card {
   border-bottom: 2px solid #d8d8d8;
 }
 
 .none {
   display: none;
+}
+
+.error-msg-area {
+  color: #c42c30;
+  text-align: center;
+  font-weight: bold;
+}
+
+.error {
+  background-color: #fbb;
+}
+
+.error-msg {
+  color: #c42c30;
+  font-size: .8em;
+  display: block;
 }
 
 @media screen and (max-width: 1000px) {
@@ -1466,49 +1619,54 @@ header.header .nav-item {
   .logo-block {
     padding: 15px 20px 0 5px;
   }
-  .search-list-area .box {
+  .search-list-area .box,
+  .entry-disp-area .box {
     margin: 5px 10px 20px;
     padding: 10px;
   }
-  .search-list-area .name {
+  .search-list-area .name,
+  .entry-disp-area .name {
     font-size: .8em;
   }
-  .search-list-area .status {
+  .search-list-area .status,
+  .entry-disp-area .status {
     padding-left: 0 !important;
     font-size: .8em;
   }
-  .search-list-area .pair-block {
+  .search-list-area .pair-block,
+  .entry-disp-area .pair-block {
     margin: 40px auto;
     margin-bottom: 10px;
   }
-  .search-list-area .card {
+  .search-list-area .card,
+  .entry-disp-area .card {
     width: 44%;
   }
-  .search-list-area .card .user-attr {
+  .search-list-area .card .user-attr,
+  .entry-disp-area .card .user-attr {
     padding: 5px 5px;
   }
-  .search-list-area .card .user-attr .name {
+  .search-list-area .card .user-attr .name,
+  .entry-disp-area .card .user-attr .name {
     display: inline-block;
     font-size: .8em;
-    width: 70%;
+    width: 100%;
   }
-  .search-list-area .card .user-attr .sex {
-    display: inline-block;
-    width: 25%;
-    font-size: .8em;
-  }
-  .search-list-area .card .user-attr .age {
+  .search-list-area .card .user-attr .age,
+  .entry-disp-area .card .user-attr .age {
     display: inline-block;
     font-size: .8em;
     width: 48%;
   }
-  .search-list-area .card .user-attr .current-pref {
+  .search-list-area .card .user-attr .current-pref,
+  .entry-disp-area .card .user-attr .current-pref {
     display: inline-block;
     font-size: .8em;
     width: 48%;
     text-align: center;
   }
-  .search-list-area .button {
+  .search-list-area .button,
+  .entry-disp-area .button {
     width: 100%;
   }
   .title-content {
@@ -1541,6 +1699,9 @@ header.header .nav-item {
   .profile-pic-area .basic-info-block .status {
     display: none !important;
   }
+  .profile-area .profile-title {
+    font-size: 1em;
+  }
   .profile-area .table th {
     width: 40%;
     vertical-align: middle;
@@ -1561,6 +1722,58 @@ header.header .nav-item {
   }
   .slick-slider-detail .slick-dots {
     margin-bottom: -90px;
+  }
+  .other-content .title {
+    padding: 10px 0;
+  }
+  .profile-area .profile-main-block textarea {
+    font-size: .8em;
+  }
+  .profile-area .input-table input, .profile-area .input-table select {
+    font-size: .8em;
+  }
+  .profile-area .input-table option {
+    font-size: .9em;
+  }
+  .profile-area .input-table .select select {
+    padding: 0 18px 0 3px;
+  }
+  .profile-area .input-table.table td .control label {
+    font-size: .8em;
+  }
+  .profile-area .input-table .required:before {
+    top: 30%;
+  }
+  .profile-area input[type="checkbox"] + label {
+    position: relative;
+    display: inline-block;
+    padding: 0 3px 0 30px !important;
+    cursor: pointer;
+    font-size: .8em;
+    line-height: 32px;
+    font-weight: normal;
+  }
+  .profile-area input[type="checkbox"] + label:before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+    background: #fff;
+    border: 1px solid #ccc;
+  }
+  .profile-area input[type="checkbox"]:checked + label:after {
+    position: absolute;
+    content: " ";
+    top: 3px;
+    left: 5px;
+    width: 20px;
+    height: 20px;
+    background: url("../img/icon-check-32.png");
+    background-size: contain;
+    vertical-align: middle;
   }
 }
 
@@ -2066,127 +2279,12 @@ a.button.is-large, button.button.is-large, input[type=submit].button.is-large {
  * @since 2016.12.22
  *
 **/
-.ui-datepicker {
-  width: inherit;
-  padding: .2em .2em 0;
-  display: none;
+#ui-datepicker-div {
+  z-index: 1000 !important;
 }
 
 .ui-datepicker * {
-  font-size: 20px;
   font-family: helvetica, arial, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', 'Meiryo UI', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif !important;
-}
-
-.ui-datepicker table {
-  width: 100%;
-  font-size: .9em;
-  border-collapse: collapse;
-  margin: 0 0 .4em;
-}
-
-.ui-datepicker table th, .ui-datepicker table td {
-  margin: 3px;
-}
-
-.ui-datepicker th {
-  padding: .8em .8em;
-  text-align: center;
-  font-weight: bold;
-  border: 0;
-}
-
-.ui-widget-content {
-  border: 1px solid #ddd;
-  background-color: #fff;
-  color: #808080;
-}
-
-.ui-widget-header {
-  border: 1px solid #ddd;
-  background: #808080;
-  color: #fff;
-  font-weight: bold;
-}
-
-.ui-widget.ui-widget-content {
-  border: 1px solid #c5c5c5;
-}
-
-.ui-datepicker td span, .ui-datepicker td a {
-  display: block;
-  padding: .7em;
-  padding-left: 20px;
-  padding-right: 20px;
-  text-align: center;
-  text-decoration: none;
-}
-
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
-  border: 1px solid #c5c5c5;
-  background: #f2f2f2;
-  font-weight: normal;
-  color: #454545;
-}
-
-.ui-widget-header .ui-icon {
-  background-image: url("../img/ui-icons_ffffff_256x240.png");
-}
-
-.class-sunday > .ui-state-default {
-  background: #cccccc !important;
-  color: #990000 !important;
-}
-
-.class-saturday > .ui-state-default {
-  background: #cccccc !important;
-  color: #006ebb !important;
-}
-
-.ui-datepicker-calendar th:first-child {
-  color: #990000;
-}
-
-.ui-datepicker-calendar th:last-child {
-  color: #006ebb;
-}
-
-.ui-icon-circle-triangle-w {
-  background-position: 0px 0px;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
-  margin-right: 5px;
-  vertical-align: middle;
-  background-image: url(../img/icon/ic-angle-left.png) !important;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-}
-
-.ui-icon-circle-triangle-e {
-  background-position: 0px 0px;
-  background-repeat: no-repeat !important;
-  background-size: contain !important;
-  margin-right: 5px;
-  vertical-align: middle;
-  background-image: url(../img/icon/ic-angle-right.png) !important;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-}
-
-.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span {
-  display: block;
-  position: absolute;
-  left: 50%;
-  margin-left: -13px;
-  top: 50%;
-  margin-top: -13px;
-}
-
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
-  border: 1px solid #dad55e;
-  background: #fffa90;
-  color: #777620;
 }
 
 /**
@@ -2329,6 +2427,21 @@ i.img-golf-player:before {
     height: 20px;
     line-height: 20px;
   }
+}
+
+.icon-calendar {
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: middle;
+  background: url("../img/icon/ic-calendar.png");
+  width: 40px;
+  height: 40px;
+  line-height: 30px;
+  background-color: #666;
+  border: 5px solid #666;
+  margin-left: -5px;
 }
 
 /*

@@ -322,7 +322,7 @@ table th {
 
 .block:not(:last-child), .box:not(:last-child), .content:not(:last-child), .notification:not(:last-child), .progress:not(:last-child), .title:not(:last-child),
 .subtitle:not(:last-child), .highlight:not(:last-child), .level:not(:last-child), .message:not(:last-child), .tabs:not(:last-child) {
-  /*margin-bottom: 20px;*/
+  margin-bottom: 20px;
 }
 
 .container {
@@ -6763,7 +6763,7 @@ a.panel-block:hover {
 
 .section {
   background-color: #fff;
-  /*padding: 40px 20px;*/
+  padding: 40px 20px;
 }
 
 @media screen and (min-width: 980px) {

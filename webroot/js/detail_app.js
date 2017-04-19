@@ -31,14 +31,15 @@ $(function() {
     // infinite: true, //無限スクロール
     draggable: true, //マウスドラッグでのスクロール
     swipeToSlide: true,
+    initialSlide: -1,
     responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          centerMode: true,
-          slidesToShow: 3
-        }
-      },
+      // {
+      //   breakpoint: 768,
+      //   settings: {
+      //     centerMode: true,
+      //     slidesToShow: 3
+      //   }
+      // },
       {
         breakpoint: 480,
         settings: {

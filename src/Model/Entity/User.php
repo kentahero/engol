@@ -3,7 +3,9 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 
-class Users extends Entity {
+class User extends Entity {
+
+	protected $_virtual = ['sex_name'];
 
 	protected function _getSexName() {
 
@@ -13,13 +15,5 @@ class Users extends Entity {
 		}
 
 		return '';
-	}
-
-	protected function _getCoursePrefecture() {
-		return 'ほげほげ';
-	}
-
-	protected function _getTrainingPrefecture() {
-		return 'トレーニング';
 	}
 }

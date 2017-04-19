@@ -18,26 +18,34 @@ class CompanionService extends AppService {
 	 */
 	public function findCompanions($conditions) {
 		$GroupsTable = TableRegistry::get('UserGroups');
+		$UsersTable = TableRegistry::get('Users');
+
+		//ぶら下がるユーザーの条件式を構築
+		$companionCond = ['companion_flg'=>'1','Users.deleted'=>'0'];
+		if (!empty($conditions['pref_cd']))$companionCond['prefecture_cd'] = $conditions['pref_cd'];
+		if (!empty($conditions['sex']))$companionCond['sex'] = $conditions['sex'];
+		if (!empty($conditions['age'])) {
+			$ageTable = [
+					'20'=>['lower'=>20,'upper'=>24],
+					'25'=>['lower'=>25,'upper'=>29],
+					'30'=>['lower'=>30,'upper'=>34],
+					'35'=>['lower'=>35,'upper'=>39],
+					'40'=>['lower'=>40,'upper'=>0]
+			];
+			$companionCond['display_age >='] = $ageTable[$conditions['age']]['lower'];
+			if ($ageTable[$conditions['age']]['upper']!=0)$companionCond['display_age <='] = $ageTable[$conditions['age']]['upper'];
+		}
+		$userQuery = $UsersTable->find('all')->select(['group_id'])->where($companionCond);
+
+		//グループテーブルを検索
 		$query = $GroupsTable->find('all')
-			->where(['deleted'=>'0'])
+			->where(['deleted'=>'0','id IN'=>$userQuery])
 			->contain(['Users'=> function($query) use ($conditions) {
-				$companionCond = ['companion_flg'=>'1','Users.deleted'=>'0'];
-				if (!empty($conditions['pref_cd']))$companionCond['prefecture_cd'] = $conditions['pref_cd'];
-				if (!empty($conditions['sex']))$companionCond['sex'] = $conditions['sex'];
-				if (!empty($conditions['age'])) {
-					$ageTable = [
-						'20'=>['lower'=>20,'upper'=>24],
-						'25'=>['lower'=>25,'upper'=>29],
-						'30'=>['lower'=>30,'upper'=>34],
-						'35'=>['lower'=>35,'upper'=>39],
-						'40'=>['lower'=>40,'upper'=>0]
-					];
-					$companionCond['display_age >='] = $ageTable[$conditions['age']]['lower'];
-					if ($ageTable[$conditions['age']]['upper']!=0)$companionCond['display_age <='] = $ageTable[$conditions['age']]['upper'];
-				}
-				return $query->select()->where($companionCond)->contain(['CompanionInfos','Prefectures']);
+				return $query->select()->contain(['CompanionInfos','Prefectures']);
 			}]);
 		$groups = $query->all();
+
+		//debug($groups);
 
 		return $groups;
 	}
@@ -47,8 +55,8 @@ class CompanionService extends AppService {
 	 */
 	public function getReccomend() {
 		$CompanionInfos = TableRegistry::get("Users");
-		$CompanionInfos->find('all')->order('');
-		return $CompanionInfos->all();
+		$query = $CompanionInfos->find('all')->contain(['CompanionInfos'])->order('CompanionInfos.offer_count DESC')->limit(10);
+		return $query->all();
 	}
 
 	/**

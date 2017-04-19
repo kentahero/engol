@@ -133,12 +133,7 @@
             </select>
           </span>
           <span class="select is-pulled-right">
-            <select class="" name="pref">
-              <option value='' disabled selected style='display:none;'>地域を選択</option>
-              <?php foreach($prefs as $pref) {?>
-              <option value="<?=$pref->cd?>"><?=$pref->name?></option>
-              <?php } ?>
-            </select>
+            <?php echo $this->Form->select('pref',$prefs,['empty'=>'地域を選択'])?>
           </span>
         </section>
 
@@ -193,95 +188,26 @@
     <h2 class="title-content has-text-centered">人気の<b class="strong-color-red">お相手</b>を<b class="strong-color-red">チェック</b></h2>
     <p class="sub-title has-text-centered strong-color-red">Check your partner</p>
     <div class="slick-slider mb40">
+      <?php foreach($recommend as $user) {?>
       <div class="card mrl5">
-        <a class="card-link" href="/profile/">
+        <a class="card-link" href="/profile/index/<?=$user->id?>">
           <div class="card-image">
             <figure class="image is-square">
-              <img src="./img/pic/sample01.jpg" alt="Image">
+              <?php if ($user->companion_info->image != 0) {?>
+              <img src="/img/pic/pic_<?=$user->id?>_1.jpg" alt="Image">
+              <?php } else { ?>
+              <img src="/img/pic/nophoto.png" alt="Image">
+              <?php }?>
             </figure>
           </div>
           <div class="user-attr">
-            <p class="age">38歳</p>
-            <p class="job">タレント</p>
-            <p class="score">スコア 90</p>
+            <p class="age"><?=$user->display_age?>歳</p>
+            <p class="job"><?=$user->companion_info->job?></p>
+            <p class="score">スコア <?=$user->companion_info->average_score?></p>
           </div>
         </a>
       </div>
-
-      <div class="card mrl5">
-        <a class="card-link" href="/profile/">
-          <div class="card-image">
-            <figure class="image is-square">
-              <img src="./img/pic/sample02.jpg" alt="Image">
-            </figure>
-          </div>
-          <div class="user-attr">
-            <p class="age">38歳</p>
-            <p class="job">タレント</p>
-            <p class="score">スコア 90</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="card mrl5">
-        <a class="card-link" href="/profile/">
-          <div class="card-image">
-            <figure class="image is-square">
-              <img src="./img/pic/sample03.jpg" alt="Image">
-            </figure>
-          </div>
-          <div class="user-attr">
-            <p class="age">38歳</p>
-            <p class="job">タレント</p>
-            <p class="score">スコア 90</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="card mrl5">
-        <a class="card-link" href="/profile/">
-          <div class="card-image">
-            <figure class="image is-square">
-              <img src="./img/pic/sample04.jpg" alt="Image">
-            </figure>
-          </div>
-          <div class="user-attr">
-            <p class="age">38歳</p>
-            <p class="job">タレント</p>
-            <p class="score">スコア 90</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="card mrl5">
-        <a class="card-link" href="/profile/">
-          <div class="card-image">
-            <figure class="image is-square">
-              <img src="./img/pic/sample05.jpg" alt="Image">
-            </figure>
-          </div>
-          <div class="user-attr">
-            <p class="age">38歳</p>
-            <p class="job">タレント</p>
-            <p class="score">スコア 90</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="card mrl5">
-        <a class="card-link" href="/profile/">
-          <div class="card-image">
-            <figure class="image is-square">
-              <img src="./img/pic/sample06.jpg" alt="Image">
-            </figure>
-          </div>
-          <div class="user-attr">
-            <p class="age">38歳</p>
-            <p class="job">タレント</p>
-            <p class="score">スコア 90</p>
-          </div>
-        </a>
-      </div>
+      <?php }?>
     </div>
 
     <a href="#" class="button mb20">
