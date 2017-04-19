@@ -93,58 +93,6 @@
   </section>
   <section class="search-list-area container">
     <div class="columns">
-      <div class="column is-half">
-        <div class="box">
-          <div class="title-block is-clearfix">
-            <span class="icon left">
-              <i class="ci img-ball-search"></i>
-            </span>
-            <p class="is-pulled-left name"><span class="male">Hideki</span> & <span class="female">Hiroshi</span> ペア</p>
-            <p class="is-pulled-right status">ログイン：本日</p>
-          </div>
-          <div class="pair-block">
-            <div class="card male">
-              <a class="card-link" href="/profile/">
-                <div class="card-image">
-                  <figure class="image is-4by3">
-                    <img src="/img/pic/sample03.jpg" alt="Image">
-                  </figure>
-                </div>
-                <div class="user-attr male">
-                  <p class="name">Hidekiさん</p>
-                  <p class="sex">(男)</p>
-                  <p class="age">32歳</p>
-                  <p class="current-pref">大阪府</p>
-                </div>
-              </a>
-            </div>
-            <span class="icon pair-cross">
-              <i class="ci img-cross"></i>
-            </span>
-            <div class="card female">
-              <a class="card-link" href="/profile/">
-                <div class="card-image">
-                  <figure class="image is-4by3">
-                    <img src="/img/pic/sample03.jpg" alt="Image">
-                  </figure>
-                </div>
-                <div class="user-attr female">
-                  <p class="name">Hidekiさん</p>
-                  <p class="sex">(女)</p>
-                  <p class="age">32歳</p>
-                  <p class="current-pref">大阪府</p>
-                </div>
-              </a>
-            </div>
-          </div>
-          <a href="#" class="button">
-            <span>このペアで予約する</span>
-              <span class="icon is-medium right">
-                <i class="ci img-next"></i>
-              </span>
-          </a>
-        </div>
-      </div>
       <?php
         foreach($groups as $group) {
           if (count($group->users) != 2) {
