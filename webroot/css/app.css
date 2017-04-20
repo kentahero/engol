@@ -587,24 +587,26 @@ header.header .nav-item {
   padding: 5px;
 }
 
+.slick-slider .card .user-attr p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: "";
+}
+
 .slick-slider .card .user-attr .age {
   color: #22b573;
-  display: inline-block;
   font-size: 1.2em;
-  width: 48%;
   text-align: center;
 }
 
 .slick-slider .card .user-attr .job {
   color: #22b573;
-  display: inline-block;
   font-size: 1.2em;
-  width: 48%;
+  text-align: center;
 }
 
 .slick-slider .card .user-attr .score {
   color: #22b573;
-  display: block;
   font-size: 1.2em;
   text-align: center;
 }
@@ -962,6 +964,13 @@ header.header .nav-item {
   padding: 5px 20px;
 }
 
+.search-list-area .card .user-attr p,
+.entry-disp-area .card .user-attr p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: "";
+}
+
 .search-list-area .card .user-attr.male,
 .entry-disp-area .card .user-attr.male {
   background-color: #d0ede0;
@@ -1026,6 +1035,12 @@ header.header .nav-item {
   padding: 5px 20px;
   margin-left: 25%;
   width: 50%;
+}
+
+.profile-pic-area .basic-info-block .basic-info li {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: "";
 }
 
 .profile-pic-area .basic-info-block .basic-info .name {
@@ -1128,7 +1143,6 @@ header.header .nav-item {
 }
 
 .profile-area .table td .card {
-  width: 90%;
   position: relative;
   display: block;
 }
@@ -1137,6 +1151,12 @@ header.header .nav-item {
   padding: 5px 20px;
   display: block;
   white-space: normal;
+}
+
+.profile-area .table td .card .user-attr p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: "";
 }
 
 .profile-area .table td .card .user-attr.male {
@@ -1151,12 +1171,7 @@ header.header .nav-item {
 
 .profile-area .table td .card .user-attr .name {
   display: inline-block;
-  width: 70%;
-}
-
-.profile-area .table td .card .user-attr .sex {
-  display: inline-block;
-  width: 25%;
+  width: 100%;
 }
 
 .profile-area .table td .card .user-attr .age {
@@ -1225,6 +1240,8 @@ header.header .nav-item {
 .profile-area .input-table.table td {
   padding-left: 15px;
   position: relative;
+  line-height: 32px;
+  height: 32px;
 }
 
 .profile-area .input-table.table td .control label {
@@ -1237,7 +1254,7 @@ header.header .nav-item {
   content: '*';
   font-size: 1.5em;
   color: #c42c30;
-  top: 25%;
+  top: 33%;
   left: 0;
 }
 
@@ -1420,6 +1437,19 @@ header.header .nav-item {
   color: #c42c30;
   font-size: .8em;
   display: block;
+}
+
+.confirm-msg-area {
+  color: #006837;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.entry-complete-area {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 @media screen and (max-width: 1000px) {
@@ -1775,6 +1805,9 @@ header.header .nav-item {
     background-size: contain;
     vertical-align: middle;
   }
+  .entry-complete-area {
+    text-align: left;
+  }
 }
 
 @media screen and (max-width: 320px) {
@@ -1882,11 +1915,9 @@ header.header .nav-item {
   }
   .slick-slider .card .user-attr .age {
     font-size: .7em;
-    width: 40%;
   }
   .slick-slider .card .user-attr .job {
     font-size: .7em;
-    width: 55%;
   }
   .slick-slider .card .user-attr .score {
     font-size: .7em;
