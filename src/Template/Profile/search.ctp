@@ -100,7 +100,7 @@
             <span class="icon left">
               <i class="ci img-ball-search"></i>
             </span>
-            <p class="is-pulled-left name"><span class="male"><?=$this->Text->truncate($group->users[0]->nickname,9)?></span> & <span class="female"><?=$this->Text->truncate($group->users[1]->nickname,9)?></span> ペア</p>
+            <p class="is-pulled-left name" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><span class="male"><?=$group->users[0]->nickname?></span> & <span class="female"><?=$group->users[1]->nickname?></span> ペア</p>
             <!-- <p class="is-pulled-right status">ログイン：本日</p> -->
           </div>
           <div class="pair-block">

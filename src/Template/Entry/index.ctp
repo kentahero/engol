@@ -1,3 +1,9 @@
+<?php
+  $this->loadHelper('Form', [
+    		'templates' => 'app_form',
+    	]);
+?>
+
 <script type="text/javascript">
   $(function() {
     $('.calendar-picker').datepicker({
@@ -67,7 +73,7 @@
                   <?php }?>
                 </figure>
               </div>
-              <div class="user-attr <?php echo $group->users[0]->sex==1?'male':'female'?>">
+              <div class="user-attr <?=$group->users[0]->sex_class?>">
                 <p class="name"><?=$this->Text->truncate($group->users[0]->nickname,11)?></p>
                 <p class="age"><?=$group->users[0]->display_age?>歳(<?=$group->users[0]->sex_name?>)</p>
                 <p class="current-pref"><?=$group->users[0]->prefecture->name?></p>
@@ -88,7 +94,7 @@
                   <?php }?>
                 </figure>
               </div>
-              <div class="user-attr <?php echo $group->users[1]->sex==1?'male':'female'?>">
+              <div class="user-attr <?=$group->users[1]->sex_class?>">
                 <p class="name"><?=$this->Text->truncate($group->users[1]->nickname,11)?></p>
                 <p class="age"><?=$group->users[1]->display_age?>歳(<?=$group->users[1]->sex_name?>)</p>
                 <p class="current-pref"><?=$group->users[1]->prefecture->name?></p>
@@ -100,14 +106,14 @@
     </div>
   </section>
   <section class="container">
-    <a href="#" class="button" style="width:90% ">
+    <a href="#" class="button" style="width:95% ">
       <span style="font-size:0.9em">既に会員登録されている方はコチラ</span>
       <span class="icon is-medium right">
         <i class="ci img-next"></i>
       </span>
     </a>
 
-    <?php echo $this->Form->create(null,['valueSources'=>'data','type'=>'post']);?>
+    <?php echo $this->Form->create(null,['valueSources'=>'data','type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm']]);?>
     <div class="profile-area">
       <section class="profile-main-block">
         <div class="error-msg-area mb10">
@@ -125,7 +131,15 @@
               <th>Eメール</th>
               <td class="required">
                 <p class="control">
-                  <input class="input error" type="text" placeholder="" value="Hideki">
+                  <?php echo $this->Form->text('email',['class'=>'input','placeholder'=>'info@engol.jp']);?>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th>Eメール確認</th>
+              <td class="required">
+                <p class="control">
+                  <?php echo $this->Form->text('email_confirm',['class'=>'input','placeholder'=>'info@engol.jp']);?>
                 </p>
               </td>
             </tr>
@@ -134,6 +148,12 @@
               <td>
                 <span class="error-msg">選択必須項目です</span>
                 <p class="control">
+                  <?php echo $this->Form->radio('email_kind',
+                  	[
+                  		['value'=>'1','text'=>'携帯'],
+                  		['value'=>'2','text'=>'PC']
+                  	]);?>
+                  <!--
                   <label class="radio bvc">
                     <input type="radio" name="mail_kind">
                     携帯
@@ -142,6 +162,7 @@
                     <input type="radio" name="mail_kind">
                     PC
                   </label>
+                  -->
                 </p>
               </td>
             </tr>
@@ -149,39 +170,47 @@
               <th>パスワード</th>
               <td class="required">
                 <p class="control">
-                  <input class="input" type="password" placeholder="" value="password">
+                  <?php echo $this->Form->password('password',['class'=>'input']);?>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>姓</th>
+              <th>パスワード確認</th>
               <td class="required">
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="東谷">
+                  <?php echo $this->Form->password('password_confirm',['class'=>'input']);?>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>名</th>
+              <th>お名前(姓)</th>
               <td class="required">
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="紀之">
+                  <?php echo $this->Form->text('first_name',['class'=>'input','placeholder'=>'田中']);?>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>姓（カナ）</th>
+              <th>お名前(名)</th>
               <td class="required">
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="ヒガシタニ">
+                  <?php echo $this->Form->text('last_name',['class'=>'input','placeholder'=>'太郎']);?>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>名（カナ）</th>
+              <th>お名前（カナ性）</th>
               <td class="required">
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="ノリユキ">
+                  <?php echo $this->Form->text('first_kana',['class'=>'input','placeholder'=>'タナカ']);?>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <th>お名前（カナ名）</th>
+              <td class="required">
+                <p class="control">
+                  <?php echo $this->Form->text('last_kana',['class'=>'input','placeholder'=>'タロウ']);?>
                 </p>
               </td>
             </tr>
@@ -189,7 +218,7 @@
               <th>ニックネーム</th>
               <td class="required">
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="Noriyuki">
+                  <?php echo $this->Form->text('nickname',['class'=>'input','placeholder'=>'たろうくん']);?>
                 </p>
               </td>
             </tr>
@@ -240,7 +269,6 @@
               </th>
               <td class="required">
                 <p class="control bvc date">
-                  <!-- <input class="input" type="text" placeholder="" value="ノリユキ"> -->
                   <span class="select">
                     <select class="year">
                     <option value='' disabled selected style='display:none;'>年</option>
@@ -272,7 +300,7 @@
               <th>郵便番号</th>
               <td>
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="5431234">
+                  <?php echo $this->Form->text('postal',['class'=>'input','placeholder'=>'5634445']);?>
                 </p>
               </td>
             </tr>
@@ -281,11 +309,7 @@
               <td>
                 <p class="control">
                   <span class="select">
-                    <select>
-                    <option value='' disabled selected style='display:none;'>地域</option>
-                    <option value="">北海道</option>
-                    <option value="">東北</option>
-                    </select>
+                    <?php echo $this->Form->select('prefecture_cd',$prefs,['empty'=>'都道府県'])?>
                   </span>
                 </p>
               </td>
@@ -294,31 +318,24 @@
               <th>市区町村</th>
               <td>
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="大阪市中央区天満橋">
+                  <span class="select">
+                  </select>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>住所１</th>
+              <th>町名番地</th>
               <td>
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="１丁目１０番２０号">
+                  <?php echo $this->Form->text('address1',['class'=>'input','placeholder'=>'1丁目2-3']);?>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>住所２</th>
+              <th>建物名・部屋番号</th>
               <td>
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="プレサンス５０１号室">
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <th>建物名</th>
-              <td>
-                <p class="control">
-                  <input class="input" type="text" placeholder="" value="プレサンス５０１号室">
+                  <?php echo $this->Form->text('address2',['class'=>'input','placeholder'=>'天神橋マンション201']);?>
                 </p>
               </td>
             </tr>
@@ -326,7 +343,7 @@
               <th>電話番号</th>
               <td>
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="090-1234-5678">
+                  <?php echo $this->Form->text('tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
                 </p>
               </td>
             </tr>

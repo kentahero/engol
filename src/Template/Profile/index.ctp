@@ -45,7 +45,7 @@
     </div>
     <section class="basic-info-block mb20 <?=$user->sex_class?>">
       <div class="is-clearfix">
-        <ul class="is-pulled-left basic-info <?=$user->sex_class?>>
+        <ul class="is-pulled-left basic-info <?=$user->sex_class?>">
           <li class="name"><?=$user->nickname?>さん</li>
           <li class="age"><?=$user->display_age?>歳(<?=$user->sex_name?>)</li>
           <li class="current-pref"><?=$user->prefecture->name?></li>
@@ -106,6 +106,7 @@
               <th>設定料金</th>
               <td><?=number_format($user->companion_info->amount)?>円</td>
             </tr>
+            <?php if ($user->pair) {?>
             <tr>
               <th>ペアリング</th>
               <td>
@@ -123,7 +124,7 @@
                         </figure>
                       </div>
                       <div class="user-attr <?=$user->pair->sex_class?>">
-                        <p class="name" style="width:100%"><?=$this->Text->truncate($user->pair->nickname,10)?></p>
+                        <p class="name"><?=$this->Text->truncate($user->pair->nickname,10)?></p>
                         <p class="age"><?=$user->pair->display_age?>歳(<?=$user->pair->sex_name?>)</p>
                         <p class="current-pref"><?=$user->pair->prefecture->name?></p>
                       </div>
@@ -132,6 +133,7 @@
                 </div>
               </td>
             </tr>
+            <?php }?>
           </tbody>
         </table>
       </section>
