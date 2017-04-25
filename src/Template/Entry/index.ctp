@@ -1,17 +1,17 @@
 <?php
   $this->loadHelper('Form', [
-    		'templates' => 'app_form',
+    		'templates' => 'form-templates',
     	]);
 ?>
-
+<?=$this->Html->script('/js/lib/jquery-ui-1.12.1/datepicker-ja',['block'=>'script']);?>
 <script type="text/javascript">
-  $(function() {
+  $(document).ready(function() {
     $('.calendar-picker').datepicker({
         dateFormat : "yy/mm/dd"
         ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
         ,showOn: "button"
         ,buttonImageOnly : true
-        ,buttonImage : "./img/ic-calendar-32.png"
+        ,buttonImage : "/img/ic-calendar-32.png"
         ,beforeShow : function(input,inst){
           //開く前に日付を上書き
           var year = $(this).parent().find(".year").val();
@@ -34,8 +34,8 @@
     <section class="bg-green profile-title-block">
       <ul class="brcb">
         <li class="strong"><a href="/">トップ</a></li>
-        <li class="strong"><a href="/profile/search">プロフィール検索</a></li>
-        <li><a href="">Hidekiさん</a></li>
+        <li class="strong"><a href="/profile/search">オファー申し込み</a></li>
+        <!-- <li><a href="">入力</a></li> -->
       </ul>
       <!--
       <a class="bvc" href="./index.html">
@@ -53,72 +53,25 @@
       </p>
     </section> -->
     <div class="entry-disp-area">
-      <div class="box">
-        <div class="title-block is-clearfix">
-          <span class="icon left">
-            <i class="ci img-ball-search"></i>
-          </span>
-          <p class="is-pulled-left name"><span class="male"><?=$this->Text->truncate($group->users[0]->nickname,9)?></span> & <span class="female"><?=$this->Text->truncate($group->users[1]->nickname,9)?></span> ペア</p>
-          <!--<p class="is-pulled-right status">ログイン：本日</p>-->
-        </div>
-        <div class="pair-block">
-          <div class="card">
-            <a class="card-link" href="/profile/index/<?=$group->users[0]->id?>">
-              <div class="card-image">
-                <figure class="image is-4by3">
-                  <?php if($group->users[0]->companion_info->image != 0) {?>
-                  <img src="/img/pic/pic_<?=$group->users[0]->id?>_1.jpg" alt="Image">
-                  <?php }else{?>
-                  <img src="/img/pic/nophoto.png" alt="Image">
-                  <?php }?>
-                </figure>
-              </div>
-              <div class="user-attr <?=$group->users[0]->sex_class?>">
-                <p class="name"><?=$this->Text->truncate($group->users[0]->nickname,11)?></p>
-                <p class="age"><?=$group->users[0]->display_age?>歳(<?=$group->users[0]->sex_name?>)</p>
-                <p class="current-pref"><?=$group->users[0]->prefecture->name?></p>
-              </div>
-            </a>
-          </div>
-          <span class="icon pair-cross">
-            <i class="ci img-cross"></i>
-          </span>
-          <div class="card">
-            <a class="card-link" href="/profile/index/<?=$group->users[1]->id?>">
-              <div class="card-image">
-                <figure class="image is-4by3">
-                  <?php if($group->users[1]->companion_info->image != 0) {?>
-                  <img src="/img/pic/pic_<?=$group->users[1]->id?>_1.jpg" alt="Image">
-                  <?php }else{?>
-                  <img src="/img/pic/nophoto.png" alt="Image">
-                  <?php }?>
-                </figure>
-              </div>
-              <div class="user-attr <?=$group->users[1]->sex_class?>">
-                <p class="name"><?=$this->Text->truncate($group->users[1]->nickname,11)?></p>
-                <p class="age"><?=$group->users[1]->display_age?>歳(<?=$group->users[1]->sex_name?>)</p>
-                <p class="current-pref"><?=$group->users[1]->prefecture->name?></p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
+      <?= $this->element('profile')?>
     </div>
   </section>
   <section class="container">
-    <a href="#" class="button" style="width:95% ">
+    <a href="#" class="button mb30" style="width:95%; max-width:1024px; ">
       <span style="font-size:0.9em">既に会員登録されている方はコチラ</span>
-      <span class="icon is-medium right">
+      <span class="icon is-medium right" style="vertical-align: baseline">
         <i class="ci img-next"></i>
       </span>
     </a>
-
-    <?php echo $this->Form->create(null,['valueSources'=>'data','type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm']]);?>
+    <?php echo $this->Form->create($user,['type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm']]);?>
+    <?= $this->Form->hidden('group_id')?>
     <div class="profile-area">
       <section class="profile-main-block">
+      　<?php if ($this->Form->errors) { ?>
         <div class="error-msg-area mb10">
           入力項目にエラーがあります
         </div>
+        <?php }?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -132,6 +85,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('email',['class'=>'input','placeholder'=>'info@engol.jp']);?>
+                  <?php echo $this->Form->error('email')?>
                 </p>
               </td>
             </tr>
@@ -140,29 +94,16 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('email_confirm',['class'=>'input','placeholder'=>'info@engol.jp']);?>
+                  <?php echo $this->Form->error('email_confirm')?>
                 </p>
               </td>
             </tr>
             <tr>
               <th>メール種別</th>
               <td>
-                <span class="error-msg">選択必須項目です</span>
                 <p class="control">
-                  <?php echo $this->Form->radio('email_kind',
-                  	[
-                  		['value'=>'1','text'=>'携帯'],
-                  		['value'=>'2','text'=>'PC']
-                  	]);?>
-                  <!--
-                  <label class="radio bvc">
-                    <input type="radio" name="mail_kind">
-                    携帯
-                  </label>
-                  <label class="radio bvc">
-                    <input type="radio" name="mail_kind">
-                    PC
-                  </label>
-                  -->
+                  <?php echo $this->Form->radio('email_kind',[['value'=>'1','text'=>' 携帯'],['value'=>'2','text'=>' PC']]);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -171,6 +112,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->password('password',['class'=>'input']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -179,6 +121,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->password('password_confirm',['class'=>'input']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -187,6 +130,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('first_name',['class'=>'input','placeholder'=>'田中']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -195,6 +139,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('last_name',['class'=>'input','placeholder'=>'太郎']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -203,6 +148,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('first_kana',['class'=>'input','placeholder'=>'タナカ']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -211,6 +157,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('last_kana',['class'=>'input','placeholder'=>'タロウ']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -219,6 +166,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('nickname',['class'=>'input','placeholder'=>'たろうくん']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -226,14 +174,8 @@
               <th>性別</th>
               <td class="required">
                 <p class="control">
-                  <label class="radio">
-                    <input type="radio" name="sex">
-                    男性
-                  </label>
-                  <label class="radio">
-                    <input type="radio" name="sex">
-                    女性
-                  </label>
+                  <?php echo $this->Form->radio('sex',[['value'=>'1','text'=>' 男性'],['value'=>'2','text'=>' 女性']]);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -248,7 +190,7 @@
                         ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
                         ,showOn: "button"
                         ,buttonImageOnly : true
-                        ,buttonImage : "./img/ic-calendar-20.png"
+                        ,buttonImage : "/img/ic-calendar-20.png"
                         ,beforeShow : function(input,inst){
                           //開く前に日付を上書き
                           var year = $(".birthday-year").val();
@@ -301,21 +243,23 @@
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('postal',['class'=>'input','placeholder'=>'5634445']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>都道府県</th>
+              <th>住所(都道府県)</th>
               <td>
                 <p class="control">
                   <span class="select">
                     <?php echo $this->Form->select('prefecture_cd',$prefs,['empty'=>'都道府県'])?>
+                    <?php echo $this->Form->error('mail_kind')?>
                   </span>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>市区町村</th>
+              <th>住所(市区町村)</th>
               <td>
                 <p class="control">
                   <span class="select">
@@ -324,18 +268,20 @@
               </td>
             </tr>
             <tr>
-              <th>町名番地</th>
+              <th>住所(町名番地)</th>
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('address1',['class'=>'input','placeholder'=>'1丁目2-3']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
             <tr>
-              <th>建物名・部屋番号</th>
+              <th>住所(建物名・部屋番号)</th>
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('address2',['class'=>'input','placeholder'=>'天神橋マンション201']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -344,6 +290,7 @@
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
+                  <?php echo $this->Form->error('mail_kind')?>
                 </p>
               </td>
             </tr>
@@ -359,7 +306,7 @@
                         ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
                         ,showOn: "button"
                         ,buttonImageOnly : true
-                        ,buttonImage : "./img/ic-calendar-25.png"
+                        ,buttonImage : "/img/ic-calendar-25.png"
                         ,beforeShow : function(input,inst){
                           //開く前に日付を上書き
                           var year = $(".preferred-date1-year").val();
@@ -421,7 +368,7 @@
                         ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
                         ,showOn: "button"
                         ,buttonImageOnly : true
-                        ,buttonImage : "./img/ic-calendar-25.png"
+                        ,buttonImage : "/img/ic-calendar-25.png"
                         ,beforeShow : function(input,inst){
                           //開く前に日付を上書き
                           var year = $(".preferred-date2-year").val();
@@ -483,7 +430,7 @@
                         ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
                         ,showOn: "button"
                         ,buttonImageOnly : true
-                        ,buttonImage : "./img/ic-calendar-25.png"
+                        ,buttonImage : "/img/ic-calendar-25.png"
                         ,beforeShow : function(input,inst){
                           //開く前に日付を上書き
                           var year = $(".preferred-date3-year").val();
@@ -561,7 +508,8 @@
               <th>ゴルフ場名</th>
               <td>
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="茨木カントリークラブ">
+                  <?php echo $this->Form->text('course_name',['class'=>'input','placeholder'=>'茨木カントリークラブ']);?>
+                  <?php echo $this->Form->error('course_name')?>
                 </p>
               </td>
             </tr>
@@ -583,7 +531,8 @@
               <th>練習場名</th>
               <td>
                 <p class="control">
-                  <input class="input" type="text" placeholder="" value="茨木ゴルフ練習場">
+                  <?php echo $this->Form->text('training_name',['class'=>'input','placeholder'=>'茨木ゴルフ練習場']);?>
+                  <?php echo $this->Form->error('training_name')?>
                 </p>
               </td>
             </tr>
@@ -594,8 +543,7 @@
               </span>
               <h2 class="profile-title male bvc">お相手に一言メッセージ</h2>
               <p class="control">
-              <textarea class="textarea" placeholder="Textarea">
-              </textarea>
+              <textarea class="textarea" placeholder="よろしくお願いいたします"></textarea>
               </p>
               </td>
             </tr>
@@ -617,12 +565,12 @@
           </p>
         </div>
 
-        <a href="#" class="button">
+        <button type="submit" class="button">
           <span>入力内容を確認する</span>
           <span class="icon is-medium right">
               <i class="ci img-next"></i>
           </span>
-        </a>
+        </button>
       </section>
       <?php $this->Form->end()?>
     </div>

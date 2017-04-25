@@ -2,6 +2,7 @@
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\Validation\Validator;
 
 class UsersTable extends Table {
 
@@ -16,7 +17,24 @@ class UsersTable extends Table {
 			$this->belongsTo('Cities')
 			->setForeignKey('city_cd');
 			//->setJoinType('INNER');
+	}
 
+	/**
+	 *
+	 * @param Validator $validator
+	 */
+	public function validationDefault(Validator $validator) {
+
+		return $validator
+			//->requirePresence('email')
+			->notEmpty('email','Eメールを入力して下さい');
+		/*
+			->add('email',[
+				'email'=>[
+					'message'=>	'Eメールをアドレスの形式で入力して下さい'
+				]
+			]);
+		*/
 	}
 
 }

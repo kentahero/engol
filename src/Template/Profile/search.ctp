@@ -84,6 +84,13 @@
   </section>
   <section class="search-list-area container">
       <?php
+        if (count($groups) == 0) {
+      ?>
+　　　<div>お探しの条件ではお相手は見つかりませんでした</div>
+      <?php
+        }
+      ?>
+      <?php
         $i=0;
         foreach($groups as $group) {
           if (count($group->users) != 2) {

@@ -24,6 +24,9 @@ class EntryController extends AppController
 	public function index() {
 
 		$groupId = $this->request->getQuery('group_id');
+		if (!$groupId) {
+			throw new NotFoundException();
+		}
 
 		//都道府県リストの生成
 		$tablePref = TableRegistry::get('Prefectures');
@@ -37,15 +40,51 @@ class EntryController extends AppController
 			//ペア出ない場合は404
 			throw new NotFoundException();
 		}
+		$tableUser = TableRegistry::get('Users');
+		$user = $tableUser->newEntity();
+		//セッションからデータ読み込み
+		$formData = $this->request->session()->read('form_data');
+		if ($formData) {
+			$user = $tableUser->patchEntity($user, $formData);
+		}
+		$user->group_id = $groupId;
+		$this->set('user',$user);
 		$this->set('group',$group);
-
 	}
 
 	public function confirm() {
 
+		$data = $this->request->getData();
+		//セッションにデータ書き込み
+		$this->request->session()->write('form_data',$data);
+
+		//バリデーション実行
+		$tableUser = TableRegistry::get('Users');
+		$user = $tableUser->newEntity($data);
+		if ($user->errors()) {
+			$this->set('user',$user);
+			$this->render('index');
+		}
+		$this->set('data',$user);
+
+		//都道府県リストの生成
+		$tablePref = TableRegistry::get('Prefectures');
+		$prefs = $tablePref->find('list');
+		$this->set('prefs',$prefs);
+
+		$groupId = $data['group_id'];
+		//選択ペアの取得
+		$service = new CompanionService();
+		$group = $service->getCompanionPairGroup($groupId);
+		if (count($group->users) != 2) {
+			//ペア出ない場合は404
+			throw new NotFoundException();
+		}
+
+		$this->set('group',$group);
 	}
 
-	public function finish() {
+	public function complete() {
 
 	}
 }
