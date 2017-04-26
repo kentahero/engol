@@ -13,7 +13,7 @@
               <span class="bvc" style="text-align:left"></span>
             </dt>
             <dd class="bvc">
-              <img src="./img/reserve_step_01.png" alt="" />
+              <img src="/img/reserve_step_01.png" alt="" />
             </dd>
           </dl>
           <dl>
@@ -23,7 +23,7 @@
               <span class="bvc" style="text-align:left"></span>
             </dt>
             <dd class="bvc">
-              <img src="./img/reserve_step_02.png" alt="" />
+              <img src="/img/reserve_step_02.png" alt="" />
             </dd>
           </dl>
           <dl>
@@ -33,7 +33,7 @@
               <span class="bvc" style="text-align:left"></span>
             </dt>
             <dd class="bvc">
-              <img src="./img/reserve_step_03.png" alt="" />
+              <img src="/img/reserve_step_03.png" alt="" />
             </dd>
           </dl>
         </div>
@@ -51,7 +51,7 @@
               <span class="bvc" style="text-align:left">クレジットカードにてお支払い頂きます</span>
             </dt>
             <dd class="bvc">
-              <img src="./img/reserve_step_04.png" alt="" />
+              <img src="/img/reserve_step_04.png" alt="" />
             </dd>
           </dl>
           <dl>
@@ -61,7 +61,7 @@
               <span class="bvc" style="text-align:left">ご自身でお相手の分もゴルフ場をご予約下さい</span>
             </dt>
             <dd class="bvc">
-              <img src="./img/reserve_step_02.png" alt="" />
+              <img src="/img/reserve_step_02.png" alt="" />
             </dd>
           </dl>
           <dl>
@@ -71,7 +71,7 @@
               <span class="bvc" style="text-align:left"></span>
             </dt>
             <dd class="bvc">
-              <img src="./img/reserve_step_06.png" alt="" />
+              <img src="/img/reserve_step_06.png" alt="" />
             </dd>
           </dl>
         </div>
@@ -81,7 +81,7 @@
   <section class="container">
     <div class="conv-button-block">
       <a href="#" class="conv-button">
-        <img src="./img/btn_conversion.png" class="img1" alt="お相手を探す" />
+        <img src="/img/btn_conversion.png" class="img1" alt="お相手を探す" />
       </a>
     </div>
   </section>
