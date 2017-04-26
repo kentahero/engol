@@ -5,7 +5,7 @@
   </section>
   <section class="other-area">
     <ul>
-      <li><a href="#">ご利用の流れ</a></li>
+      <li><a href="/pages/use">ご利用の流れ</a></li>
       <li><a href="#">料金について</a></li>
       <li><a href="#">ログイン</a></li>
     </ul>
