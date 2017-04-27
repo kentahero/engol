@@ -22,15 +22,21 @@ class TopController extends AppController
 
 	public function index() {
 
+		//成約数の取得
+		$tableResv = TableRegistry::get('Reservations');
+		$count = $tableResv->find('all')->count();
+		$this->set('count',$count);
+
+		//都道府県データの取得
 		$tablePref = TableRegistry::get('Prefectures');
 		$prefs = $tablePref->find('list');
 		$this->set('prefs',$prefs);
 
+		//レコメンドデータの取得
 		$service = new CompanionService();
 		$recommend = $service->getReccomend();
 		$this->set('recommend',$recommend);
 
-
-		$this->set('title','ゴルフのお相手を探すならエンゴル');
+		$this->assign('title','ゴルフのお相手を探すならエンゴル');
 	}
 }

@@ -6,7 +6,7 @@
     </h1>
     <div class="conv-button-block">
       <a href="/profile/search" class="conv-button">
-        <img src="./img/btn_conversion.png" class="img1" alt="検索してから予約する" />
+        <img src="./img/btn_conversion.png" class="img1" alt="検索してからオファーする" />
       </a>
     </div>
   </section>
@@ -17,7 +17,7 @@
     </div>
     <div class="bvc round-count-block">
       <i class="ci img-golf-cup"></i>
-      <span class="ronund-count">9,999,999</span>
+      <span class="ronund-count"><?=number_format($count)?></span>
     </div>
   </section>
   <section class="sub-visual">
@@ -26,7 +26,7 @@
   </section>
   <div class="bg-green">
     <section class="container pb20">
-      <h2 class="title-content has-text-centered"><b class="strong-color-red">3 Step</b>で<b>予約</b>ができる！</h2>
+      <h2 class="title-content has-text-centered"><b class="strong-color-red">3 Step</b>で<b>オファー</b>ができる！</h2>
       <p class="sub-title has-text-centered strong-color-red">Reserve in 3 Steps</p>
       <div class="reserve-description">
         <div class="float-inner">
@@ -68,7 +68,7 @@
     <div class="ptb10">
       <div class="conv-button-block">
         <a href="/profile/search" class="conv-button mb20">
-          <img src="/img/btn_conversion.png" alt="検索してから予約する" />
+          <img src="/img/btn_conversion.png" alt="検索してからオファーする" />
         </a>
       </div>
     </div>
@@ -146,7 +146,7 @@
 
         <section class="container">
           <button class="button">
-            <span>この条件で予約する</span>
+            <span>この条件で検索する</span>
             <span class="icon is-medium right">
               <i class="ci img-search"></i>
             </span>
@@ -218,7 +218,7 @@
     </a>
     <div class="conv-button-block">
       <a href="/profile/search" class="conv-button">
-        <img src="/img/btn_conversion.png" class="img1" alt="検索してから予約する" />
+        <img src="/img/btn_conversion.png" class="img1" alt="検索してからオファーする" />
       </a>
     </div>
   </section>
