@@ -9,14 +9,17 @@
         </h1>
       </div>
       <div class="nav-right has-text-right wid-per50">
-         <div class="nav-item">
-          <i class="ci img-user-out"></i>
-          <span class="ic-char">ログイン</span>
-        </div>
+        <?php if (isset($member)) {?>
         <a class="nav-item nav-link" href="../index.html">
           <i class="ci img-logout"></i>
-          <span class="ic-char"></span>
+          <span class="ic-char">ようこそ<?=$member->nickname?>さん</span>
         </a>
+        <?php } else { ?>
+        <a class="nav-item nav-link" href="/member/login">
+          <i class="ci img-user-out"></i>
+          <span class="ic-char">ログイン</span>
+        </a>
+        <?php } ?>
       </div>
     </div>
   </div>
