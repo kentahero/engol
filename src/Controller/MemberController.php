@@ -17,7 +17,7 @@ namespace App\Controller;
 use Cake\ORM\TableRegistry;
 use App\Service\CompanionService;
 
-class TopController extends AppController
+class MemberController extends AppController
 {
 
 	public function index() {
@@ -38,5 +38,26 @@ class TopController extends AppController
 		$this->set('recommend',$recommend);
 
 		$this->set('title','ゴルフのお相手を探すならエンゴル');
+	}
+
+	public function login() {
+
+		if ($this->request->is('post')) {
+			$email = $this->request->getData('email');
+			$password = $this->request->getData('password');
+
+			$tableUser = TableRegistry::get('Users');
+			$member = $tableUser->find('all')->where(['email'=>$email,'password'=>$password])->first();
+			if ($member) {
+				$this->request->session()->write('member',$member);
+				$this->redirect('/');
+			} else {
+
+			}
+		}
+	}
+
+	public function forgot() {
+
 	}
 }

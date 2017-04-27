@@ -57,12 +57,14 @@
     </div>
   </section>
   <section class="container">
-    <a href="#" class="button mb30" style="width:95%; max-width:1024px; ">
+    <?php if (!isset($member)) { ?>
+    <a href="/member/login" class="button mb30" style="width:95%; max-width:1024px; ">
       <span style="font-size:0.9em">既に会員登録されている方はコチラ</span>
       <span class="icon is-medium right" style="vertical-align: baseline">
         <i class="ci img-next"></i>
       </span>
     </a>
+    <?php } ?>
     <?php echo $this->Form->create($user,['type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm']]);?>
     <?= $this->Form->hidden('group_id')?>
     <div class="profile-area">
@@ -80,6 +82,7 @@
         </div>
         <table class="table input-table mb50">
           <tbody>
+            <?php if (!isset($member)) { ?>
             <tr>
               <th>Eメール</th>
               <td class="required">
@@ -294,7 +297,7 @@
                 </p>
               </td>
             </tr>
-
+            <?php } ?>
             <tr>
               <th>
                 希望日付1
