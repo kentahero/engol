@@ -35,8 +35,8 @@
               <th>生年月日</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->password('password',['class'=>'input']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->text('birth',['class'=>'input','placeholder'=>'19800704']);?>
+                  <?php echo $this->Form->error('birth')?>
                 </p>
               </td>
             </tr>

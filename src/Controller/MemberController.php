@@ -22,22 +22,13 @@ class MemberController extends AppController
 
 	public function index() {
 
-		//成約数の取得
-		$tableResv = TableRegistry::get('Reservations');
-		$count = $tableResv->find('all')->count();
-		$this->set('count',$count + COUNTER_ADD);
+		$member = $this->request->session()->read('member');
 
-		//都道府県データの取得
-		$tablePref = TableRegistry::get('Prefectures');
-		$prefs = $tablePref->find('list');
-		$this->set('prefs',$prefs);
+		if ($member) {
 
-		//レコメンドデータの取得
-		$service = new CompanionService();
-		$recommend = $service->getReccomend();
-		$this->set('recommend',$recommend);
-
-		$this->set('title','ゴルフのお相手を探すならエンゴル');
+		} else {
+			$this->redirect('/member/login');
+		}
 	}
 
 	public function login() {
@@ -50,6 +41,14 @@ class MemberController extends AppController
 			$member = $tableUser->find('all')->where(['email'=>$email,'password'=>$password])->first();
 			if ($member) {
 				$this->request->session()->write('member',$member);
+
+				if ($member->companion_flg == '1') {
+					//登録ゴルファーの場合
+
+				} else {
+					//申し込み者の場合
+
+				}
 				$this->redirect('/');
 			} else {
 
@@ -58,6 +57,7 @@ class MemberController extends AppController
 	}
 
 	public function forgot() {
-
+		$email = $this->request->getData('email');
+		$birth = $this->request->getData('birth');
 	}
 }
