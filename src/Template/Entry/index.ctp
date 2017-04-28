@@ -69,7 +69,7 @@
     <?= $this->Form->hidden('group_id')?>
     <div class="profile-area">
       <section class="profile-main-block">
-      　<?php if ($this->Form->errors) { ?>
+      　<?php if ($this->Form->error) { ?>
         <div class="error-msg-area mb10">
           入力項目にエラーがあります
         </div>
@@ -106,7 +106,7 @@
               <td>
                 <p class="control">
                   <?php echo $this->Form->radio('email_kind',[['value'=>'1','text'=>' 携帯'],['value'=>'2','text'=>' PC']]);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('email_kind')?>
                 </p>
               </td>
             </tr>
@@ -115,7 +115,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->password('password',['class'=>'input']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('password')?>
                 </p>
               </td>
             </tr>
@@ -124,7 +124,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->password('password_confirm',['class'=>'input']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('password_confirm')?>
                 </p>
               </td>
             </tr>
@@ -133,7 +133,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('first_name',['class'=>'input','placeholder'=>'田中']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('first_name')?>
                 </p>
               </td>
             </tr>
@@ -142,7 +142,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('last_name',['class'=>'input','placeholder'=>'太郎']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('last_name')?>
                 </p>
               </td>
             </tr>
@@ -151,7 +151,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('first_kana',['class'=>'input','placeholder'=>'タナカ']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('first_kana')?>
                 </p>
               </td>
             </tr>
@@ -160,7 +160,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('last_kana',['class'=>'input','placeholder'=>'タロウ']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('last_kana')?>
                 </p>
               </td>
             </tr>
@@ -169,7 +169,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('nickname',['class'=>'input','placeholder'=>'たろうくん']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('nickname')?>
                 </p>
               </td>
             </tr>
@@ -178,7 +178,7 @@
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->radio('sex',[['value'=>'1','text'=>' 男性'],['value'=>'2','text'=>' 女性']]);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('sex')?>
                 </p>
               </td>
             </tr>
@@ -246,7 +246,7 @@
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('postal',['class'=>'input','placeholder'=>'5634445']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('postal')?>
                 </p>
               </td>
             </tr>
@@ -256,7 +256,7 @@
                 <p class="control">
                   <span class="select">
                     <?php echo $this->Form->select('prefecture_cd',$prefs,['empty'=>'都道府県'])?>
-                    <?php echo $this->Form->error('mail_kind')?>
+                    <?php echo $this->Form->error('prefecture_cd')?>
                   </span>
                 </p>
               </td>
@@ -275,7 +275,7 @@
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('address1',['class'=>'input','placeholder'=>'1丁目2-3']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('address1')?>
                 </p>
               </td>
             </tr>
@@ -284,7 +284,7 @@
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('address2',['class'=>'input','placeholder'=>'天神橋マンション201']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('address2')?>
                 </p>
               </td>
             </tr>
@@ -293,7 +293,7 @@
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
-                  <?php echo $this->Form->error('mail_kind')?>
+                  <?php echo $this->Form->error('tel')?>
                 </p>
               </td>
             </tr>

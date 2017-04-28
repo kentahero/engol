@@ -22,4 +22,12 @@ class User extends Entity {
 		}
 		return '';
 	}
+
+	protected function _passwordConfirm() {
+
+	}
+
+	protected function _emailConfirm() {
+
+	}
 }

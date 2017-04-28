@@ -15,6 +15,7 @@
   <?= $this->fetch('meta') ?>
   <?= $this->fetch('css') ?>
   <?= $this->fetch('script') ?>
+  <?= $this->element('analytics') ?>
 </head>
 <body>
 <?= $this->element('header') ?>
