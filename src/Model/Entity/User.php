@@ -9,8 +9,8 @@ class User extends Entity {
 
 	protected function _getSexName() {
 		switch($this->_properties['sex']) {
-			case '1':return '男性';
-			case '2':return '女性';
+			case '1':return '男';
+			case '2':return '女';
 		}
 		return '';
 	}

@@ -25,7 +25,7 @@ class TopController extends AppController
 		//成約数の取得
 		$tableResv = TableRegistry::get('Reservations');
 		$count = $tableResv->find('all')->count();
-		$this->set('count',$count);
+		$this->set('count',$count + COUNTER_ADD);
 
 		//都道府県データの取得
 		$tablePref = TableRegistry::get('Prefectures');
@@ -37,6 +37,6 @@ class TopController extends AppController
 		$recommend = $service->getReccomend();
 		$this->set('recommend',$recommend);
 
-		$this->assign('title','ゴルフのお相手を探すならエンゴル');
+		$this->set('title','ゴルフのお相手を探すならエンゴル');
 	}
 }

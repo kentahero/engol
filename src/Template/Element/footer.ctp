@@ -1,19 +1,25 @@
+  <!--
   <section class="staff-area">
     <i class="ci img-golf-player"></i>
     ゴルファーとして登録する
     <i class="ci img-golf-player"></i>
   </section>
+  -->
   <section class="other-area">
     <ul>
       <li><a href="/pages/use">ご利用の流れ</a></li>
-      <li><a href="#">料金について</a></li>
-      <li><a href="#">ログイン</a></li>
+      <li><a href="/pages/amount">料金について</a></li>
+      <?php if (!isset($member)) { ?>
+      <li><a href="/member/login">ログイン</a></li>
+      <?php } else { ?>
+      <li><a href="/member/index">メールボックス</a></li>
+      <?php } ?>
     </ul>
     <ul>
       <li><a href="/pages/terms">利用規約</a></li>
       <li><a href="/pages/company">運営者情報</a></li>
-      <li><a href="#">個人情報保護方針</a></li>
-      <li><a href="#">免責事項</a></li>
+      <li><a href="/pages/privacy">個人情報保護方針</a></li>
+      <li><a href="/pages/disclaimer">免責事項</a></li>
       <li><a href="/pages/transaction">特定商取引法に基づく表記</a></li>
     </ul>
   </section>

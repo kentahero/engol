@@ -124,7 +124,7 @@
                         </figure>
                       </div>
                       <div class="user-attr <?=$user->pair->sex_class?>">
-                        <p class="name"><?=$this->Text->truncate($user->pair->nickname,10)?></p>
+                        <p class="name"><?=$this->Text->truncate($user->pair->nickname,12)?>さん</p>
                         <p class="age"><?=$user->pair->display_age?>歳(<?=$user->pair->sex_name?>)</p>
                         <p class="current-pref"><?=$user->pair->prefecture->name?></p>
                       </div>

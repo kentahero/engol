@@ -63,5 +63,12 @@ class ProfileController extends AppController
 		$tablePref = TableRegistry::get('Prefectures');
 		$prefs = $tablePref->find('list');
 		$this->set(compact('groups','prefs'));
+
+		if ($prefCd) {
+			$pref = $tablePref->get($prefCd);
+			$this->set('title',"{$pref->name}に居るゴルフのお相手一覧");
+		} else {
+			$this->set('title','ゴルフのお相手一覧');
+		}
 	}
 }

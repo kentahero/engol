@@ -117,7 +117,8 @@ html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquot
 .select select {
   position: relative;
   border-color: #4ec48f;
-  font-size: 16px;
+  //font-size: 16px;
+  font-size: 1em;
   height: 40px;
   padding: 0 30px 0 10px;
   width: 100%;
@@ -197,7 +198,7 @@ input[type="checkbox"] + label:before {
 
 input[type="checkbox"]:checked + label:after {
   position: absolute;
-  content: url("../img/icon-check-32.png");
+  content: url("/img/icon-check-32.png");
   top: 3px;
   left: 5px;
   width: 35px;
@@ -360,7 +361,7 @@ header.header .nav-item {
 }
 
 .main-visual {
-  background-image: url("../img/main-visual.jpg");
+  background-image: url("/img/main-visual.jpg");
   background-position: center center;
   background-repeat: no-repeat !important;
   background-size: cover;
@@ -397,7 +398,7 @@ header.header .nav-item {
 }
 
 .search-visual {
-  background-image: url("../img/search-visual.jpg");
+  background-image: url("/img/search-visual.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   padding-bottom: 46.45833%;
@@ -567,7 +568,7 @@ header.header .nav-item {
 }
 
 .sub-visual {
-  background-image: url("../img/sub-visual.jpg");
+  background-image: url("/img/sub-visual.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   padding-bottom: 47.91667%;
@@ -576,7 +577,7 @@ header.header .nav-item {
 }
 
 .sub-visual-description {
-  background-image: url("../img/sub_visual_description.jpg");
+  background-image: url("/img/sub_visual_description.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   padding-bottom: 47.91667%;
@@ -813,7 +814,7 @@ header.header .nav-item {
 .search-area .search-title-content:before {
   position: absolute;
   content: "";
-  background: url("../img/icon-man.png");
+  background: url("/img/icon-man.png");
   background-repeat: no-repeat !important;
   background-size: contain !important;
   display: inline-block;
@@ -828,7 +829,7 @@ header.header .nav-item {
 .search-area .search-title-content:after {
   position: absolute;
   content: "";
-  background: url("../img/icon-woman.png");
+  background: url("/img/icon-woman.png");
   background-repeat: no-repeat !important;
   background-size: contain !important;
   display: inline-block;
@@ -1825,7 +1826,7 @@ header.header .nav-item {
     left: 5px;
     width: 20px;
     height: 20px;
-    background: url("../img/icon-check-32.png");
+    background: url("/img/icon-check-32.png");
     background-size: contain;
     vertical-align: middle;
   }
@@ -2218,7 +2219,7 @@ a.button.is-large, button.button.is-large, input[type=submit].button.is-large {
   margin-left: -50px;
   margin-top: -12px;
   padding-right: 5px;
-  content: url("../img/icon_pdf.png");
+  content: url("/img/icon_pdf.png");
 }
 
 .main-content .agenda-sec .agenda-detail .result {
@@ -2376,28 +2377,28 @@ i.ci:before {
 }
 
 i.img-search:before {
-  background: url("../img/icon/ic-search-wh.png");
+  background: url("/img/icon/ic-search-wh.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-clear:before {
-  background: url("../img/icon/ic-clear.png");
+  background: url("/img/icon/ic-clear.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-next:before {
-  background: url("../img/icon/icon-next-whitegrn.png");
+  background: url("/img/icon/icon-next-whitegrn.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-golf-cup:before {
-  background: url("../img/icon/ic-golf-cup.png");
+  background: url("/img/icon/ic-golf-cup.png");
   width: 50px;
   height: 50px;
   line-height: 50px;
@@ -2406,7 +2407,7 @@ i.img-golf-cup:before {
 }
 
 i.img-golf-cup-search:before {
-  background: url("../img/icon/ic-golf-cup.png");
+  background: url("/img/icon/ic-golf-cup.png");
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -2415,42 +2416,42 @@ i.img-golf-cup-search:before {
 }
 
 i.img-search-left-gray:before {
-  background: url("../img/icon/icon-left-gray.png");
+  background: url("/img/icon/icon-left-gray.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-search-right-gray:before {
-  background: url("../img/icon/icon-right-gray.png");
+  background: url("/img/icon/icon-right-gray.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-ball:before {
-  background: url("../img/icon/ic-ball.png");
+  background: url("/img/icon/ic-ball.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-flag-male:before {
-  background: url("../img/icon/icon-flag-grn.png");
+  background: url("/img/icon/icon-flag-grn.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-flag-female:before {
-  background: url("../img/icon/icon-flag-pnk.png");
+  background: url("/img/icon/icon-flag-pnk.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-ball-search:before {
-  background: url("../img/icon/ic-ball.png");
+  background: url("/img/icon/ic-ball.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
@@ -2458,14 +2459,14 @@ i.img-ball-search:before {
 }
 
 i.img-cross:before {
-  background: url("../img/icon/icon-cross.png");
+  background: url("/img/icon/icon-cross.png");
   width: 25px;
   height: 25px;
   line-height: 25px;
 }
 
 i.img-golf-player:before {
-  background: url("../img/icon/ic-golf-player.png");
+  background: url("/img/icon/ic-golf-player.png");
   width: 30px;
   height: 30px;
   line-height: 30px;
@@ -2474,7 +2475,7 @@ i.img-golf-player:before {
 
 @media screen and (max-width: 600px) {
   i.img-golf-cup:before {
-    background: url("../img/icon/ic-golf-cup.png");
+    background: url("/img/icon/ic-golf-cup.png");
     width: 30px;
     height: 30px;
     line-height: 30px;
@@ -2484,7 +2485,7 @@ i.img-golf-player:before {
 
 @media screen and (max-width: 320px) {
   i.img-ball:before {
-    background: url("../img/icon/ic-ball.png");
+    background: url("/img/icon/ic-ball.png");
     width: 20px;
     height: 20px;
     line-height: 20px;
@@ -2497,7 +2498,7 @@ i.img-golf-player:before {
   display: inline-block;
   margin-right: 5px;
   vertical-align: middle;
-  background: url("../img/icon/ic-calendar.png");
+  background: url("/img/icon/ic-calendar.png");
   width: 40px;
   height: 40px;
   line-height: 30px;
@@ -2528,7 +2529,8 @@ input.input + i.ci:before {
  * アイコン用文字装飾
  */
 .ic-char {
-  font-size: 14px;
+  //font-size: 14px;
+  font-size: 0.8em;
   display: inline-block;
   line-height: 20px;
 }
@@ -2548,7 +2550,7 @@ i.img-meeting {
 }
 
 i.img-meeting:before {
-  background: url("../img/meeting-blue.png");
+  background: url("/img/meeting-blue.png");
   width: 40px;
   height: 40px;
   line-height: 40px;

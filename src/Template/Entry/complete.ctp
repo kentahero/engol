@@ -24,8 +24,8 @@
           <p>お相手からのオファー承諾をお待ち下さい。</p>
           <p>オファーの内容を確認したい場合は下の「会員画面へ」ボタンからログインしてご確認ください。</p>
         </div>
-        <a href="#" class="button mb30">
-          <span>会員画面へ</span>
+        <a href="/member/index" class="button mb30">
+          <span>メールボックスへ</span>
           <span class="icon is-medium right">
               <i class="ci img-next"></i>
           </span>

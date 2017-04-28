@@ -4,7 +4,7 @@
   <?= $this->Html->charset() ?>
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title><?= $this->fetch('title') ?></title>
+  <title>ゴルフのお相手探しエンゴル | <?= $title ?></title>
   <?= $this->Html->meta('icon') ?>
   <?= $this->Html->css(array('font-awesome.min','slick','slick-theme','bulma','app')) ?>
   <?= $this->Html->script(array('lib/jquery-3.1.1.min','lib/jquery-ui-1.12.1/jquery-ui.min','lib/slick/slick.min','lib/slick/slick.min','app')) ?>

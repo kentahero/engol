@@ -57,7 +57,7 @@
           <dl>
             <dt class="bvc">
               <h5 class="reserve-baloon mb10">Step5</h5>
-              <span class="bvc" style="text-align:left">お支払いが完了したらご成約</span>
+              <span class="bvc" style="text-align:left">お支払いが完了したらご成約完了</span>
               <span class="bvc" style="text-align:left">ご自身でお相手の分もゴルフ場をご予約下さい</span>
             </dt>
             <dd class="bvc">
@@ -80,7 +80,7 @@
   </div>
   <section class="container">
     <div class="conv-button-block">
-      <a href="#" class="conv-button">
+      <a href="/profile/search" class="conv-button">
         <img src="/img/btn_conversion.png" class="img1" alt="お相手を探す" />
       </a>
     </div>

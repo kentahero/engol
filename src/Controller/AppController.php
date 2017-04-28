@@ -65,6 +65,9 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
-	$this->set('title','エンゴル');
+        $member = $this->request->session()->read('member');
+        if ($member) {
+        	$this->set('member',$member);
+        }
     }
 }
