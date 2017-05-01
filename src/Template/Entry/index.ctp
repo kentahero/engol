@@ -3,7 +3,10 @@
     		'templates' => 'form-templates',
     	]);
 ?>
+<?=$this->Html->css('/js/lib/jquery-ui-1.12.1/jquery-ui.min',['block'=>'css']);?>
 <?=$this->Html->script('/js/lib/jquery-ui-1.12.1/datepicker-ja',['block'=>'script']);?>
+<?=$this->Html->script('holiday_check',['block'=>'script']);?>
+<?=$this->Html->script('entry',['block'=>'script']);?>
 <script type="text/javascript">
   $(document).ready(function() {
     $('.calendar-picker').datepicker({
@@ -12,14 +15,35 @@
         ,showOn: "button"
         ,buttonImageOnly : true
         ,buttonImage : "/img/ic-calendar-32.png"
+		,beforeShowDay: function(date) {
+       	  var result;
+          var dd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+          var hName = ktHolidayName(dd);
+          if(hName != "") {
+          	result = [true, "date-holiday", hName];
+          } else {
+          	switch (date.getDay()) {
+              case 0: //日曜日
+               	result = [true, "date-holiday"];
+               	break;
+              case 6: //土曜日
+               	result = [true, "date-saturday"];
+                break;
+              default:
+               	result = [true];
+                break;
+              }
+          }
+          return result;
+        }
         ,beforeShow : function(input,inst){
           //開く前に日付を上書き
           var year = $(this).parent().find(".year").val();
           var month = $(this).parent().find(".month").val();
           var date = $(this).parent().find(".day").val();
           $(this).datepicker( "setDate" , year + "/" + month + "/" + date)
-        },
-        onSelect: function(dateText, inst){
+        }
+        ,onSelect: function(dateText, inst){
           //カレンダー確定時にフォームに反映
           var dates = dateText.split('/');
           $(this).parent().find(".year").val(dates[0]);
@@ -29,6 +53,22 @@
       });
     });
 </script>
+<style>
+    .date-holiday .ui-state-default {
+        background-image:none;
+        background-color:#FF9999;
+    }
+    .date-saturday .ui-state-default {
+        background-image:none;
+        background-color:#66CCFF;
+    }
+    body {
+        margin:0;
+        padding:0;
+        font-family:Arial,sans-serif;
+        font-size:0.8em;
+    }
+</style>
 <section class="main-content detail-page">
   <section class="profile-pic-area">
     <section class="bg-green profile-title-block">
@@ -65,7 +105,7 @@
       </span>
     </a>
     <?php } ?>
-    <?php echo $this->Form->create($user,['type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm']]);?>
+    <?php echo $this->Form->create($user,['type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm'],'novalidate' => true]);?>
     <?= $this->Form->hidden('group_id')?>
     <div class="profile-area">
       <section class="profile-main-block">
@@ -186,64 +226,25 @@
               <th>
                 生年月日
                 <!-- <input type="text" value="" class="birthday-picker none"/> -->
-<!--                 <script type="text/javascript">
-                  $(function() {
-                    $('.birthday-picker').datepicker({
-                        dateFormat : "yy/mm/dd"
-                        ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
-                        ,showOn: "button"
-                        ,buttonImageOnly : true
-                        ,buttonImage : "/img/ic-calendar-20.png"
-                        ,beforeShow : function(input,inst){
-                          //開く前に日付を上書き
-                          var year = $(".birthday-year").val();
-                          var month = $(".birthday-month").val();
-                          var date = $(".birthday-date").val();
-                          $(this).datepicker( "setDate" , year + "/" + month + "/" + date)
-                        },
-                        onSelect: function(dateText, inst){
-                          //カレンダー確定時にフォームに反映
-                          var dates = dateText.split('/');
-                          $(".birthday-year").val(dates[0]);
-                          $(".birthday-month").val(dates[1]);
-                          $(".birthday-date").val(dates[2]);
-                        }
-                      });
-                    });
-                </script> -->
               </th>
               <td class="required">
                 <p class="control bvc date">
                   <span class="select">
-                    <select class="year">
-                    <option value='' disabled selected style='display:none;'>年</option>
-                    <option value="1950">1950年</option>
-                    <option value="2017">2017年</option>
-                    </select>
+                  <?php echo $this->Form->select('birth_year',$birth_years,['empty'=>'年','class'=>'select']);?>
                   </span>
                   <span class="select">
-                    <select class="month">
-                    <option value='' disabled selected style='display:none;'>月</option>
-                    <option value="01">1月</option>
-                    <option value="02">2月</option>
-                    <option value="12">12月</option>
-                    </select>
+                    <?php echo $this->Form->select('birth_month',$months,['empty'=>'月']);?>
                   </span>
                   <span class="select">
-                    <select class="day">
-                    <option value='' disabled selected style='display:none;'>日</option>
-                    <option value="01">1日</option>
-                    <option value="31">31日</option>
-                    </select>
-                    </select>
+                   <?php echo $this->Form->select('birth_day',$days,['empty'=>'日']);?>
                   </span>
-                  <input type="text" value="" class="calendar-picker none"/>
+                  <!--<input type="text" value="" class="calendar-picker none"/>-->
                 </p>
               </td>
             </tr>
             <tr>
-              <th>郵便番号</th>
-              <td>
+              <th>郵便番号<br/>(ハイフンなし)</th>
+              <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('postal',['class'=>'input','placeholder'=>'5634445']);?>
                   <?php echo $this->Form->error('postal')?>
@@ -252,10 +253,10 @@
             </tr>
             <tr>
               <th>住所(都道府県)</th>
-              <td>
+              <td class="required">
                 <p class="control">
                   <span class="select">
-                    <?php echo $this->Form->select('prefecture_cd',$prefs,['empty'=>'都道府県'])?>
+                    <?php echo $this->Form->select('prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'prefecture_cd'])?>
                     <?php echo $this->Form->error('prefecture_cd')?>
                   </span>
                 </p>
@@ -263,10 +264,13 @@
             </tr>
             <tr>
               <th>住所(市区町村)</th>
-              <td>
+              <td class="required">
                 <p class="control">
                   <span class="select">
-                  </select>
+                    <select id="city_cd" name="city_cd">
+                      <option value>市区町村を選択</option>
+                    </select>
+                  </span>
                 </p>
               </td>
             </tr>
@@ -289,8 +293,8 @@
               </td>
             </tr>
             <tr>
-              <th>電話番号</th>
-              <td>
+              <th>電話番号<br/>(ハイフンあり)</th>
+              <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
                   <?php echo $this->Form->error('tel')?>
@@ -301,59 +305,17 @@
             <tr>
               <th>
                 希望日付1
-<!--                 <input type="text" value="" class="preferred-date1-picker none"/>
-                <script type="text/javascript">
-                  $(function() {
-                    $('.preferred-date1-picker').datepicker({
-                        dateFormat : "yy/mm/dd"
-                        ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
-                        ,showOn: "button"
-                        ,buttonImageOnly : true
-                        ,buttonImage : "/img/ic-calendar-25.png"
-                        ,beforeShow : function(input,inst){
-                          //開く前に日付を上書き
-                          var year = $(".preferred-date1-year").val();
-                          var month = $(".preferred-date1-month").val();
-                          var date = $(".preferred-date1-date").val();
-                          $(this).datepicker( "setDate" , year + "/" + month + "/" + date)
-                        },
-                        onSelect: function(dateText, inst){
-                          //カレンダー確定時にフォームに反映
-                          var dates = dateText.split('/');
-                          $(".preferred-date1-year").val(dates[0]);
-                          $(".preferred-date1-month").val(dates[1]);
-                          $(".preferred-date1-date").val(dates[2]);
-                        }
-                      });
-                    });
-                </script> -->
               </th>
               <td class="required">
                 <p class="control bvc date">
-<!--                   <input type="text" value="" class="input wid-per20 preferred-date1-year" size="4" /> <span class="input-label">年</span>
-                  <input type="text" value="" class="input wid-per20 preferred-date1-month" size="4" /> <span class="input-label">月</span>
-                  <input type="text" value="" class="input wid-per20 preferred-date1-date" size="4" /> <span class="input-label">日</span> -->
                   <span class="select">
-                    <select class="year">
-                    <option value='' disabled selected style='display:none;'>年</option>
-                    <option value="1950">1950年</option>
-                    <option value="2017">2017年</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_year_1',$offer_years,['empty'=>'年','class'=>'year']);?>
                   </span>
                   <span class="select">
-                    <select class="month">
-                    <option value='' disabled selected style='display:none;'>月</option>
-                    <option value="01">1月</option>
-                    <option value="12">12月</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_month_1',$months,['empty'=>'月','class'=>'month']);?>
                   </span>
                   <span class="select">
-                    <select class="day">
-                    <option value='' disabled selected style='display:none;'>日</option>
-                    <option value="01">1日</option>
-                    <option value="31">31日</option>
-                    </select>
-                    </select>
+                    <?php echo $this->Form->select('offer_day_1',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
                 </p>
@@ -363,58 +325,17 @@
             <tr>
               <th>
                 希望日付2
-<!--                 <input type="text" value="" class="preferred-date2-picker none"/>
-                <script type="text/javascript">
-                  $(function() {
-                    $('.preferred-date2-picker').datepicker({
-                        dateFormat : "yy/mm/dd"
-                        ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
-                        ,showOn: "button"
-                        ,buttonImageOnly : true
-                        ,buttonImage : "/img/ic-calendar-25.png"
-                        ,beforeShow : function(input,inst){
-                          //開く前に日付を上書き
-                          var year = $(".preferred-date2-year").val();
-                          var month = $(".preferred-date2-month").val();
-                          var date = $(".preferred-date2-date").val();
-                          $(this).datepicker( "setDate" , year + "/" + month + "/" + date)
-                        },
-                        onSelect: function(dateText, inst){
-                          //カレンダー確定時にフォームに反映
-                          var dates = dateText.split('/');
-                          $(".preferred-date2-year").val(dates[0]);
-                          $(".preferred-date2-month").val(dates[1]);
-                          $(".preferred-date2-date").val(dates[2]);
-                        }
-                      });
-                    });
-                </script> -->
               </th>
               <td class="required">
                 <p class="control bvc date">
-<!--                   <input type="text" value="" class="input wid-per20 preferred-date2-year" size="4" /> <span class="input-label">年</span>
-                  <input type="text" value="" class="input wid-per20 preferred-date2-month" size="4" /> <span class="input-label">月</span>
-                  <input type="text" value="" class="input wid-per20 preferred-date2-date" size="4" /> <span class="input-label">日</span> -->
                   <span class="select">
-                    <select class="year">
-                    <option value='' disabled selected style='display:none;'>年</option>
-                    <option value="1950">1950年</option>
-                    <option value="2017">2017年</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_year_2',$offer_years,['empty'=>'年','class'=>'year']);?>
                   </span>
                   <span class="select">
-                    <select class="month">
-                    <option value='' disabled selected style='display:none;'>月</option>
-                    <option value="01">1月</option>
-                    <option value="12">12月</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_month_2',$months,['empty'=>'月','class'=>'month']);?>
                   </span>
                   <span class="select">
-                    <select class="day">
-                    <option value='' disabled selected style='display:none;'>日</option>
-                    <option value="01">1日</option>
-                    <option value="31">31日</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_day_2',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
                 </p>
@@ -425,58 +346,17 @@
             <tr>
               <th>
                 希望日付3
-<!--                 <input type="text" value="" class="preferred-date3-picker none"/>
-                <script type="text/javascript">
-                  $(function() {
-                    $('.preferred-date3-picker').datepicker({
-                        dateFormat : "yy/mm/dd"
-                        ,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
-                        ,showOn: "button"
-                        ,buttonImageOnly : true
-                        ,buttonImage : "/img/ic-calendar-25.png"
-                        ,beforeShow : function(input,inst){
-                          //開く前に日付を上書き
-                          var year = $(".preferred-date3-year").val();
-                          var month = $(".preferred-date3-month").val();
-                          var date = $(".preferred-date3-date").val();
-                          $(this).datepicker( "setDate" , year + "/" + month + "/" + date)
-                        },
-                        onSelect: function(dateText, inst){
-                          //カレンダー確定時にフォームに反映
-                          var dates = dateText.split('/');
-                          $(".preferred-date3-year").val(dates[0]);
-                          $(".preferred-date3-month").val(dates[1]);
-                          $(".preferred-date3-date").val(dates[2]);
-                        }
-                      });
-                    });
-                </script> -->
               </th>
               <td class="required">
                 <p class="control bvc date">
-<!--                   <input type="text" value="" class="input wid-per20 preferred-date3-year" size="4" /> <span class="input-label">年</span>
-                  <input type="text" value="" class="input wid-per20 preferred-date3-month" size="4" /> <span class="input-label">月</span>
-                  <input type="text" value="" class="input wid-per20 preferred-date3-date" size="4" /> <span class="input-label">日</span> -->
                   <span class="select">
-                    <select class="year">
-                    <option value='' disabled selected style='display:none;'>年</option>
-                    <option value="1950">1950年</option>
-                    <option value="2017">2017年</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_year_3',$offer_years,['empty'=>'年','class'=>'year']);?>
                   </span>
                   <span class="select">
-                    <select class="month">
-                    <option value='' disabled selected style='display:none;'>月</option>
-                    <option value="01">1月</option>
-                    <option value="12">12月</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_month_3',$months,['empty'=>'月','class'=>'month']);?>
                   </span>
                   <span class="select">
-                    <select class="day">
-                    <option value='' disabled selected style='display:none;'>日</option>
-                    <option value="01">1日</option>
-                    <option value="31">31日</option>
-                    </select>
+                    <?php echo $this->Form->select('offer_day_3',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
                 </p>

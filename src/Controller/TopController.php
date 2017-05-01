@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
 use App\Service\CompanionService;
+use Cake\Network\Exception\NotFoundException;
 
 class TopController extends AppController
 {
@@ -38,5 +39,20 @@ class TopController extends AppController
 		$this->set('recommend',$recommend);
 
 		$this->set('title','ゴルフのお相手を探すならエンゴル');
+	}
+
+	public function getCityList() {
+		/*
+		if(!$this->request->is('ajax')) {
+			throw new NotFoundException();
+		}
+		*/
+		$this->viewBuilder()->setClassName('Json');
+		$prefCd = $this->request->getData('prefecture_cd');
+		$tableCity = TableRegistry::get('Cities');
+		$cities = $tableCity->find('list')->where(['prefecture_cd'=>$prefCd])->all();
+		$this->set('cities',$cities);
+		$this->set('_serialize', ['cities']);
+
 	}
 }

@@ -56,6 +56,14 @@ class MemberController extends AppController
 		}
 	}
 
+	public function logout() {
+		$member = $this->request->session()->read('member');
+		if ($member) {
+			$this->request->session()->delete('member');
+		}
+		$this->redirect('/');
+	}
+
 	public function forgot() {
 		$email = $this->request->getData('email');
 		$birth = $this->request->getData('birth');

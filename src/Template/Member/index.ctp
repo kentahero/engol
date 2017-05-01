@@ -31,21 +31,21 @@
         <table class="table input-table mb50">
           <thead>
             <tr>
-              <th>種別</th>
-              <th>お名前</th>
+              <th>状況</th>
+              <th></th>
             </tr>
     　　  </theadv>
           <tbody>
             <tr>
               <td>オファー</td>
+              <td><b>オファーがありました</b><br/>2013年12月1日のお申し込みがありました</td>
+            </tr>
+            <tr>
+              <td>承諾</td>
               <td>ほげほげほえ</td>
             </tr>
             <tr>
-              <td>オファー申込</td>
-              <td>ほげほげほえ</td>
-            </tr>
-            <tr>
-              <td>オファー申込</td>
+              <td>成約</td>
               <td>ほげほげほえ</td>
             </tr>
           </tbody>

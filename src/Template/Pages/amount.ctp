@@ -6,7 +6,7 @@
       <div class="reserve-description">
           <dl style="width:100%;height:initial">
             <dt style="width:100%;position:relative;padding:0px;height:initial">
-              <span class="bvc" style="text-align:left">engolでお支払い頂く代金は<b>「1.お相手のプレイ費」「2.お相手の設定料金」「3.サービス利用料」</b>の合計額となります。</span>
+              <span class="bvc" style="text-align:left">engolでお支払い頂く代金は<br/><b>「1.お相手のプレイ費」<br/>「2.お相手の設定料金」<br/>「3.サービス利用料」<br/></b>の合計額となります。</span>
             </dt>
           </dl>
       </div>
@@ -16,10 +16,28 @@
       <div class="reserve-description">
         <div class="float-inner" style="padding:5px">
           <dl style="width:100%;height:initial">
-            <dt class="bvc" style="width:100%;position:relative;padding-top:0px;height:initial">
+            <dt class="bvc" style="width:100%;position:relative;padding:0px;height:initial">
               <h5 class="reserve-baloon mb10">1. お相手のプレイ費</h5>
-              <span class="bvc" style="text-align:left">ゴルフ場でのラウンドをご希望の場合はどのゴルフ場でも一律お相手一人に付き<b>15,000円</b>ご負担頂きます。ペアのお相手へのお申込みの場合、合計<b>30,000円</b>となります。</span>
-              <span class="bvc" style="text-align:left">ゴルフ練習場でのプレイをご希望の方は現地でお相手分の費用をお支払いください。</span>
+              <span class="bvc" style="text-align:left">ゴルフ場でのラウンドをご希望の場合はどのゴルフ場でも一律以下の料金をお支払下さい。練習場でのプレイを希望の方は現地でお相手分をお支払いください。</span>
+              <span class="bvc" style="text-align:left;padding:10px">
+              <table class="table is-bordered">
+                <tr>
+                  <th>お相手</th>
+                  <th>平日(月～金)</th>
+                  <th>土日祝日</th>
+                </tr>
+                <tr>
+                  <td>お一人</td>
+                  <td><b>10,000円</b></td>
+                  <td><b>15,000円</b></td>
+                </tr>
+                <tr>
+                  <td>ペア</td>
+                  <td><b>20,000円</b></td>
+                  <td><b>30,000円</b></td>
+                </tr>
+              </table>
+              </span>
             </dt>
           </dl>
         </div>
