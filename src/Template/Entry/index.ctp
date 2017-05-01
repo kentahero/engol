@@ -362,57 +362,54 @@
                 </p>
               </td>
             </tr>
-
-
             <tr>
               <th>プレイ場所</th>
-              <td>
+              <td class="required">
                 <p class="control bvc">
-                  <input type="checkbox" id="round"/><label for="round">ゴルフ場</label>
-                  <input type="checkbox" id="practice"/><label for="practice">練習場</label>
+                  <?php echo $this->Form->radio('course_kind',[['value'=>'1','text'=>' ゴルフ場'],['value'=>'2','text'=>' 練習場']]);?>
+                  <?php echo $this->Form->error('course_kind')?>
                 </p>
               </td>
             </tr>
-            <tr>
+            <tr id="course_prefecture" style="display:none">
               <th>ゴルフ場地域</th>
-              <td>
+              <td class="required">
                 <p class="control">
                   <span class="select">
-                    <select>
-                    <option value='' disabled selected style='display:none;'>地域</option>
-                    <option value="">北海道</option>
-                    <option value="">東北</option>
-                    </select>
+                    <?php echo $this->Form->select('course_prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'course_prefecture_cd'])?>
                   </span>
                 </p>
               </td>
             </tr>
-            <tr>
+            <tr id="course_name" style="display:none">
               <th>ゴルフ場名</th>
-              <td>
+              <td class="required">
                 <p class="control">
+                   <span class="select">
+                    <select id="course_id" name="course_id">
+                      <option value>ゴルフ場を選択</option>
+                    </select>
+                  </span>
+                  <!--
                   <?php echo $this->Form->text('course_name',['class'=>'input','placeholder'=>'茨木カントリークラブ']);?>
+                  -->
                   <?php echo $this->Form->error('course_name')?>
                 </p>
               </td>
             </tr>
-            <tr>
+            <tr id="training_prefecture" style="display:none">
               <th>練習場地域</th>
-              <td>
+              <td class="required">
                 <p class="control">
                   <span class="select">
-                    <select>
-                    <option value='' disabled selected style='display:none;'>地域</option>
-                    <option value="">北海道</option>
-                    <option value="">東北</option>
-                    </select>
+                    <?php echo $this->Form->select('training_prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'course_prefecture_cd'])?>
                   </span>
                 </p>
               </td>
             </tr>
-            <tr>
+            <tr id="training_name" style="display:none">
               <th>練習場名</th>
-              <td>
+              <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('training_name',['class'=>'input','placeholder'=>'茨木ゴルフ練習場']);?>
                   <?php echo $this->Form->error('training_name')?>
