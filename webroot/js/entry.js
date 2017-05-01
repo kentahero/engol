@@ -41,6 +41,8 @@ $(function(){
 	  $('#course_id option').remove();
 	  $('#course_id').append($('<option>').html("ゴルフ場選択").val(""));
 	  //ajaxで市区町村リスト取得
+	  getCourseList(1);
+	  /*
 	  $.ajax({
         type: "POST",
 		url: "https://app.rakuten.co.jp/services/api/Gora/GoraGolfCourseSearch/20131113",
@@ -52,5 +54,23 @@ $(function(){
 		  $('#course_id').append($option);
 　　    }
 	  });
+	  */
   });
 });
+
+function getCourseList(page) {
+	$.ajax({
+        type: "POST",
+		url: "https://app.rakuten.co.jp/services/api/Gora/GoraGolfCourseSearch/20131113",
+		data: { format: 'json', formatVersion:2, applicationId: '1062787586708515126', page: page, areaCode: $('#course_prefecture_cd').val()}
+	  }).done(function( res ) {
+		for(var i in res.Items){
+		  $option = $('<option>').val(res.Items[i].golfCourseId).text(res.Items[i].golfCourseName);
+		  //市区町村項目を追加
+		  $('#course_id').append($option);
+　　    }
+		if (res.page != res.pageCount) {
+			getCourseList(res.page+1);
+		}
+	 });
+}
