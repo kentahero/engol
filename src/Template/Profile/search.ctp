@@ -93,7 +93,8 @@
       <?php
         $i=0;
         foreach($groups as $group) {
-          if (count($group->users) != 2) {
+          //グループのループ
+          if (count($group->users) > 2) {
             //現在はペア表示のみ対応
             continue;
           }
@@ -107,52 +108,53 @@
             <span class="icon left">
               <i class="ci img-ball-search"></i>
             </span>
+            <?php if (count($group->users) == 2) {?>
             <p class="is-pulled-left name" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><span class="male"><?=$group->users[0]->nickname?></span> & <span class="female"><?=$group->users[1]->nickname?></span> ペア</p>
+            <?php } else {?>
+            <p class="is-pulled-left name" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><span class="male"><?=$group->users[0]->nickname?></span></p>
+            <?php }?>
             <!-- <p class="is-pulled-right status">ログイン：本日</p> -->
           </div>
           <div class="pair-block">
+            <?php
+              $j=0;
+              foreach($group->users as $user) {
+                //プレイヤーのループ
+            ?>
             <div class="card">
-              <a class="card-link" href="/profile/index/<?=$group->users[0]->id?>">
+              <a class="card-link" href="/profile/index/<?=$user->id?>">
                 <div class="card-image">
                   <figure class="image is-4by3">
-                    <?php if($group->users[0]->companion_info->image != 0) {?>
-                    <img src="/img/pic/pic_<?=$group->users[0]->id?>_1.jpg" alt="Image">
+                    <?php if($user->companion_info->image != 0) {?>
+                    <img src="/img/pic/pic_<?=$user->id?>_1.jpg" alt="Image">
                     <?php }else{?>
                     <img src="/img/pic/nophoto.png" alt="Image">
                     <?php }?>
                   </figure>
                 </div>
-                <div class="user-attr <?=$group->users[0]->sex_class?>">
-                  <p class="name"><?=$this->Text->truncate($group->users[0]->nickname,11)?></p>
-                  <p class="age"><?=$group->users[0]->display_age?>歳(<?=$group->users[0]->sex_name?>)</p>
-                  <p class="current-pref"><?=$group->users[0]->prefecture->name?></p>
+                <div class="user-attr <?=$user->sex_class?>">
+                  <p class="name"><?=$this->Text->truncate($user->nickname,11)?></p>
+                  <p class="age"><?=$user->display_age?>歳(<?=$user->sex_name?>)</p>
+                  <p class="current-pref"><?=$user->prefecture->name?></p>
                 </div>
               </a>
             </div>
+            <?php if ($j == 0 && count($group->users) >= 2) {?>
             <span class="icon pair-cross">
               <i class="ci img-cross"></i>
             </span>
-            <div class="card">
-              <a class="card-link" href="/profile/index/<?=$group->users[1]->id?>">
-                <div class="card-image">
-                  <figure class="image is-4by3">
-                    <?php if($group->users[1]->companion_info->image != 0) {?>
-                    <img src="/img/pic/pic_<?=$group->users[1]->id?>_1.jpg" alt="Image">
-                    <?php }else{?>
-                    <img src="/img/pic/nophoto.png" alt="Image">
-                    <?php }?>
-                  </figure>
-                </div>
-                <div class="user-attr <?=$group->users[1]->sex_class?>">
-                  <p class="name"><?=$this->Text->truncate($group->users[1]->nickname,11)?></p>
-                  <p class="age"><?=$group->users[1]->display_age?>歳(<?=$group->users[1]->sex_name?>)</p>
-                  <p class="current-pref"><?=$group->users[1]->prefecture->name?></p>
-                </div>
-              </a>
-            </div>
+            <?php
+                }
+                $j++;
+              } //user loop end
+            ?>
           </div>
           <a href="/entry/index?group_id=<?=$group->id?>" class="button">
+            <?php if (count($group->users) == 2) {?>
             <span>このペアにオファーする</span>
+            <?php } else { ?>
+            <span>この人にオファーする</span>
+            <?php }?>
             <span class="icon is-medium right">
                 <i class="ci img-next"></i>
             </span>

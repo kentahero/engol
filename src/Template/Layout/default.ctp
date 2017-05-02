@@ -2,6 +2,9 @@
 <html>
 <head>
   <?= $this->Html->charset() ?>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="/appletouchicon.png">
+  <meta name="apple-mobile-web-app-title" content="エンゴル">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>ゴルフのお相手探しエンゴル | <?= $title ?></title>
