@@ -37,11 +37,10 @@ class EntryController extends AppController
 		//選択ペアの取得
 		$service = new CompanionService();
 		$group = $service->getCompanionPairGroup($groupId);
-		if (count($group->users) != 2) {
+		if (!$group) {
 			//ペア出ない場合は404
 			throw new NotFoundException();
 		}
-
 		//日付の生成
 		$now = Time::now();
 		$bithYears = [];

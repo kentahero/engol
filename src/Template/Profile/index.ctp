@@ -142,7 +142,11 @@
 </section>
 <p class="reserve-btn">
   <a href="/entry/?group_id=<?=$user->group_id?>" class="button">
+    <?php if($user->pair) {?>
     <span>このペアにオファーする</span>
+    <?php } else {?>
+    <span>この人にオファーする</span>
+    <?php }?>
     <span class="icon is-medium right">
         <i class="ci img-next"></i>
     </span>
