@@ -124,7 +124,7 @@
           <tbody>
             <?php if (!isset($member)) { ?>
             <tr>
-              <th>Eメール</th>
+              <th>メールアドレス</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('email',['class'=>'input','placeholder'=>'info@engol.jp']);?>
@@ -133,7 +133,7 @@
               </td>
             </tr>
             <tr>
-              <th>Eメール確認</th>
+              <th>メールアドレス確認</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('email_confirm',['class'=>'input','placeholder'=>'info@engol.jp']);?>
@@ -239,6 +239,7 @@
                    <?php echo $this->Form->select('birth_day',$days,['empty'=>'日']);?>
                   </span>
                   <!--<input type="text" value="" class="calendar-picker none"/>-->
+                  <?php echo $this->Form->error('birth')?>
                 </p>
               </td>
             </tr>
@@ -267,9 +268,8 @@
               <td class="required">
                 <p class="control">
                   <span class="select">
-                    <select id="city_cd" name="city_cd">
-                      <option value>市区町村を選択</option>
-                    </select>
+                    <?php echo $this->Form->select('city_cd',$cities,['empty'=>'市区町村を選択','id'=>'city_cd'])?>
+                    <?php echo $this->Form->error('city_cd')?>
                   </span>
                 </p>
               </td>
@@ -318,6 +318,7 @@
                     <?php echo $this->Form->select('offer_day_1',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
+                  <?php echo $this->Form->error('offer_date_1')?>
                 </p>
               </td>
             </tr>
@@ -338,6 +339,7 @@
                     <?php echo $this->Form->select('offer_day_2',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
+                  <?php echo $this->Form->error('offer_date_2')?>
                 </p>
               </td>
             </tr>
@@ -359,6 +361,7 @@
                     <?php echo $this->Form->select('offer_day_3',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
+                  <?php echo $this->Form->error('offer_date_3')?>
                 </p>
               </td>
             </tr>
@@ -381,19 +384,22 @@
                 </p>
               </td>
             </tr>
-            <tr id="course_name" style="display:none">
+            <tr id="course_name_tr" style="display:none">
               <th>ゴルフ場名</th>
               <td class="required">
                 <p class="control">
                    <span class="select">
-                    <select id="course_id" name="course_id">
-                      <option value>ゴルフ場を選択</option>
-                    </select>
+                    <?php echo $this->Form->select('course_name',$courses,['empty'=>'ゴルフ場を選択','id'=>'course_name'])?>
                   </span>
-                  <!--
-                  <?php echo $this->Form->text('course_name',['class'=>'input','placeholder'=>'茨木カントリークラブ']);?>
-                  -->
                   <?php echo $this->Form->error('course_name')?>
+                </p>
+              </td>
+            </tr>
+			<tr id="course_name_other" style="display:none">
+              <th>ゴルフ場名（リストにない場合）</th>
+              <td>
+                <p class="control">
+                  <?php echo $this->Form->text('course_name_other',['class'=>'input','placeholder'=>'茨木カントリークラブ']);?>
                 </p>
               </td>
             </tr>

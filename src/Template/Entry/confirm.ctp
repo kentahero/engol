@@ -49,7 +49,7 @@
             <tr>
               <th>メール種別</th>
               <td>
-                <?=$data['email_kind']?>
+                <?=$data['email_kind_name']?>
               </td>
             </tr>
             <tr>
@@ -100,7 +100,7 @@
               </th>
               <td class="required">
                 <p class="control bvc date">
-                  <?=$data['birty_day']?>
+                  <?=$data['birty_year']?>年<?=$data['birty_month']?>月<?=$data['birty_day']?>日
                 </p>
               </td>
             </tr>
@@ -113,7 +113,7 @@
             <tr>
               <th>都道府県</th>
               <td>
-                <?=$data['pref_name']?>
+                <?=$data['prefecture_name']?>
               </td>
             </tr>
             <tr>
@@ -146,7 +146,7 @@
                 希望日付1
               </th>
               <td class="required">
-                2017年12月28日
+                <?=$data['offer_year_1']?>年<?=$data['offer_month_1']?>月<?=$data['offer_day_1']?>日
               </td>
             </tr>
 
@@ -155,7 +155,7 @@
                 希望日付2
               </th>
               <td class="required">
-                2017年12月28日
+                <?=$data['offer_year_2']?>年<?=$data['offer_month_2']?>月<?=$data['offer_day_2']?>日
               </td>
             </tr>
 
@@ -165,7 +165,7 @@
                 希望日付3
               </th>
               <td class="required">
-                2017年12月28日
+                <?=$data['offer_year_3']?>年<?=$data['offer_month_3']?>月<?=$data['offer_day_3']?>日
               </td>
             </tr>
 

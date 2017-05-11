@@ -5,7 +5,7 @@ use Cake\ORM\Entity;
 
 class User extends Entity {
 
-	protected $_virtual = ['sex_name','sex_class'];
+	protected $_virtual = ['sex_name','sex_class','email_kind_name'];
 
 	protected function _getSexName() {
 		switch($this->_properties['sex']) {
@@ -24,10 +24,16 @@ class User extends Entity {
 	}
 
 	protected function _passwordConfirm() {
-
 	}
 
 	protected function _emailConfirm() {
-
 	}
+
+	protected function _emailKindName() {
+		switch($this->_properties['email_kind']) {
+			case '1':return '携帯';
+			case '2':return 'PC';
+		}
+	}
+
 }

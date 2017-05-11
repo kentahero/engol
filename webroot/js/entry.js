@@ -25,12 +25,14 @@ $(function(){
 	  var course_kind = $('input[name="course_kind"]:checked').val();
 	  if (course_kind == "1") {
 		  $('#course_prefecture').show();
-		  $('#course_name').show();
+		  $('#course_name_tr').show();
+		  $('#course_name_other').show();
 		  $('#training_prefecture').hide();
 		  $('#training_name').hide();
 	  } else if(course_kind == "2") {
 		  $('#course_prefecture').hide();
-		  $('#course_name').hide();
+		  $('#course_name_tr').hide();
+		  $('#course_name_other').hide();
 		  $('#training_prefecture').show();
 		  $('#training_name').show();
 	  }
@@ -42,19 +44,6 @@ $(function(){
 	  $('#course_id').append($('<option>').html("ゴルフ場選択").val(""));
 	  //ajaxで市区町村リスト取得
 	  getCourseList(1);
-	  /*
-	  $.ajax({
-        type: "POST",
-		url: "https://app.rakuten.co.jp/services/api/Gora/GoraGolfCourseSearch/20131113",
-		data: { format: 'json', formatVersion:2, applicationId: '1062787586708515126', areaCode: $('#course_prefecture_cd').val()}
-	  }).done(function( res ) {
-		for(var i in res.Items){
-		  $option = $('<option>').val(res.Items[i].golfCourseId).text(res.Items[i].golfCourseName);
-		  //市区町村項目を追加
-		  $('#course_id').append($option);
-　　    }
-	  });
-	  */
   });
 });
 
@@ -62,12 +51,12 @@ function getCourseList(page) {
 	$.ajax({
         type: "POST",
 		url: "https://app.rakuten.co.jp/services/api/Gora/GoraGolfCourseSearch/20131113",
-		data: { format: 'json', formatVersion:2, applicationId: '1062787586708515126', page: page, areaCode: $('#course_prefecture_cd').val()}
+		data: { format: 'json', formatVersion:2, applicationId: '1062787586708515126', page: page, areaCode: $('#course_prefecture_cd').val(), sort: '50on'}
 	  }).done(function( res ) {
+		var head = "";
 		for(var i in res.Items){
-		  $option = $('<option>').val(res.Items[i].golfCourseId).text(res.Items[i].golfCourseName);
-		  //市区町村項目を追加
-		  $('#course_id').append($option);
+		  $option = $('<option>').val(res.Items[i].golfCourseName).text(res.Items[i].golfCourseName);
+		  $('#course_name').append($option);
 　　    }
 		if (res.page != res.pageCount) {
 			getCourseList(res.page+1);

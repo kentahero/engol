@@ -203,7 +203,7 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
+            'from' => 'info@engol.jp',
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],

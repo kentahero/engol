@@ -27,14 +27,14 @@ class UsersTable extends Table {
 	public function validationDefault(Validator $validator) {
 		//Eメールチェック
 		$validator
-			->notEmpty('email','Eメールを入力して下さい')
-			->add('email','validFormat',['rule'=>'email','message'=>'Eメールアドレスの形式で入力して下さい'])
+			->notEmpty('email','メールアドレスを入力して下さい')
+			->add('email','validFormat',['rule'=>'email','message'=>'メールアドレスの形式で入力して下さい'])
 			->add('email','length',['rule'=>['maxLength',256],'message'=>'256文字以下で入力して下さい'])
 			->add('email','custom',['rule'=>[$this,'duplicateEmail'],'message'=>'既に登録されているアドレスです']);
 		//Eメール確認チェック
 		$validator
-			->notEmpty('email_confirm','Eメールの確認を入力して下さい')
-			->add('email_confirm','custom',['rule'=>[$this,'confirmEmail'],'message'=>'Eメールの確認が一致しません']);
+			->notEmpty('email_confirm','メールアドレスの確認を入力して下さい')
+			->add('email_confirm','custom',['rule'=>[$this,'confirmEmail'],'message'=>'メールアドレスの確認が一致しません']);
 		//パスワード
 		$validator
 			->notEmpty('password','パスワードを入力して下さい')
@@ -62,7 +62,7 @@ class UsersTable extends Table {
 		$validator
 			->notEmpty('nickname','名前(カナ名)を入力して下さい')
 			->add('nickname','length',['rule'=>['maxLength',9],'message'=>'9文字以下で入力して下さい'])
-			->add('nickname','custom',['rule'=>[$this,'dupulicateNickname'],'message'=>'既に使われているニックネームです']);
+			->add('nickname','custom',['rule'=>[$this,'duplicateNickname'],'message'=>'既に使われているニックネームです']);
 		//性別
 		$validator
 			->requirePresence('sex','性別を選択して下さい');
@@ -83,8 +83,9 @@ class UsersTable extends Table {
 		$validator
 			->notEmpty('tel','連絡先電話番号を入力して下さい')
 			->add('tel','tel',['rule'=>['custom','/\d{2,4}-\d{2,4}-\d{4}/'],'message'=>'ハイフンありの電話番号形式で入力して下さい']);
-
-
+		$validator
+			->notEmpty('offer_year_1','希望日を入れて下さい')
+			->notEmpty('offer_month_1','希望日を入力して下さい');
 
 
 		return $validator;
@@ -115,5 +116,4 @@ class UsersTable extends Table {
 		$count = $this->find('all')->where(['nickname'=>$value])->count();
 		return $count==0;
 	}
-
 }
