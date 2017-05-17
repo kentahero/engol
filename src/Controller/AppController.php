@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 
 /**
  * Application Controller
@@ -43,6 +44,8 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+
+        Time::setDefaultLocale('japanese');
 
         /*
          * Enable the following components for recommended CakePHP security settings.

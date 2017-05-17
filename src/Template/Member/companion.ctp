@@ -28,30 +28,22 @@
         <div class="confirm-msg-area mb10">
           メールボックス
         </div>
-        <table class="input-table mb50 is-bordered" style="boerder:1px">
+        <table class="table input-table mb50">
           <tbody>
-            <?php if(count($offers) == 0) {?>
-            <tr><td>メッセージがありません</td></tr>
-            <?php } else {?>
             <?php foreach($offers as $offer) {?>
             <tr>
-              <?php if ($offer->offer_user_id == $member->id) {?>
+              <?php if ($offer->status == 0) {?>
               <td>
-              <p style="font-size:3px">■<a href="/member/detail?offer_id=<?=$offer->id?>"><?=$offer->offer_title?></a></p>
-              <p style="font-size:1.5px">お相手：<?=$offer->recieve_group->users[0]->nickname?><p>
-              <p style="font-size:1.5px">場所：<?=$offer->course_name?>　日時：<?=$offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>希望<p>
+              <p>■<a href="/member/detail?offer_id=<?=$offer->id?>"><?=$offer->offer_user->nickname?>さんからオファーされました</a></p>
+              <p style="font-size:1px"><?=$offer->course_name?>にて<?=$offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>希望<p>
               <p style="font-size:1px;text-align:right"><?=$offer->created->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?></p>
               </td>
-              <?php } else {?>
-              <td>
-              <p style="font-size:3px">■<a href="/member/detail?offer_id=<?=$offer->id?>"><?=$offer->recieve_title?></a></p>
-              <p style="font-size:1.5px">お相手：<?=$offer->offer_user->nickname?><p>
-              <p style="font-size:1.5px">場所：<?=$offer->course_name?>　日時：<?=$offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>希望<p>
-              <p style="font-size:1px;text-align:right"><?=$offer->created->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?></p>
-              </td>
+              <?php } else if ($offer->status == 1) {?>
+              <td>■<?=$offer->created?> <?=$offer->recieve_group->users[0]->nickname?>さんからのオファーを承諾しました<br/><?=$offer->course_name?>にて<?=$offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>希望<p></td>
+              <?php } else if ($offer->status == 2) {?>
+              <td>■<?=$offer->created?> <?=$offer->recieve_group->users[0]->nickname?>さんからのオファーが成立しました<br/><?=$offer->course_name?>にて<?=$offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>希望<p></td>
               <?php }?>
             </tr>
-            <?php }?>
             <?php }?>
           </tbody>
         </table>

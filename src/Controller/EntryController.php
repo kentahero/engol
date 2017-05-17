@@ -127,13 +127,24 @@ class EntryController extends AppController
 		$this->set('group',$group);
 
 		//バリデーション実行
-		$tableUser = TableRegistry::get('Users');
-		$user = $tableUser->newEntity($data);
-		if ($user->errors()) {
-			$this->set('user',$user);
-			$this->render('index');
+		if (!$this->request->session()->read('member')) {
+			$tableUser = TableRegistry::get('Users');
+			$user = $tableUser->newEntity($data);
+			if ($user->errors()) {
+				$this->set('user',$user);
+				$this->render('index');
+			}
+			$this->set('data',$user);
+		} else {
+			//会員のためのバリデーション
+			$tableOffer = TableRegistry::get('Offers');
+			$offer = $tableOffer->newEntity($data);
+			if ($offer->errors()) {
+				$this->set($user,$offer);
+				$this->render('index');
+			}
+			$this->set('data',$offer);
 		}
-		$this->set('data',$user);
 	}
 
 	public function complete() {
@@ -148,27 +159,34 @@ class EntryController extends AppController
 		$connection->begin();
 
 		try {
-			$tableGroup = TableRegistry::get('UserGroups');
-			$group = $tableGroup->newEntity();
-			$group->name = $data['nickname'].'グループ';
-			if (!$tableGroup->save($group)) {
-				throw new InternalErrorException();
-			}
+			if (!$this->request->session()->read('member')) {
+				$tableGroup = TableRegistry::get('UserGroups');
+				$group = $tableGroup->newEntity();
+				$group->name = $data['nickname'].'グループ';
+				if (!$tableGroup->save($group)) {
+					throw new InternalErrorException();
+				}
 
-			$userId = null;
-			$tableUser = TableRegistry::get('Users');
-			$user = $tableUser->newEntity($data);
-			$user->group_id = $group->id;
-			$user->companion_flg = '0';
-			if (!$tableUser->save($user)) {
-				throw new InternalErrorException();
+				$userId = null;
+				$tableUser = TableRegistry::get('Users');
+				$user = $tableUser->newEntity($data);
+				$user->group_id = $group->id;
+				$user->companion_flg = '0';
+				$user->birth = $data['birth_year'].'-'.$data['birth_month'].'-'.$data['birth_day'];
+				if (!$tableUser->save($user)) {
+					throw new InternalErrorException();
+				}
+			} else {
+				$user = $this->request->session()->read('member');
 			}
-			debug($user);
-
 			$tableOffer = TableRegistry::get('Offers');
 			$offer =$tableOffer->newEntity($data);
 			$offer->offer_user_id = $user->id;
 			$offer->recieve_group_id = $data['group_id'];
+			$offer->date1 = $data['offer_year_1'].'-'.$data['offer_month_1'].'-'.$data['offer_day_1'];
+			$offer->date2 = $data['offer_year_2'].'-'.$data['offer_month_2'].'-'.$data['offer_day_2'];
+			$offer->date3 = $data['offer_year_3'].'-'.$data['offer_month_3'].'-'.$data['offer_day_3'];
+
 			$tableOffer->save($offer);
 
 			$emailUser = new EMail();
@@ -177,14 +195,20 @@ class EntryController extends AppController
 				->setTo($user->email)
 				->setViewVars($data)
 				->send();
-
+			/*
+			$emailComp = new EMail();
+			$emailComp
+				->setTemplate('offer')
+				->setTo()
+				->setViewVars($data)
+				->send();
+			*/
 			$connection->commit();
 
 		} catch(Exception $e) {
 			$connection->rollback();
 			throw $e;
 		}
-
 		//$this->request->session()->delete('form_data');
 	}
 
@@ -200,6 +224,9 @@ class EntryController extends AppController
 						'page'=>$page,
 						'areaCode'=>$prefecture_cd,
 						'sort'=>'50on'
+				],
+				[
+				//		'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
 				]);
 		$json = json_decode($response->body(),true);
 		//debug($json);
@@ -210,6 +237,7 @@ class EntryController extends AppController
 			}
 
 			if ($page != $json['pageCount']) {
+				//sleep(60);
 				$courses = $this->courseApi($prefecture_cd, $page+1, $courses);
 			}
 		}

@@ -2,10 +2,11 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\I18n\Time;
 
 class User extends Entity {
 
-	protected $_virtual = ['sex_name','sex_class','email_kind_name'];
+	protected $_virtual = ['sex_name','sex_class','email_kind_name','real_age'];
 
 	protected function _getSexName() {
 		switch($this->_properties['sex']) {
@@ -21,6 +22,10 @@ class User extends Entity {
 			case '2':return 'female';
 		}
 		return '';
+	}
+
+	protected function _getRealAge() {
+		return (int) ((date('Ymd')-$this->_properties['birth']->i18nFormat('YYYYMMdd', 'Asia/Tokyo'))/10000);
 	}
 
 	protected function _passwordConfirm() {

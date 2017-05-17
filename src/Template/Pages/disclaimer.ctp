@@ -1,7 +1,7 @@
 <section class="main-content">
 <div class="brcb-area bg-green mb20">
   <ul class="brcb">
-    <li class="strong"><a href="">トップ</a></li>
+    <li class="strong"><a href="/">トップ</a></li>
     <li><a href="">免責事項</a></li>
   </ul>
   <!--

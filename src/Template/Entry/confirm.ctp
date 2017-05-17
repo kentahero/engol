@@ -40,8 +40,9 @@
         </div>
         <table class="table input-table mb50">
           <tbody>
+            <?php if (!isset($member)) {?>
             <tr>
-              <th>Eメール</th>
+              <th>メールアドレス</th>
               <td class="required">
                 <?=$data['email']?>
               </td>
@@ -100,7 +101,7 @@
               </th>
               <td class="required">
                 <p class="control bvc date">
-                  <?=$data['birty_year']?>年<?=$data['birty_month']?>月<?=$data['birty_day']?>日
+                  <?=$data['birth_year']?>年<?=$data['birth_month']?>月<?=$data['birth_day']?>日
                 </p>
               </td>
             </tr>
@@ -140,7 +141,7 @@
                 <?=$data['tel']?>
               </td>
             </tr>
-
+            <?php }?>
             <tr>
               <th>
                 希望日付1
@@ -168,8 +169,6 @@
                 <?=$data['offer_year_3']?>年<?=$data['offer_month_3']?>月<?=$data['offer_day_3']?>日
               </td>
             </tr>
-
-
             <tr>
               <th>プレイ場所</th>
               <td>
@@ -179,25 +178,25 @@
             <tr>
               <th>ゴルフ場地域</th>
               <td>
-                大阪府
+                <?=$data['course_prefecture_name']?>
               </td>
             </tr>
             <tr>
               <th>ゴルフ場名</th>
               <td>
-                茨木カントリークラブ
+                <?=$data['course_name']?>
               </td>
             </tr>
             <tr>
               <th>練習場地域</th>
               <td>
-                大阪府
+                <?=$data['training_prefecture_name']?>
               </td>
             </tr>
             <tr>
               <th>練習場名</th>
               <td>
-                  茨木ゴルフ練習場
+                <?=$data['training_name']?>
               </td>
             </tr>
             <tr>
