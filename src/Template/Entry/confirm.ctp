@@ -60,27 +60,15 @@
               </td>
             </tr>
             <tr>
-              <th>姓</th>
+              <th>氏名</th>
               <td class="required">
-                <?=$data['first_name']?>
+                <?=$data['first_name']?>　<?=$data['last_name']?>
               </td>
             </tr>
             <tr>
-              <th>名</th>
+              <th>氏名（カナ）</th>
               <td class="required">
-                <?=$data['last_name']?>
-              </td>
-            </tr>
-            <tr>
-              <th>姓（カナ）</th>
-              <td class="required">
-                <?=$data['first_kana']?>
-              </td>
-            </tr>
-            <tr>
-              <th>名（カナ）</th>
-              <td class="required">
-                <?=$data['last_kana']?>
+                <?=$data['first_kana']?>　<?=$data['last_kana']?>　
               </td>
             </tr>
             <tr>

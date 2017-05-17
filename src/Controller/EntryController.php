@@ -150,6 +150,7 @@ class EntryController extends AppController
 	public function complete() {
 
 		$data = $this->request->session()->read('form_data');
+		debug($data);
 		if (!$data) {
 			throw new NotFoundException();
 		}
@@ -226,7 +227,7 @@ class EntryController extends AppController
 						'sort'=>'50on'
 				],
 				[
-						'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
+						//'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
 				]);
 		$json = json_decode($response->body(),true);
 		//debug($json);
