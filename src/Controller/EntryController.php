@@ -128,6 +128,7 @@ class EntryController extends AppController
 
 		//バリデーション実行
 		if (!$this->request->session()->read('member')) {
+			//会員登録のバリデーション実行
 			$tableUser = TableRegistry::get('Users');
 			$user = $tableUser->newEntity($data);
 			if ($user->errors()) {
@@ -135,22 +136,21 @@ class EntryController extends AppController
 				$this->render('index');
 			}
 			$this->set('data',$user);
-		} else {
-			//会員のためのバリデーション
-			$tableOffer = TableRegistry::get('Offers');
-			$offer = $tableOffer->newEntity($data);
-			if ($offer->errors()) {
-				$this->set($user,$offer);
-				$this->render('index');
-			}
-			$this->set('data',$offer);
+
 		}
+		//オファーのバリデーション
+		$tableOffer = TableRegistry::get('Offers');
+		$offer = $tableOffer->newEntity($data);
+		if ($offer->errors()) {
+			$this->set($user,$offer);
+			$this->render('index');
+		}
+		$this->set('data',$offer);
 	}
 
 	public function complete() {
 
 		$data = $this->request->session()->read('form_data');
-		debug($data);
 		if (!$data) {
 			throw new NotFoundException();
 		}
@@ -194,6 +194,7 @@ class EntryController extends AppController
 			$emailUser
 				->setTemplate('user')
 				->setTo($user->email)
+				->setSubject('【エンゴル】オファー申し込み完了')
 				->setViewVars($data)
 				->send();
 			/*
@@ -227,7 +228,7 @@ class EntryController extends AppController
 						'sort'=>'50on'
 				],
 				[
-						'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
+				//		'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
 				]);
 		$json = json_decode($response->body(),true);
 		//debug($json);

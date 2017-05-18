@@ -230,6 +230,14 @@
               <td class="required">
                 <p class="control bvc date">
                   <span class="select">
+                  <?php echo $this->Form->input('birth',[
+                  					'type'=>'date',
+                  					'monthNames'=>false,
+                  					'label'=>false,
+                  					'templates' => [ 'dateWidget' => '{{year}} 年 {{month}} 月 {{day}} 日' ]
+                  				]);?>
+                  </span>
+                  <span class="select">
                   <?php echo $this->Form->select('birth_year',$birth_years,['empty'=>'年','class'=>'select']);?>
                   </span>
                   <span class="select">

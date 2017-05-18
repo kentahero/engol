@@ -163,6 +163,7 @@
                 ゴルフ場, 練習場
               </td>
             </tr>
+            <?php if ($data['course_kind'] == 1) {?>
             <tr>
               <th>ゴルフ場地域</th>
               <td>
@@ -175,6 +176,7 @@
                 <?=$data['course_name']?>
               </td>
             </tr>
+            <?php } else if($data['course_kind'] == 2) {?>
             <tr>
               <th>練習場地域</th>
               <td>
@@ -187,6 +189,7 @@
                 <?=$data['training_name']?>
               </td>
             </tr>
+            <?php }?>
             <tr>
               <th>お相手にメッセージ</th>
               <td>

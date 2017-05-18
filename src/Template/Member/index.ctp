@@ -31,7 +31,7 @@
         <table class="input-table mb50 is-bordered" style="boerder:1px">
           <tbody>
             <?php if(count($offers) == 0) {?>
-            <tr><td>メッセージがありません</td></tr>
+            <tr><td><p style="text-align:center;">メッセージがありません</p></td></tr>
             <?php } else {?>
             <?php foreach($offers as $offer) {?>
             <tr>

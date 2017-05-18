@@ -49,4 +49,14 @@ class Offer extends Entity {
 		}
 		return '';
 	}
+
+	protected function _getCourseKindName() {
+		switch ($this->_properties['course_kind']) {
+			case 1:
+				return 'ゴルフ場';
+			case 2:
+				return '練習場';
+		}
+		return '';
+	}
 }
