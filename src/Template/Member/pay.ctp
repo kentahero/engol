@@ -27,7 +27,7 @@
       <section class="profile-main-block">
         <div class="confirm-msg-area mb10">
           クレジットカード決済
-          <p><?php if(isset($error)) { echo $error }?></p>
+          <p><?php if(isset($error)){ echo $error; }?></p>
         </div>
       </section>
     </div>
