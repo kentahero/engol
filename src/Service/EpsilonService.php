@@ -46,14 +46,11 @@ class EpsilonService extends AppService {
 	}
 
 	public function start($vo) {
-
-		debug($vo);
-
 		$return = ['status'=>0,'message'=>''];
 		$http = new Client();
 		$response = $http->post(self::DEBUG_ORDER_URL,$vo,
 				[
-					'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
+					//'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
 				]);
 		if (!$response->isOk()) {
 			$return['status'] = false;
