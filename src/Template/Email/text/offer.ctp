@@ -1,23 +1,29 @@
-TO:<?=offer_nickname?>様
+
 
 以下の方からオファーの申し込みがございました。
-3日以内にメールボックス画面からオファーへの返答をして下さい。
+代表者の方は3日以内にメールボックス画面からオファーへの返答をして下さい。
 
 https://www.engol.jp/member/
 
 ---------------------------
 お申込みのお相手
 ---------------------------
-■ニックネーム：<?=$nickname?>
-■性別：<?=$sex_name?>
+■ニックネーム：<?=$User->nickname?>
+
+■性別：<?=$User->sex_name?>
+
 
 ---------------------------
 オファー内容
 ---------------------------
-■希望日付1：<?=$offer_year_1?>年<?=$offer_month_1?>月<?=$offer_day_1?>日
-■希望日付2：<?=$offer_year_2?>年<?=$offer_month_2?>月<?=$offer_day_2?>日
-■希望日付3：<?=$offer_year_3?>年<?=$offer_month_3?>月<?=$offer_day_3?>日
-■希望プレイ場所：<?=$course_prefecture_name?> <?=$course_name?>
+■希望日付1：<?php if($Offer->date1)echo $Offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+
+■希望日付2：<?php if($Offer->date2)echo $Offer->date2->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+
+■希望日付3：<?php if($Offer->date3)echo $Offer->date3->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+
+■希望プレイ場所：<?=$Offer->course_prefecture_name?> <?=$Offer->course_name?>
+
 
 ※本メールにお心当たりがない場合には以下にお問い合わせ下さい
 　EMail: info@engol.jp

@@ -15,27 +15,36 @@
 namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
-use App\Service\CompanionService;
 use Cake\Network\Exception\NotFoundException;
 use Cake\I18n\Time;
 use Cake\Mailer\Email;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Datasource\ConnectionManager;
 use Cake\Network\Http\Client;
+use App\Service\CompanionService;
+use App\Model\Entity\Offer;
 
 class EntryController extends AppController
 {
 
 	private function common() {
 
+		$entities = $this->request->session()->read('form_data');
+
 		//都道府県リストの生成
 		$tablePref = TableRegistry::get('Prefectures');
 		$prefs = $tablePref->find('list');
 		$this->set('prefs',$prefs);
 
-		if($this->request->getData('prefecture_cd')) {
+		$prefectureCd = '';
+		if ($this->request->getData('User.prefecture_cd')) {
+			$prefectureCd= $this->request->getData('User.prefecture_cd');
+		} else if (isset($entities['User']) && $entities['User']->prefecture_cd) {
+			$prefectureCd= $entities['User']->prefecture_cd;
+		}
+		if ($prefectureCd!= '') {
 			$tableCity = TableRegistry::get('Cities');
-			$cities = $tableCity->find('list')->where(['prefecture_cd'=>$this->request->getData('prefecture_cd')])->all();
+			$cities = $tableCity->find('list')->where(['prefecture_cd'=>$prefectureCd])->all();
 			$this->set('cities',$cities);
 		} else {
 			$this->set('cities',[]);
@@ -64,10 +73,16 @@ class EntryController extends AppController
 		}
 		$this->set('days',$days);
 
+		$coursePrefCd = '';
 		//ゴルフ場リストの生成
-		if ($this->request->getData('course_prefecture_cd')) {
+		if ($this->request->getData('Offer.course_prefecture_cd')) {
+			$coursePrefCd = $this->request->getData('Offer.course_prefecture_cd');
+		} else if ($entities && $entities['Offer']->course_prefecture_cd) {
+			$coursePrefCd = $entities['Offer']->course_prefecture_cd;
+		}
+		if ($coursePrefCd != '') {
 			$courses = [];
-			$courses = $this->courseApi($this->request->getData('course_prefecture_cd'),1,$courses);
+			$courses = $this->courseApi($coursePrefCd,1,$courses);
 			$this->set('courses',$courses);
 		} else {
 			$this->set('courses',[]);
@@ -77,46 +92,49 @@ class EntryController extends AppController
 
 	public function index() {
 
-		$groupId = $this->request->getQuery('group_id');
-		if (!$groupId) {
+		$offerGroupId = $this->request->getQuery('group_id');
+		if (!$offerGroupId) {
 			throw new NotFoundException();
 		}
 		$this->common();
 
 		//選択ペアの取得
 		$service = new CompanionService();
-		$group = $service->getCompanionPairGroup($groupId);
+		$group = $service->getCompanionPairGroup($offerGroupId);
 		if (!$group) {
 			//グループが見つからない場合404
 			throw new NotFoundException();
 		}
 
-		$tableUser = TableRegistry::get('Users');
-		$user = $tableUser->newEntity();
 		//セッションからデータ読み込み
-		$formData = $this->request->session()->read('form_data');
-		if ($formData) {
-			//$user = $tableUser->patchEntity($user, $formData);
+		$entities = $this->request->session()->read('form_data');
+		if ($entities) {
+			$entities['Offer']->receive_group_id = $offerGroupId;
+			$this->set('entities',$entities);
+		} else {
+			$tableUser = TableRegistry::get('Users');
+			$user = $tableUser->newEntity();
+			$tableOffer = TableRegistry::get('Offers');
+			$offer = $tableOffer->newEntity();
+			$offer->receive_group_id = $offerGroupId;
+
+			$this->set('entities',['User'=>$user,'Offer'=>$offer]);
 		}
-		//$user->offer_month = $now->month;
-		$user->group_id = $groupId;
-		$this->set('user',$user);
+
 		$this->set('group',$group);
 	}
 
 	public function confirm() {
 
 		$data = $this->request->getData();
+		$member = $this->request->session()->read('member');
 
 		if (!$this->request->is('post')) {
 			throw new NotFoundException();
 		}
-		//セッションにデータ書き込み
-		$this->request->session()->write('form_data',$data);
-
 		$this->common();
 
-		$groupId = $data['group_id'];
+		$groupId = $data['Offer']['receive_group_id'];
 		//選択ペアの取得
 		$service = new CompanionService();
 		$group = $service->getCompanionPairGroup($groupId);
@@ -124,35 +142,93 @@ class EntryController extends AppController
 			//ペア出ない場合は404
 			throw new NotFoundException();
 		}
-		$this->set('group',$group);
-
-		//バリデーション実行
-		if (!$this->request->session()->read('member')) {
-			//会員登録のバリデーション実行
-			$tableUser = TableRegistry::get('Users');
-			$user = $tableUser->newEntity($data);
-			if ($user->errors()) {
-				$this->set('user',$user);
-				$this->render('index');
+		$receiveUserId = '';
+		foreach($group->users as $comp) {
+			if ($comp->leader_flg == '1') {
+				$receiveUserId = $comp->id;
 			}
-			$this->set('data',$user);
-
 		}
+		$this->set('group',$group);
+		$entities = [];
+		//バリデーション実行
+		if (!$member) { //未ログインの場合
+			//-------------------------------------
+			//会員登録のバリデーション実行
+			//-------------------------------------
+			$data['User']['birth'] = null;
+			if (!empty($data['User']['birth_year'])&&!empty($data['User']['birth_month'])&&!empty($data['User']['birth_day'])) {
+				$data['User']['birth'] = $data['User']['birth_year'].'-'.$data['User']['birth_month'].'-'.$data['User']['birth_day'];
+			}
+			$tableUser = TableRegistry::get('Users');
+			$user = $tableUser->patchEntity(
+					$tableUser->newEntity(),
+					$data['User']);
+			$entities['User'] = $user;
+		} else {
+			$data['Offer']['offer_user_id'] = $member->id;
+		}
+		//-------------------------------------
 		//オファーのバリデーション
+		//-------------------------------------
+		//希望日付のデータ生成
+		$data['Offer']['date1'] = null;
+		$data['Offer']['date2'] = null;
+		$data['Offer']['date3'] = null;
+		for($i=0;$i<3;$i++) {
+			$offerDate = $data['Offer']['date'][$i];
+			if (!empty($offerDate['year'])&&!empty($offerDate['month'])&&!empty($offerDate['day'])) {
+				$data['Offer']['date'.($i+1)] = $offerDate['year'].'-'.$offerDate['month'].'-'.$offerDate['day'];
+			}
+		}
+		//バリデーション
 		$tableOffer = TableRegistry::get('Offers');
-		$offer = $tableOffer->newEntity($data);
-		if ($offer->errors()) {
-			$this->set($user,$offer);
+		if (isset($data['Offer']['course_kind']) && $data['Offer']['course_kind'] == 1) {
+			if (!empty($data['Offer']['course_name_other'])) {
+				$data['Offer']['course_name'] = $data['Offer']['course_name_other'];
+			}
+			$tableOffer->validator('default')->offsetUnset('training_prefecture_cd');
+			$tableOffer->validator('default')->offsetUnset('training_name');
+		} else if (isset($data['Offer']['course_kind']) && $data['Offer']['course_kind'] ==2) {
+			$tableOffer->validator('default')->offsetUnset('course_prefecture_cd');
+			$tableOffer->validator('default')->offsetUnset('course_name');
+		}
+		$data['Offer']['receive_user_id'] = $receiveUserId;
+		$offer = $tableOffer->newEntity($data['Offer']);
+		$entities['Offer'] = $offer;
+
+		//---------------------------------
+		//付属情報の取得
+		//---------------------------------
+		if (!empty($entities['User']['city_cd'])) {
+			$tableCity = TableRegistry::get('Cities');
+			$city = $tableCity->find()->where(['Cities.cd'=>$entities['User']['city_cd']])->contain('Prefectures')->first();
+			$entities['User']['prefecture_name'] = $city->prefecture->name;
+			$entities['User']['city_name'] = $city->name;
+		}
+
+		if (!empty($entities['Offer']['course_prefecture_cd'])) {
+			$tablePref = TableRegistry::get('Prefectures');
+			$coursePref = $tablePref->get($entities['Offer']['course_prefecture_cd']);
+			$entities['Offer']['course_prefecture_name'] = $coursePref->name;
+		}
+		$entities['Group'] = $group;
+		$this->set('entities',$entities);
+		//セッションにデータ書き込み
+		$this->request->session()->write('form_data',$entities);
+
+		if ((!$member && $user->errors()) || $offer->errors()) {
+			//バリデーションエラーがあった場合は入力画面表示
+			$this->set('error',true);
 			$this->render('index');
 		}
-		$this->set('data',$offer);
+
 	}
 
 	public function complete() {
 
-		$data = $this->request->session()->read('form_data');
-		if (!$data) {
-			throw new NotFoundException();
+		$entities= $this->request->session()->read('form_data');
+		if (!$entities) {
+			throw new InternalErrorException('セッション情報消失');
 		}
 
 		//トランザクションの開始
@@ -160,55 +236,72 @@ class EntryController extends AppController
 		$connection->begin();
 
 		try {
-			if (!$this->request->session()->read('member')) {
+			$member = $this->request->session()->read('member');
+			if (!$member) {
+				//グループの登録
 				$tableGroup = TableRegistry::get('UserGroups');
 				$group = $tableGroup->newEntity();
-				$group->name = $data['nickname'].'グループ';
+				$group->name = $entities['User']['nickname'].'グループ';
 				if (!$tableGroup->save($group)) {
-					throw new InternalErrorException();
+					throw new InternalErrorException('グループテーブルの保存に失敗');
 				}
-
-				$userId = null;
+				//ユーザーの登録
 				$tableUser = TableRegistry::get('Users');
-				$user = $tableUser->newEntity($data);
+				//$user = $tableUser->newEntity((array)$entities['User'],['validate' => false]);
+				$user = $entities['User'];
 				$user->group_id = $group->id;
 				$user->companion_flg = '0';
-				$user->birth = $data['birth_year'].'-'.$data['birth_month'].'-'.$data['birth_day'];
 				if (!$tableUser->save($user)) {
-					throw new InternalErrorException();
+					throw new InternalErrorException('ユーザーテーブルの保存に失敗');
 				}
 			} else {
-				$user = $this->request->session()->read('member');
+				$user = $member;
 			}
+			//オファーの登録
 			$tableOffer = TableRegistry::get('Offers');
-			$offer =$tableOffer->newEntity($data);
+			//$offer =$tableOffer->newEntity((array)$entities['Offer'],['validate' => false]);
+			$offer = $entities['Offer'];
 			$offer->offer_user_id = $user->id;
-			$offer->recieve_group_id = $data['group_id'];
-			$offer->date1 = $data['offer_year_1'].'-'.$data['offer_month_1'].'-'.$data['offer_day_1'];
-			$offer->date2 = $data['offer_year_2'].'-'.$data['offer_month_2'].'-'.$data['offer_day_2'];
-			$offer->date3 = $data['offer_year_3'].'-'.$data['offer_month_3'].'-'.$data['offer_day_3'];
+			$offer->status = Offer::STATUS_OFFER;
+			if (!$tableOffer->save($offer)) {
+				throw new InternalErrorException('オファーテーブルの保存に失敗');
+			}
 
-			$tableOffer->save($offer);
-
+			$entities['member'] = $member;
+			//申込者へのメール送信
 			$emailUser = new EMail();
 			$emailUser
 				->setTemplate('user')
 				->setTo($user->email)
 				->setSubject('【エンゴル】オファー申し込み完了')
-				->setViewVars($data)
+				->setViewVars($entities)
 				->send();
-			/*
+			//登録ゴルファーへのメール
 			$emailComp = new EMail();
 			$emailComp
 				->setTemplate('offer')
-				->setTo()
-				->setViewVars($data)
+				->setSubject('【エンゴル】オファーの申し込みがありました')
+				->setViewVars($entities);
+			foreach($entities['Group']['users'] as $companion) {
+				if ($companion->email) {
+					$emailComp
+						->setTo($companion->email)
+						->send();
+				}
+			}
+			//運営へのメール
+			$emailAdmin = new EMail();
+			$emailAdmin
+				->setTemplate('admin')
+				->setTo('info@engol.jp')
+				->setSubject('【エンゴル】オファー申し込みがありました')
+				->setViewVars($entities)
 				->send();
-			*/
 			$connection->commit();
 
 		} catch(Exception $e) {
 			$connection->rollback();
+			debug($e);
 			throw $e;
 		}
 		//$this->request->session()->delete('form_data');
@@ -228,7 +321,7 @@ class EntryController extends AppController
 						'sort'=>'50on'
 				],
 				[
-				//		'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
+						'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
 				]);
 		$json = json_decode($response->body(),true);
 		//debug($json);

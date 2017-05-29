@@ -21,8 +21,8 @@ $(function(){
 	});
   });
 
-  $('input[name="course_kind"]:radio').change( function() {
-	  var course_kind = $('input[name="course_kind"]:checked').val();
+  $('input[name="Offer[course_kind]"]:radio').change( function() {
+	  var course_kind = $('input[name="Offer[course_kind]"]:checked').val();
 	  if (course_kind == "1") {
 		  $('#course_prefecture').show();
 		  $('#course_name_tr').show();
@@ -45,6 +45,9 @@ $(function(){
 	  //ajaxで市区町村リスト取得
 	  getCourseList(1);
   });
+
+  $('input[name="Offer[course_kind]"]:radio').change();
+
 });
 
 function getCourseList(page) {

@@ -15,6 +15,8 @@
         ,showOn: "button"
         ,buttonImageOnly : true
         ,buttonImage : "/img/ic-calendar-32.png"
+        ,minDate: '4d'
+        ,maxDate: '30d'
 		,beforeShowDay: function(date) {
        	  var result;
           var dd = date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
@@ -105,13 +107,13 @@
       </span>
     </a>
     <?php } ?>
-    <?php echo $this->Form->create($user,['type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm'],'novalidate' => true]);?>
-    <?= $this->Form->hidden('group_id')?>
+    <?php echo $this->Form->create($entities,['type'=>'post','url'=>['controller'=>'Entry','action'=>'confirm'],'novalidate' => true]);?>
+    <?= $this->Form->hidden('Offer.receive_group_id')?>
     <div class="profile-area">
       <section class="profile-main-block">
-      　<?php if ($this->Form->error) { ?>
+      　<?php if (isset($error)) { ?>
         <div class="error-msg-area mb10">
-          入力項目にエラーがあります
+          入力項目にエラーがあります。各項目を確認の上、再度入力して下さい。
         </div>
         <?php }?>
         <div class="mb10">
@@ -127,8 +129,8 @@
               <th>メールアドレス</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('email',['class'=>'input','placeholder'=>'info@engol.jp']);?>
-                  <?php echo $this->Form->error('email')?>
+                  <?php echo $this->Form->text('User.email',['class'=>'input','placeholder'=>'info@engol.jp']);?>
+                  <?php echo $this->Form->error('User.email')?>
                 </p>
               </td>
             </tr>
@@ -136,26 +138,28 @@
               <th>メールアドレス確認</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('email_confirm',['class'=>'input','placeholder'=>'info@engol.jp']);?>
-                  <?php echo $this->Form->error('email_confirm')?>
+                  <?php echo $this->Form->text('User.email_confirm',['class'=>'input','placeholder'=>'info@engol.jp']);?>
+                  <?php echo $this->Form->error('User.email_confirm')?>
                 </p>
               </td>
             </tr>
+            <!--
             <tr>
               <th>メール種別</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->radio('email_kind',[['value'=>'1','text'=>' 携帯'],['value'=>'2','text'=>' PC']]);?>
-                  <?php echo $this->Form->error('email_kind')?>
+                  <?php echo $this->Form->radio('User.email_kind',[['value'=>'1','text'=>' 携帯'],['value'=>'2','text'=>' PC']]);?>
+                  <?php echo $this->Form->error('User.email_kind')?>
                 </p>
               </td>
             </tr>
+             -->
             <tr>
               <th>パスワード</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->password('password',['class'=>'input']);?>
-                  <?php echo $this->Form->error('password')?>
+                  <?php echo $this->Form->password('User.password',['class'=>'input']);?>
+                  <?php echo $this->Form->error('User.password')?>
                 </p>
               </td>
             </tr>
@@ -163,8 +167,8 @@
               <th>パスワード確認</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->password('password_confirm',['class'=>'input']);?>
-                  <?php echo $this->Form->error('password_confirm')?>
+                  <?php echo $this->Form->password('User.password_confirm',['class'=>'input']);?>
+                  <?php echo $this->Form->error('User.password_confirm')?>
                 </p>
               </td>
             </tr>
@@ -172,8 +176,8 @@
               <th>お名前(姓)</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('first_name',['class'=>'input','placeholder'=>'田中']);?>
-                  <?php echo $this->Form->error('first_name')?>
+                  <?php echo $this->Form->text('User.first_name',['class'=>'input','placeholder'=>'田中']);?>
+                  <?php echo $this->Form->error('User.first_name')?>
                 </p>
               </td>
             </tr>
@@ -181,8 +185,8 @@
               <th>お名前(名)</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('last_name',['class'=>'input','placeholder'=>'太郎']);?>
-                  <?php echo $this->Form->error('last_name')?>
+                  <?php echo $this->Form->text('User.last_name',['class'=>'input','placeholder'=>'太郎']);?>
+                  <?php echo $this->Form->error('User.last_name')?>
                 </p>
               </td>
             </tr>
@@ -190,8 +194,8 @@
               <th>お名前（カナ性）</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('first_kana',['class'=>'input','placeholder'=>'タナカ']);?>
-                  <?php echo $this->Form->error('first_kana')?>
+                  <?php echo $this->Form->text('User.first_kana',['class'=>'input','placeholder'=>'タナカ']);?>
+                  <?php echo $this->Form->error('User.first_kana')?>
                 </p>
               </td>
             </tr>
@@ -199,8 +203,8 @@
               <th>お名前（カナ名）</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('last_kana',['class'=>'input','placeholder'=>'タロウ']);?>
-                  <?php echo $this->Form->error('last_kana')?>
+                  <?php echo $this->Form->text('User.last_kana',['class'=>'input','placeholder'=>'タロウ']);?>
+                  <?php echo $this->Form->error('User.last_kana')?>
                 </p>
               </td>
             </tr>
@@ -208,8 +212,8 @@
               <th>ニックネーム</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('nickname',['class'=>'input','placeholder'=>'たろうくん']);?>
-                  <?php echo $this->Form->error('nickname')?>
+                  <?php echo $this->Form->text('User.nickname',['class'=>'input','placeholder'=>'たろうくん']);?>
+                  <?php echo $this->Form->error('User.nickname')?>
                 </p>
               </td>
             </tr>
@@ -217,8 +221,8 @@
               <th>性別</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->radio('sex',[['value'=>'1','text'=>' 男性'],['value'=>'2','text'=>' 女性']]);?>
-                  <?php echo $this->Form->error('sex')?>
+                  <?php echo $this->Form->radio('User.sex',[['value'=>'1','text'=>' 男性'],['value'=>'2','text'=>' 女性']]);?>
+                  <?php echo $this->Form->error('User.sex')?>
                 </p>
               </td>
             </tr>
@@ -230,24 +234,16 @@
               <td class="required">
                 <p class="control bvc date">
                   <span class="select">
-                  <?php echo $this->Form->input('birth',[
-                  					'type'=>'date',
-                  					'monthNames'=>false,
-                  					'label'=>false,
-                  					'templates' => [ 'dateWidget' => '{{year}} 年 {{month}} 月 {{day}} 日' ]
-                  				]);?>
+                  <?php echo $this->Form->select('User.birth_year',$birth_years,['empty'=>'年','class'=>'select']);?>
                   </span>
                   <span class="select">
-                  <?php echo $this->Form->select('birth_year',$birth_years,['empty'=>'年','class'=>'select']);?>
+                    <?php echo $this->Form->select('User.birth_month',$months,['empty'=>'月']);?>
                   </span>
                   <span class="select">
-                    <?php echo $this->Form->select('birth_month',$months,['empty'=>'月']);?>
-                  </span>
-                  <span class="select">
-                   <?php echo $this->Form->select('birth_day',$days,['empty'=>'日']);?>
+                   <?php echo $this->Form->select('User.birth_day',$days,['empty'=>'日']);?>
                   </span>
                   <!--<input type="text" value="" class="calendar-picker none"/>-->
-                  <?php echo $this->Form->error('birth')?>
+                  <?php echo $this->Form->error('User.birth')?>
                 </p>
               </td>
             </tr>
@@ -255,8 +251,8 @@
               <th>郵便番号<br/>(ハイフンなし)</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('postal',['class'=>'input','placeholder'=>'5634445']);?>
-                  <?php echo $this->Form->error('postal')?>
+                  <?php echo $this->Form->text('User.postal',['class'=>'input','placeholder'=>'5634445']);?>
+                  <?php echo $this->Form->error('User.postal')?>
                 </p>
               </td>
             </tr>
@@ -265,8 +261,8 @@
               <td class="required">
                 <p class="control">
                   <span class="select">
-                    <?php echo $this->Form->select('prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'prefecture_cd'])?>
-                    <?php echo $this->Form->error('prefecture_cd')?>
+                    <?php echo $this->Form->select('User.prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'prefecture_cd'])?>
+                    <?php echo $this->Form->error('User.prefecture_cd')?>
                   </span>
                 </p>
               </td>
@@ -276,8 +272,8 @@
               <td class="required">
                 <p class="control">
                   <span class="select">
-                    <?php echo $this->Form->select('city_cd',$cities,['empty'=>'市区町村を選択','id'=>'city_cd'])?>
-                    <?php echo $this->Form->error('city_cd')?>
+                    <?php echo $this->Form->select('User.city_cd',$cities,['empty'=>'市区町村を選択','id'=>'city_cd'])?>
+                    <?php echo $this->Form->error('User.city_cd')?>
                   </span>
                 </p>
               </td>
@@ -286,8 +282,8 @@
               <th>住所(町名番地)</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->text('address1',['class'=>'input','placeholder'=>'1丁目2-3']);?>
-                  <?php echo $this->Form->error('address1')?>
+                  <?php echo $this->Form->text('User.address1',['class'=>'input','placeholder'=>'1丁目2-3']);?>
+                  <?php echo $this->Form->error('User.address1')?>
                 </p>
               </td>
             </tr>
@@ -295,8 +291,8 @@
               <th>住所(建物名・部屋番号)</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->text('address2',['class'=>'input','placeholder'=>'天神橋マンション201']);?>
-                  <?php echo $this->Form->error('address2')?>
+                  <?php echo $this->Form->text('User.address2',['class'=>'input','placeholder'=>'天神橋マンション201']);?>
+                  <?php echo $this->Form->error('User.address2')?>
                 </p>
               </td>
             </tr>
@@ -304,8 +300,8 @@
               <th>電話番号<br/>(ハイフンあり)</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
-                  <?php echo $this->Form->error('tel')?>
+                  <?php echo $this->Form->text('User.tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
+                  <?php echo $this->Form->error('User.tel')?>
                 </p>
               </td>
             </tr>
@@ -317,16 +313,16 @@
               <td class="required">
                 <p class="control bvc date">
                   <span class="select">
-                    <?php echo $this->Form->select('offer_year_1',$offer_years,['empty'=>'年','class'=>'year']);?>
+                    <?php echo $this->Form->select('Offer.date.0.year',$offer_years,['empty'=>'年','class'=>'year']);?>
                   </span>
                   <span class="select">
-                    <?php echo $this->Form->select('offer_month_1',$months,['empty'=>'月','class'=>'month']);?>
+                    <?php echo $this->Form->select('Offer.date.0.month',$months,['empty'=>'月','class'=>'month']);?>
                   </span>
                   <span class="select">
-                    <?php echo $this->Form->select('offer_day_1',$days,['empty'=>'日','class'=>'day']);?>
+                    <?php echo $this->Form->select('Offer.date.0.day',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
-                  <?php echo $this->Form->error('offer_date_1')?>
+                  <?php echo $this->Form->error('Offer.date1')?>
                 </p>
               </td>
             </tr>
@@ -335,19 +331,19 @@
               <th>
                 希望日付2
               </th>
-              <td class="required">
+              <td>
                 <p class="control bvc date">
                   <span class="select">
-                    <?php echo $this->Form->select('offer_year_2',$offer_years,['empty'=>'年','class'=>'year']);?>
+                    <?php echo $this->Form->select('Offer.date.1.year',$offer_years,['empty'=>'年','class'=>'year']);?>
                   </span>
                   <span class="select">
-                    <?php echo $this->Form->select('offer_month_2',$months,['empty'=>'月','class'=>'month']);?>
+                    <?php echo $this->Form->select('Offer.date.1.month',$months,['empty'=>'月','class'=>'month']);?>
                   </span>
                   <span class="select">
-                    <?php echo $this->Form->select('offer_day_2',$days,['empty'=>'日','class'=>'day']);?>
+                    <?php echo $this->Form->select('Offer.date.1.day',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
-                  <?php echo $this->Form->error('offer_date_2')?>
+                  <?php echo $this->Form->error('Offer.date2')?>
                 </p>
               </td>
             </tr>
@@ -357,19 +353,19 @@
               <th>
                 希望日付3
               </th>
-              <td class="required">
+              <td>
                 <p class="control bvc date">
                   <span class="select">
-                    <?php echo $this->Form->select('offer_year_3',$offer_years,['empty'=>'年','class'=>'year']);?>
+                    <?php echo $this->Form->select('Offer.date.2.year',$offer_years,['empty'=>'年','class'=>'year']);?>
                   </span>
                   <span class="select">
-                    <?php echo $this->Form->select('offer_month_3',$months,['empty'=>'月','class'=>'month']);?>
+                    <?php echo $this->Form->select('Offer.date.2.month',$months,['empty'=>'月','class'=>'month']);?>
                   </span>
                   <span class="select">
-                    <?php echo $this->Form->select('offer_day_3',$days,['empty'=>'日','class'=>'day']);?>
+                    <?php echo $this->Form->select('Offer.date.2.day',$days,['empty'=>'日','class'=>'day']);?>
                   </span>
                   <input type="text" value="" class="calendar-picker none"/>
-                  <?php echo $this->Form->error('offer_date_3')?>
+                  <?php echo $this->Form->error('Offer.date3')?>
                 </p>
               </td>
             </tr>
@@ -377,8 +373,8 @@
               <th>プレイ場所</th>
               <td class="required">
                 <p class="control bvc">
-                  <?php echo $this->Form->radio('course_kind',[['value'=>'1','text'=>' ゴルフ場'],['value'=>'2','text'=>' 練習場']]);?>
-                  <?php echo $this->Form->error('course_kind')?>
+                  <?php echo $this->Form->radio('Offer.course_kind',[['value'=>'1','text'=>' ゴルフ場'],['value'=>'2','text'=>' 練習場']]);?>
+                  <?php echo $this->Form->error('Offer.course_kind')?>
                 </p>
               </td>
             </tr>
@@ -387,7 +383,8 @@
               <td class="required">
                 <p class="control">
                   <span class="select">
-                    <?php echo $this->Form->select('course_prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'course_prefecture_cd'])?>
+                    <?php echo $this->Form->select('Offer.course_prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'course_prefecture_cd'])?>
+                    <?php echo $this->Form->error('Offer.course_prefecture_cd')?>
                   </span>
                 </p>
               </td>
@@ -397,9 +394,9 @@
               <td class="required">
                 <p class="control">
                    <span class="select">
-                    <?php echo $this->Form->select('course_name',$courses,['empty'=>'ゴルフ場を選択','id'=>'course_name'])?>
+                    <?php echo $this->Form->select('Offer.course_name',$courses,['empty'=>'ゴルフ場を選択','id'=>'course_name'])?>
                   </span>
-                  <?php echo $this->Form->error('course_name')?>
+                  <?php echo $this->Form->error('Offer.course_name')?>
                 </p>
               </td>
             </tr>
@@ -407,7 +404,8 @@
               <th>ゴルフ場名（リストにない場合）</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->text('course_name_other',['class'=>'input','placeholder'=>'茨木カントリークラブ']);?>
+                  <?php echo $this->Form->text('Offer.course_name_other',['class'=>'input','placeholder'=>'茨木カントリークラブ']);?>
+                  <?php echo $this->Form->error('Offer.course_other_name')?>
                 </p>
               </td>
             </tr>
@@ -416,7 +414,8 @@
               <td class="required">
                 <p class="control">
                   <span class="select">
-                    <?php echo $this->Form->select('training_prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'course_prefecture_cd'])?>
+                    <?php echo $this->Form->select('Offer.training_prefecture_cd',$prefs,['empty'=>'都道府県を選択','id'=>'course_prefecture_cd'])?>
+                    <?php echo $this->Form->error('Offer.training_prefecture_cd')?>
                   </span>
                 </p>
               </td>
@@ -425,8 +424,8 @@
               <th>練習場名</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('training_name',['class'=>'input','placeholder'=>'茨木ゴルフ練習場']);?>
-                  <?php echo $this->Form->error('training_name')?>
+                  <?php echo $this->Form->text('Offer.training_name',['class'=>'input','placeholder'=>'茨木ゴルフ練習場']);?>
+                  <?php echo $this->Form->error('Offer.training_name')?>
                 </p>
               </td>
             </tr>
@@ -437,7 +436,7 @@
               </span>
               <h2 class="profile-title male bvc">お相手に一言メッセージ</h2>
               <p class="control">
-              <textarea class="textarea" placeholder="よろしくお願いいたします"></textarea>
+              <?php echo $this->Form->textarea('Offer.message',['class'=>'textarea','placeholder'=>'よろしくお願いいたします']);?>
               </p>
               </td>
             </tr>
@@ -446,15 +445,15 @@
         <div class="mb20 consent-area">
           <h2 class="profile-title male bvc">個人情報保護方針への同意</h2>
           <p class="control">
-            <textarea class="textarea" placeholder="Textarea">
-山路やまみちを登りながら、こう考えた。
-智ちに働けば角かどが立つ。情じょうに棹さおさせば流される。意地を通とおせば窮屈きゅうくつだ。とかくに人の世は住みにくい。
-住みにくさが高こうじると、安い所へ引き越したくなる。どこへ越しても住みにくいと悟さとった時、詩が生れて、画えが出来る。
+            <textarea class="textarea">
+            <?= $this->element('privacy_text');?>
             </textarea>
           </p>
           <p class="control">
             <div class="has-text-centered">
-              <input type="checkbox" id="consent"/><label for="consent">同意します</label>
+              <?php echo $this->Form->checkbox('User.agree',['id'=>'consent'])?>
+              <label for="consent">同意します</label>
+              <?php echo $this->Form->error('User.agree')?>
             </div>
           </p>
         </div>

@@ -42,41 +42,52 @@ use App\Model\Entity\Offer;
         </div>
         <table class="table input-table mb50">
           <tbody>
+            <?php if ($offer->status == Offer::STATUS_OFFER) {?>
             <tr>
               <th>
                 希望日付1
               </th>
-              <td class="required">
-                <?=$offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+              <td>
+                <?php if ($offer->date1)echo $offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
-
             <tr>
               <th>
                 希望日付2
               </th>
-              <td class="required">
-                <?=$offer->date2->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+              <td>
+                <?php if ($offer->date2)echo $offer->date2->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
             <tr>
               <th>
                 希望日付3
               </th>
-              <td class="required">
-                <?=$offer->date3->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+              <td>
+                <?php if ($offer->date3)echo $offer->date3->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
+            <?php } else {?>
+            <tr>
+              <th>
+                決定プレイ日付
+              </th>
+              <td class="required">
+                <?php if ($offer->play_date) echo $offer->play_date->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+              </td>
+            </tr>
+            <?php }?>
             <tr>
               <th>プレイ場所</th>
               <td>
-                ゴルフ場, 練習場
+                <?=$offer->course_kind_name?>
               </td>
             </tr>
+            <?php if($offer->course_kind == '1') {?>
             <tr>
               <th>ゴルフ場地域</th>
               <td>
-                <?=$offer->course_prefecture_name?>
+                <?=$offer->course_prefecture->name?>
               </td>
             </tr>
             <tr>
@@ -85,18 +96,20 @@ use App\Model\Entity\Offer;
                 <?=$offer->course_name?>
               </td>
             </tr>
+            <?php } else {?>
             <tr>
               <th>練習場地域</th>
               <td>
-                大阪府
+                <?=$offer->taining_prefecture->name?>
               </td>
             </tr>
             <tr>
               <th>練習場名</th>
               <td>
-                  茨木ゴルフ練習場
+                 <?=$offer->training_name?>
               </td>
             </tr>
+            <?php }?>
             <tr>
               <th>メッセージ</th>
               <td>
@@ -124,7 +137,7 @@ use App\Model\Entity\Offer;
             <td  style="text-align:right;padding-right:10px;">50,000円</td>
           </tr>
         </table>
-        <a href="/member/pay">
+        <a href="/member/pay?offer_id=<?=$offer->id?>">
         <button type="submit" class="button">
           <span>料金のお支払</span>
           <span class="icon is-medium right">
@@ -135,7 +148,7 @@ use App\Model\Entity\Offer;
         <p style="text-align:center">料金をお支払頂くまでご成約となりません</p>
         <?php } else {?>
         <button type="submit" class="button">
-          <span>キャンセル</span>
+          <span>このオファーをキャンセル</span>
           <span class="icon is-medium right">
               <i class="ci img-next"></i>
           </span>
