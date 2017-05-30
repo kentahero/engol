@@ -308,7 +308,7 @@ class MemberController extends AppController
 					->setViewVars(['offer'=>$offer])
 					->send();
 			}
-			$this->redirect('/member/detail?offer_id='.$offerId);
+			$this->redirect('/member/detail?offer_id='.$offer->id);
 		}
 	}
 
