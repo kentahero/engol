@@ -16,7 +16,6 @@ namespace App\Controller;
 
 use Cake\ORM\TableRegistry;
 use App\Service\CompanionService;
-use Cake\Network\Exception\NotFoundException;
 
 class TopController extends AppController
 {
