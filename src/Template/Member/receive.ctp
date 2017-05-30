@@ -72,7 +72,7 @@ use App\Model\Entity\Offer;
         <?=$this->Form->hidden('offer_id',['value'=>$offer->id])?>
         <table class="table input-table mb50">
           <tbody>
-            <?php if ($offer->status == Offer::STATUS_OFFER) {?>
+            <?php if ($offer->status == Offer::STATUS_OFFER || $offer->status == Offer::STATUS_REDUCE) {?>
             <tr>
               <th>
                 希望日付1
@@ -163,13 +163,15 @@ use App\Model\Entity\Offer;
         </button>
         <?php echo $this->Form->end()?>
         <br/>
+        <a href="/member/reduce?offer_id=<?=$offer->id?>">
         <button type="submit" class="button">
           <span>拒否する</span>
           <span class="icon is-medium right">
               <i class="ci img-next"></i>
           </span>
         </button>
-        <?php } else {?>
+        </a>
+        <?php } else if ($offer->status != Offer::STATUS_REDUCE && $offer->status != Offer::STATUS_CANCEL) {?>
         <button type="submit" class="button">
           <span>キャンセル</span>
           <span class="icon is-medium right">

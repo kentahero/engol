@@ -14,6 +14,7 @@
  */
 namespace App\Controller;
 
+use Cake\Core\Configure;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\I18n\Time;
@@ -28,6 +29,8 @@ use Cake\I18n\Time;
  */
 class AppController extends Controller
 {
+
+	public $mailConf = 'default';
 
     /**
      * Initialization hook method.
@@ -46,6 +49,10 @@ class AppController extends Controller
         $this->loadComponent('Flash');
 
         Time::setDefaultLocale('japanese');
+
+        if (Configure::read('debug')) {
+        	$this->mailConf = 'debug';
+        }
 
         /*
          * Enable the following components for recommended CakePHP security settings.

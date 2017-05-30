@@ -35,7 +35,7 @@ class OffersTable extends Table {
 				[
 						'className'=>'Prefectures',
 						'foreignKey'=>'training_prefecture_cd',
-						'propertyName'=>'taining_prefecture'
+						'propertyName'=>'training_prefecture'
 				]);
 	}
 
@@ -97,7 +97,8 @@ class OffersTable extends Table {
 			$offer = $this->find()->where([
 					'offer_user_id'=>$context['data']['offer_user_id'],
 					'OR'=>['date1'=>$value,'date2'=>$value,'date3'=>$value],
-					'status !='=>Offer::STATUS_CANCEL
+					'status !='=>Offer::STATUS_CANCEL,
+					'status !='=>Offer::STATUS_REDUCE
 				])->first();
 
 			if ($offer)

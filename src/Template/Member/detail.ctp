@@ -42,7 +42,7 @@ use App\Model\Entity\Offer;
         </div>
         <table class="table input-table mb50">
           <tbody>
-            <?php if ($offer->status == Offer::STATUS_OFFER) {?>
+            <?php if ($offer->status == Offer::STATUS_OFFER || $offer->status == Offer::STATUS_REDUCE) {?>
             <tr>
               <th>
                 希望日付1
@@ -72,7 +72,7 @@ use App\Model\Entity\Offer;
               <th>
                 決定プレイ日付
               </th>
-              <td class="required">
+              <td>
                 <?php if ($offer->play_date) echo $offer->play_date->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
@@ -100,7 +100,7 @@ use App\Model\Entity\Offer;
             <tr>
               <th>練習場地域</th>
               <td>
-                <?=$offer->taining_prefecture->name?>
+                <?=$offer->training_prefecture->name?>
               </td>
             </tr>
             <tr>
@@ -122,19 +122,19 @@ use App\Model\Entity\Offer;
         <table class="table is-bordered">
           <tr>
             <th>お相手のプレイ料金</th>
-            <td style="text-align:right;padding-right:10px;"><?=number_format((15000*count($group->users)))?>円</td>
+            <td style="text-align:right;padding-right:10px;"><?=number_format($amount['play_amount'])?>円</td>
           </tr>
           <tr>
             <th>お相手の設定料金</th>
-            <td  style="text-align:right;padding-right:10px;"><?=number_format($group->users[0]->companion_info->amount)?>円</td>
+            <td  style="text-align:right;padding-right:10px;"><?=number_format($amount['user_amount'])?>円</td>
           </tr>
           <tr>
             <th>サイト利用料金</th>
-            <td  style="text-align:right;padding-right:10px;"><?=number_format((5000*count($group->users)))?>円</td>
+            <td  style="text-align:right;padding-right:10px;"><?=number_format($amount['site_amount'])?>円</td>
           </tr>
           <tr style="background:#00000">
             <th>合計</th>
-            <td  style="text-align:right;padding-right:10px;">50,000円</td>
+            <td  style="text-align:right;padding-right:10px;"><?=number_format($amount['total'])?>円</td>
           </tr>
         </table>
         <a href="/member/pay?offer_id=<?=$offer->id?>">
@@ -146,7 +146,7 @@ use App\Model\Entity\Offer;
         </button>
         </a>
         <p style="text-align:center">料金をお支払頂くまでご成約となりません</p>
-        <?php } else {?>
+       <?php } else if ($offer->status != Offer::STATUS_REDUCE && $offer->status != Offer::STATUS_CANCEL) {?>
         <button type="submit" class="button">
           <span>このオファーをキャンセル</span>
           <span class="icon is-medium right">

@@ -2,8 +2,8 @@
   <section class="profile-pic-area">
     <section class="bg-green profile-title-block">
       <ul class="brcb">
-        <li class="strong"><a href="">トップ</a></li>
-        <li class="strong"><a href="">メールボックス</a></li>
+        <li class="strong"><a href="/">トップ</a></li>
+        <li class="strong"><a href="/member/">メールボックス</a></li>
         <!-- <li><a href="">Hidekiさん</a></li>-->
       </ul>
       <!--
