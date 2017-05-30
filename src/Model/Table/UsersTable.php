@@ -3,14 +3,14 @@ namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\ORM\TableRegistry;
+use Cake\I18n\FrozenDate;
 
 class UsersTable extends Table {
 
 	public function initialize(array $config) {
 		//同伴者情報の結合
 		$this->hasOne('CompanionInfos');
-		//居住地都道府県情報の結合
+		//居住地都道府県情報の結合;
 		$this->belongsTo('Prefectures')
 			->setForeignKey('prefecture_cd');
 			//->setJoinType('INNER');
@@ -54,31 +54,41 @@ class UsersTable extends Table {
 			->add('last_name','length',['rule'=>['maxLength',16],'message'=>'16文字以下で入力して下さい']);
 		$validator
 			->notEmpty('first_kana','名前(カナ性)を入力して下さい')
-			->add('first_kana','length',['rule'=>['maxLength',16],'message'=>'16文字以下で入力して下さい']);
+			->add('first_kana','length',['rule'=>['maxLength',16],'message'=>'16文字以下で入力して下さい'])
+			->add('first_kana','katakana',['rule'=>[$this,'katakana'],'message'=>'全角カタカナで入力して下さい']);
 		$validator
 			->notEmpty('last_kana','名前(カナ名)を入力して下さい')
-			->add('last_kana','length',['rule'=>['maxLength',16],'message'=>'16文字以下で入力して下さい']);
+			->add('last_kana','length',['rule'=>['maxLength',16],'message'=>'16文字以下で入力して下さい'])
+			->add('last_kana','katakana',['rule'=>[$this,'katakana'],'message'=>'全角カタカナで入力して下さい']);
 		//ニックネーム
 		$validator
-			->notEmpty('nickname','名前(カナ名)を入力して下さい')
+			->notEmpty('nickname','ニックネームを入力して下さい')
 			->add('nickname','length',['rule'=>['maxLength',9],'message'=>'9文字以下で入力して下さい'])
 			->add('nickname','custom',['rule'=>[$this,'duplicateNickname'],'message'=>'既に使われているニックネームです']);
 		//性別
 		$validator
-			->requirePresence('sex','性別を選択して下さい');
+			->requirePresence('sex','性別を選択して下さい')
+			->notEmpty('sex','性別を選択して下さい');
+		//生年月日
+		$validator
+			->notEmpty('birth','生年月日を入力して下さい')
+			->add('birth','date1',['rule'=>['date'],'message'=>'生年月日を入力して下さい'])
+			->add('birth','custom',['rule'=>[$this,'birthAdult'],'message'=>'20歳未満の方はご利用頂けません']);
 		//住所各種
 		$validator
 			->notEmpty('postal','郵便番号を入力して下さい')
-			->add('postal','numeric',['rule'=>'numeric'],'ハイフンなしの数字のみで入力して下さい')
-			->add('postal','length',['rule'=>['minLength',7],'message'=>'7文字の数字で入力して下さい'])
-			->add('postal','length',['rule'=>['maxLength',7],'message'=>'7文字の数字で入力して下さい']);
+			->add('postal','numeric',['rule'=>'numeric','message'=>'ハイフンなしの数字のみで入力して下さい'])
+			->add('postal','length',['rule'=>['minLength',7],'message'=>'7桁の数字で入力して下さい'])
+			->add('postal','length',['rule'=>['maxLength',7],'message'=>'7桁の数字で入力して下さい']);
 		$validator
 			->notEmpty('prefecture_cd','都道府県を選択して下さい');
 		$validator
 			->notEmpty('city_cd','市区町村を選択して下さい');
 		$validator
+			->allowEmpty('address1')
 			->add('address1','length',['rule'=>['maxLength',256],'message'=>'256文字以内で入力して下さい']);
 		$validator
+			->allowEmpty('address2')
 			->add('address2','length',['rule'=>['maxLength',256],'message'=>'256文字以内で入力して下さい']);
 		$validator
 			->notEmpty('tel','連絡先電話番号を入力して下さい')
@@ -86,13 +96,16 @@ class UsersTable extends Table {
 		$validator
 			->notEmpty('offer_year_1','希望日を入れて下さい')
 			->notEmpty('offer_month_1','希望日を入力して下さい');
-
+		$validator
+			->requirePresence('agree','個人情報保護方針へ同意願います')
+			->notEmpty('agree','個人情報保護方針へ同意願います')
+			->equals('agree', '1', '個人情報保護方針へ同意願います');
 
 		return $validator;
 	}
 
 	public function duplicateEmail($value, $context) {
-		$count = $this->find('all')->where(['email'=>$value])->count();
+		$count = $this->find('all')->where(['email'=>$value,'deleted'=>'0'])->count();
 		return $count==0;
 	}
 
@@ -113,7 +126,17 @@ class UsersTable extends Table {
 		return true;
 	}
 	public function duplicateNickname($value, $context) {
-		$count = $this->find('all')->where(['nickname'=>$value])->count();
+		$count = $this->find('all')->where(['nickname'=>$value,'deleted'=>'0'])->count();
 		return $count==0;
+	}
+	public function birthAdult($value, $context) {
+		$birth = new FrozenDate($value);
+		if ((date('Ymd')-(int)$birth->format('Ymd'))/10000 < 20) {
+			return false;
+		}
+		return true;
+	}
+	public function katakana($value, $context){
+		return (bool)preg_match("/^[ァ-ヶー゛゜]*$/u", $value); // カタカナ
 	}
 }

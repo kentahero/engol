@@ -73,4 +73,8 @@ class AppController extends Controller
         	$this->set('member',$member);
         }
     }
+
+    public function isMember() {
+    	return $this->request->session()->read('member');
+    }
 }

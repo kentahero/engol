@@ -28,7 +28,7 @@
   <section class="container">
     <div class="profile-area">
       <section class="profile-main-block">
-        <?php echo $this->Form->create($data,['type'=>'post','url'=>['controller'=>'Entry','action'=>'complete']]);?>
+        <?php echo $this->Form->create($entities,['type'=>'post','url'=>['controller'=>'Entry','action'=>'complete']]);?>
         <div class="confirm-msg-area mb10">
           お申込み内容を確認
         </div>
@@ -43,90 +43,90 @@
             <?php if (!isset($member)) {?>
             <tr>
               <th>メールアドレス</th>
-              <td class="required">
-                <?=$data['email']?>
+              <td>
+                <?=$entities['User']->email?>
               </td>
             </tr>
+            <!--
             <tr>
               <th>メール種別</th>
               <td>
-                <?=$data['email_kind_name']?>
+                <?=$entities['User']->email_kind_name?>
               </td>
             </tr>
+            -->
             <tr>
               <th>パスワード</th>
-              <td class="required">
+              <td>
                 ●●●●●●●●●●●●
               </td>
             </tr>
             <tr>
               <th>氏名</th>
-              <td class="required">
-                <?=$data['first_name']?>　<?=$data['last_name']?>
+              <td>
+                <?=$entities['User']->first_name?>　<?=$entities['User']->last_name?>
               </td>
             </tr>
             <tr>
               <th>氏名（カナ）</th>
-              <td class="required">
-                <?=$data['first_kana']?>　<?=$data['last_kana']?>　
+              <td>
+                <?=$entities['User']->first_kana?>　<?=$entities['User']->last_kana?>　
               </td>
             </tr>
             <tr>
               <th>ニックネーム</th>
-              <td class="required">
-                <?=$data['nickname']?>
+              <td>
+                <?=$entities['User']->nickname?>
               </td>
             </tr>
             <tr>
               <th>性別</th>
-              <td class="required">
-                <?=$data['sex_name']?>
+              <td>
+                <?=$entities['User']->sex_name?>
               </td>
             </tr>
             <tr>
               <th>
                 生年月日
               </th>
-              <td class="required">
-                <p class="control bvc date">
-                  <?=$data['birth_year']?>年<?=$data['birth_month']?>月<?=$data['birth_day']?>日
-                </p>
+              <td>
+                  <?=$entities['User']->birth->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
             <tr>
               <th>郵便番号</th>
               <td>
-                <?=$data['postal']?>
+                <?=$entities['User']->postal?>
               </td>
             </tr>
             <tr>
               <th>都道府県</th>
               <td>
-                <?=$data['prefecture_name']?>
+                <?=$entities['User']->prefecture_name?>
               </td>
             </tr>
             <tr>
               <th>市区町村</th>
               <td>
-                <?=$data['city_name']?>
+                <?=$entities['User']->city_name?>
               </td>
             </tr>
             <tr>
               <th>町名番地</th>
               <td>
-                <?=$data['address1']?>
+                <?=$entities['User']->address1?>
               </td>
             </tr>
             <tr>
               <th>建物名・部屋番号</th>
               <td>
-                <?=$data['address2']?>
+                <?=$entities['User']->address2?>
               </td>
             </tr>
             <tr>
               <th>電話番号</th>
               <td>
-                <?=$data['tel']?>
+                <?=$entities['User']->tel?>
               </td>
             </tr>
             <?php }?>
@@ -134,8 +134,8 @@
               <th>
                 希望日付1
               </th>
-              <td class="required">
-                <?=$data['offer_year_1']?>年<?=$data['offer_month_1']?>月<?=$data['offer_day_1']?>日
+              <td>
+                <?php if($entities['Offer']->date1)echo $entities['Offer']->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
 
@@ -143,8 +143,8 @@
               <th>
                 希望日付2
               </th>
-              <td class="required">
-                <?=$data['offer_year_2']?>年<?=$data['offer_month_2']?>月<?=$data['offer_day_2']?>日
+              <td>
+                <?php if($entities['Offer']->date2)echo $entities['Offer']->date2->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
 
@@ -153,47 +153,47 @@
               <th>
                 希望日付3
               </th>
-              <td class="required">
-                <?=$data['offer_year_3']?>年<?=$data['offer_month_3']?>月<?=$data['offer_day_3']?>日
+              <td>
+                <?php if($entities['Offer']->date3)echo $entities['Offer']->date3->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
               </td>
             </tr>
             <tr>
               <th>プレイ場所</th>
               <td>
-                ゴルフ場, 練習場
+                <?=$entities['Offer']->course_kind_name?>
               </td>
             </tr>
-            <?php if ($data['course_kind'] == 1) {?>
+            <?php if ($entities['Offer']->course_kind == 1) {?>
             <tr>
               <th>ゴルフ場地域</th>
               <td>
-                <?=$data['course_prefecture_name']?>
+                <?=$entities['Offer']->course_prefecture_name?>
               </td>
             </tr>
             <tr>
               <th>ゴルフ場名</th>
               <td>
-                <?=$data['course_name']?>
+                <?=$entities['Offer']->course_name?>
               </td>
             </tr>
             <?php } else if($data['course_kind'] == 2) {?>
             <tr>
               <th>練習場地域</th>
               <td>
-                <?=$data['training_prefecture_name']?>
+                <?=$entities['Offer']->training_prefecture_name?>
               </td>
             </tr>
             <tr>
               <th>練習場名</th>
               <td>
-                <?=$data['training_name']?>
+                <?=$entities['Offer']->training_name?>
               </td>
             </tr>
             <?php }?>
             <tr>
               <th>お相手にメッセージ</th>
               <td>
-                <?=nl2br($data['message'])?>
+                <?=nl2br($entities['Offer']->message)?>
               </td>
           </tbody>
         </table>

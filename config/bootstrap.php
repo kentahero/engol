@@ -74,7 +74,11 @@ use Cake\Utility\Security;
  */
 try {
     Configure::config('default', new PhpConfig());
-    Configure::load('app', 'default', false);
+    if (Configure::read('debug')) {
+    	Configure::load('app.debug', 'default', false);
+    } else {
+    	Configure::load('app', 'default', false);
+    }
 
     Configure::load('constants', 'default');
 } catch (\Exception $e) {

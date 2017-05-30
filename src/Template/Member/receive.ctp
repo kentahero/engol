@@ -1,3 +1,7 @@
+<?php
+use App\Model\Entity\Offer;
+?>
+
 <section class="main-content detail-page">
   <section class="profile-pic-area">
     <section class="bg-green profile-title-block">
@@ -51,21 +55,32 @@
         <div class="confirm-msg-area mb10">
           オファー内容を確認
         </div>
+        <?php if(isset($error)) {?>
+        <div class="error-msg-area mb10">
+          希望日を選択して下さい
+        </div>
+        <?php }?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
           </span>
-          <h2 class="profile-title male bvc">オファー状態：<?=$offer->recieve_title?></h2>
+          <h2 class="profile-title male bvc">オファー状態：<?=$offer->receive_title?></h2>
         </div>
+        <?php if ($offer->status == Offer::STATUS_OFFER) {?>
+        <?php echo $this->Form->create(null,['type'=>'post','url'=>['controller'=>'member','action'=>'accept']]);?>
+        <?php } ?>
+        <?=$this->Form->hidden('offer_id',['value'=>$offer->id])?>
         <table class="table input-table mb50">
           <tbody>
+            <?php if ($offer->status == Offer::STATUS_OFFER) {?>
             <tr>
               <th>
                 希望日付1
               </th>
-              <td class="required">
-                <?=$offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
-                <input type="radio" name="offer_date" id="consent1"/><label for="consent1">選択</label>
+              <td>
+                <?php if ($offer->date1) { echo $offer->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+                <input type="radio" name="offer_date" id="consent1" value="<?=$offer->date1->i18nFormat('YYYY-MM-dd', 'Asia/Tokyo')?>"/><label for="consent1">選択</label>
+                <?php } ?>
               </td>
             </tr>
 
@@ -73,30 +88,43 @@
               <th>
                 希望日付2
               </th>
-              <td class="required">
-                <?=$offer->date2->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
-                <input type="radio" name="offer_date" id="consent2"/><label for="consent2">選択</label>
+              <td>
+                <?php if ($offer->date2) { echo $offer->date2->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+                <input type="radio" name="offer_date" id="consent2" value="<?=$offer->date2->i18nFormat('YYYY-MM-dd', 'Asia/Tokyo')?>"/><label for="consent2">選択</label>
+                <?php }?>
               </td>
             </tr>
             <tr>
               <th>
                 希望日付3
               </th>
-              <td class="required">
-                <?=$offer->date3->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
-                <input type="radio" name="offer_date" id="consent3"/><label for="consent3">選択</label>
+              <td>
+                <?php if ($offer->date3) { echo $offer->date3->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+                <input type="radio" name="offer_date" id="consent3" value="<?=$offer->date3->i18nFormat('YYYY-MM-dd', 'Asia/Tokyo')?>"/><label for="consent3">選択</label>
+                <?php }?>
               </td>
             </tr>
+            <?php } else {?>
+            <tr>
+              <th>
+                決定プレイ日付
+              </th>
+              <td>
+                <?php if ($offer->play_date) echo $offer->play_date->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+              </td>
+            </tr>
+            <?php }?>
             <tr>
               <th>プレイ場所</th>
               <td>
-                ゴルフ場, 練習場
+                <?=$offer->course_kind_name?>
               </td>
             </tr>
+            <?php if($offer->course_kind  == '1') {?>
             <tr>
               <th>ゴルフ場地域</th>
               <td>
-                大阪府
+                <?=$offer->course_prefecture->name?>
               </td>
             </tr>
             <tr>
@@ -105,18 +133,20 @@
                 <?=$offer->course_name?>
               </td>
             </tr>
+            <?php } else {?>
             <tr>
               <th>練習場地域</th>
               <td>
-                大阪府
+                <?=$offer->training_prefecture->name?>
               </td>
             </tr>
             <tr>
               <th>練習場名</th>
               <td>
-                  茨木ゴルフ練習場
+                <?=$offer->training_name?>
               </td>
             </tr>
+            <?php }?>
             <tr>
               <th>メッセージ</th>
               <td>
@@ -131,6 +161,8 @@
               <i class="ci img-next"></i>
           </span>
         </button>
+        <?php echo $this->Form->end()?>
+        <br/>
         <button type="submit" class="button">
           <span>拒否する</span>
           <span class="icon is-medium right">

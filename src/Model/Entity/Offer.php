@@ -12,7 +12,7 @@ class Offer extends Entity {
 	const STATUS_REDUCE = 5;
 	const STATUS_CANCEL = 9;
 
-	protected $_virtual = ['offer_title','recieve_title'];
+	protected $_virtual = ['offer_title','receive_title','course_kind_name'];
 
 	protected function _getOfferTitle() {
 		switch ($this->_properties['status']) {
@@ -32,7 +32,7 @@ class Offer extends Entity {
 		return '';
 	}
 
-	protected function _getRecieveTitle() {
+	protected function _getReceiveTitle() {
 		switch ($this->_properties['status']) {
 			case self::STATUS_OFFER:
 				return 'オファーが申し込まれました';
