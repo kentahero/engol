@@ -1,10 +1,11 @@
-  <!--
+  <a href="/golfer-entry/index">
   <section class="staff-area">
     <i class="ci img-golf-player"></i>
     ゴルファーとして登録する
     <i class="ci img-golf-player"></i>
   </section>
-  -->
+  </a>
+
   <section class="other-area">
     <ul>
       <li><a href="/pages/use">ご利用の流れ</a></li>
@@ -12,7 +13,7 @@
       <?php if (!isset($member)) { ?>
       <li><a href="/member/login">ログイン</a></li>
       <?php } else { ?>
-      <li><a href="/member/index">メールボックス</a></li>
+      <li><a href="/member/logout">ログアウト</a></li>
       <?php } ?>
     </ul>
     <ul>

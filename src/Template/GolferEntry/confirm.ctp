@@ -3,7 +3,7 @@
     <section class="bg-green profile-title-block">
       <ul class="brcb">
         <li class="strong"><a href="">トップ</a></li>
-        <li class="strong"><a href="">オファー申し込み</a></li>
+        <li class="strong"><a href="">ゴルファー登録</a></li>
         <!-- <li><a href="">Hidekiさん</a></li>-->
       </ul>
       <!--
@@ -13,34 +13,23 @@
       </a>
        -->
     </section>
-<!--     <section class="detail-title">
-      <p class="mb10">
-        <span class="icon-left">
-          <i class="ci img-ball"></i>
-        </span>
-        プロフィール
-      </p>
-    </section> -->
-    <div class="entry-disp-area">
-      <?= $this->element('profile')?>
-    </div>
   </section>
   <section class="container">
     <div class="profile-area">
       <section class="profile-main-block">
-        <?php echo $this->Form->create($entities,['type'=>'post','url'=>['controller'=>'Entry','action'=>'complete']]);?>
+        <?php echo $this->Form->create($entities,['type'=>'post','url'=>['controller'=>'GolferEntry','action'=>'complete']]);?>
         <div class="confirm-msg-area mb10">
-          お申込み内容を確認
+          登録内容を確認
         </div>
+        <?php if (!isset($member)) {?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
           </span>
-          <h2 class="profile-title male bvc">お申込み情報</h2>
+          <h2 class="profile-title male bvc">個人情報</h2>
         </div>
         <table class="table input-table mb50">
-          <tbody>
-            <?php if (!isset($member)) {?>
+          <tbody style="border-bottom:0px">
             <tr>
               <th>メールアドレス</th>
               <td>
@@ -130,70 +119,112 @@
               </td>
             </tr>
             <?php }?>
+		  </tbody>
+		</table>
+		<div class="mb10">
+          <span class="">
+            <i class="ci img-ball"></i>
+          </span>
+          <h2 class="profile-title male bvc">プロフィール画像</h2>
+        </div>
+        <table class="table input-table mb50">
+          <tbody style="border-bottom:0px">
             <tr>
-              <th>
-                希望日付1
-              </th>
-              <td>
-                <?php if($entities['Offer']->date1)echo $entities['Offer']->date1->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
+              <th>画像1</th>
+              <td class="required">
+                <img src="<?=$entities['CompanionInfo']['image1']['url']?>" width="200"/>
               </td>
             </tr>
-
+            <?php if($entities['CompanionInfo']['image2']['name']) {?>
             <tr>
-              <th>
-                希望日付2
-              </th>
+              <th>画像2</th>
               <td>
-                <?php if($entities['Offer']->date2)echo $entities['Offer']->date2->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
-              </td>
-            </tr>
-
-
-            <tr>
-              <th>
-                希望日付3
-              </th>
-              <td>
-                <?php if($entities['Offer']->date3)echo $entities['Offer']->date3->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
-              </td>
-            </tr>
-            <tr>
-              <th>プレイ場所</th>
-              <td>
-                <?=$entities['Offer']->course_kind_name?>
-              </td>
-            </tr>
-            <?php if ($entities['Offer']->course_kind == 1) {?>
-            <tr>
-              <th>ゴルフ場地域</th>
-              <td>
-                <?=$entities['Offer']->course_prefecture_name?>
-              </td>
-            </tr>
-            <tr>
-              <th>ゴルフ場名</th>
-              <td>
-                <?=$entities['Offer']->course_name?>
-              </td>
-            </tr>
-            <?php } else if($entities['Offer']->course_kind == 2) {?>
-            <tr>
-              <th>練習場地域</th>
-              <td>
-                <?=$entities['Offer']->training_prefecture_name?>
-              </td>
-            </tr>
-            <tr>
-              <th>練習場名</th>
-              <td>
-                <?=$entities['Offer']->training_name?>
+                <img src="<?=$entities['CompanionInfo']['image2']['url']?>" width="200"/>
               </td>
             </tr>
             <?php }?>
+            <?php if($entities['CompanionInfo']['image3']['name']) {?>
             <tr>
-              <th>お相手にメッセージ</th>
+              <th>画像3</th>
               <td>
-                <?=nl2br($entities['Offer']->message)?>
+                <img src="<?=$entities['CompanionInfo']['image3']['url']?>" width="200"/>
+              </td>
+            </tr>
+            <?php }?>
+          </tbody>
+        </table>
+        <div class="mb10">
+          <span class="">
+            <i class="ci img-ball"></i>
+          </span>
+          <h2 class="profile-title male bvc">ゴルファー情報</h2>
+        </div>
+        <table class="table input-table mb50">
+          <tbody style="border-bottom:0px">
+            <tr>
+              <th>ＰＲ</th>
+              <td class="required">
+                <?=nl2br($entities['CompanionInfo']->pr)?>
+              </td>
+            </tr>
+            <tr>
+              <th>平均スコア</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->average_score?>
+              </td>
+            </tr>
+            <tr>
+              <th>ラウンド曜日</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->round_week?>
+              </td>
+            </tr>
+            <tr>
+              <th>練習場曜日</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->training_week?>
+              </td>
+            </tr>
+            <tr>
+              <th>ゴルフ場エリア</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->course_prefecture_name?>
+              </td>
+            </tr>
+            <tr>
+              <th>練習場エリア</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->training_prefecture_name?>
+              </td>
+            </tr>
+            <tr>
+              <th>ゴルフ歴</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->history?>
+              </td>
+            </tr>
+            <tr>
+              <th>ご職業</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->job?>
+              </td>
+            </tr>
+            <tr>
+              <th>設定料金</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->amount?>
+              </td>
+            </tr>
+            <tr>
+              <th>プレイ費</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->play_amount_kind?>
+              </td>
+            </tr>
+            <tr>
+              <th>ペアの方のメールアドレス</th>
+              <td class="required">
+                <?=$entities['CompanionInfo']->pair_emai?>
               </td>
             </tr>
           </tbody>

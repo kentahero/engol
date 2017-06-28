@@ -4,7 +4,7 @@
       <div class="nav-left">
         <h1 class="logo-block">
           <a class="nav-item nav-link" href="/">
-            <img src="/img/engol_logo_white4k.png"><br>
+            <img src="/img/logo.png"><br>
           </a>
         </h1>
       </div>
@@ -12,7 +12,7 @@
         <?php if (isset($member)) {?>
           <span class="ic-char">ようこそ<?=$member->nickname?>さん</span>
         <a class="nav-item nav-link" href="/member/index">
-          <img src="/img/icon-mail.png" style="width:30px"/>
+          <img src="/img/icon-mail.png" style="max-height: 30px"/>
         </a>
         <?php } else { ?>
         <a class="nav-item nav-link" href="/member/login">
