@@ -26,7 +26,7 @@
     <div class="profile-area">
       <section class="profile-main-block">
         <div class="confirm-msg-area mb10">
-          クレジットカード決済
+          キャンセル
           <p><?php if(isset($error)){ echo $error; }?></p>
         </div>
       </section>

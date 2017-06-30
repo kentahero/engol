@@ -72,7 +72,9 @@ class CompanionService extends AppService {
 					'Users.id'=>$userId,
 					'Users.deleted'=>'0',
 					'companion_flg'=>'1',
-				])->contain(['CompanionInfos','Prefectures','Cities']);
+				])->contain(['CompanionInfos'=>function ($query) {
+					return $query->select()->contain(['CoursePrefectures','TrainingPrefectures']);
+				},'Prefectures','Cities']);
 		$user = $queryUser->first();
 		if ($user == null) {
 			return null;
@@ -82,7 +84,9 @@ class CompanionService extends AppService {
 					'group_id'=>$user->group_id,
 					'Users.deleted'=>'0',
 					'companion_flg'=>'1',
-				])->contain(['CompanionInfos','Prefectures','Cities']);
+				])->contain(['CompanionInfos'=>function ($query) {
+					return $query->select()->contain(['CoursePrefectures','TrainingPrefectures']);
+				},'Prefectures','Cities']);
 		$pair = $queryPair->first();
 		$user['pair'] = $pair;
 		return $user;

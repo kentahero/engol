@@ -24,6 +24,11 @@ class User extends Entity {
 		return '';
 	}
 
+	protected function _getDisplayAge() {
+		$real = (int) ((date('Ymd')-$this->_properties['birth']->i18nFormat('YYYYMMdd', 'Asia/Tokyo'))/10000);
+		return floor($real/10)*10;
+	}
+
 	protected function _getRealAge() {
 		return (int) ((date('Ymd')-$this->_properties['birth']->i18nFormat('YYYYMMdd', 'Asia/Tokyo'))/10000);
 	}

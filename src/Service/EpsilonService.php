@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Cake\Core\Configure;
 use Cake\Network\Http\Client;
 use Cake\Utility\Xml;
 
@@ -16,6 +17,8 @@ class EpsilonService extends AppService {
 
 	const DEBUG_ORDER_URL = 'https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi';
 	const PRODUCTION_ORDER_URL = '';
+	const DEBUG_CONFIRM_URL = 'https://beta.epsilon.jp/cgi-bin/order/getsales2.cgi';
+	const PRODUCTION_CONFIRM_URL = '';
 	const CONTRACT_CODE = '64985980';
 	const ITEM_CODE = 'IT001';
 	const ST_CODE = '10000-0000-00000-00000-00000-00000-00000';
@@ -44,14 +47,19 @@ class EpsilonService extends AppService {
 
 		return $vo;
 	}
-
+	/**
+	 * 決済処理の開始
+	 * @param unknown $vo
+	 * @return number[]|string[]|boolean[]|number[]|string[]|boolean[]|NULL[]
+	 */
 	public function start($vo) {
 		$return = ['status'=>0,'message'=>''];
+		$options = [];
+		if (!Configure::read('debug')) {
+			$options['ssl_cafile'] = '/etc/pki/tls/certs/ca-bundle.crt';
+		}
 		$http = new Client();
-		$response = $http->post(self::DEBUG_ORDER_URL,$vo,
-				[
-					'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
-				]);
+		$response = $http->post(self::DEBUG_ORDER_URL,$vo,$options);
 		if (!$response->isOk()) {
 			$return['status'] = false;
 			$return['message'] = '通信失敗';
@@ -70,6 +78,44 @@ class EpsilonService extends AppService {
 
 		$return['status'] = true;
 		$return['message'] = urldecode($xml['Epsilon_result']['result'][1]['@redirect']);
+		return $return;
+	}
+	/**
+	 * 決済完了後の確認
+	 * @param unknown $data
+	 * @return number[]|string[]|boolean[]
+	 */
+	public function confirm($data) {
+		$return = ['status'=>0,'message'=>''];
+		$options = [];
+		if (!Configure::read('debug')) {
+			$options['ssl_cafile'] = '/etc/pki/tls/certs/ca-bundle.crt';
+		}
+		$http = new Client();
+		$response = $http->post(
+				self::DEBUG_CONFIRM_URL,
+				['contract_code'=>self::CONTRACT_CODE,'trans_code'=>$data['trans_code']],
+				$options);
+		if (!$response->isOk()) {
+			$return['status'] = false;
+			$return['message'] = '通信失敗';
+			return $return;
+		}
+		$xml_str = $response->body();
+		$xml_str = mb_convert_encoding($xml_str, 'UTF-8'); //x-sjisがエラーになるためUTF-8変換
+		$xml_str = str_replace('x-sjis-cp932', 'UTF-8', $xml_str);
+		$xml = Xml::toArray(Xml::build($xml_str));
+		if (!isset($xml['Epsilon_result']['result'])) {
+			$return['status'] = false;
+			$return['message'] = '該当データなし';
+			return $return;
+		}
+		if ($xml['Epsilon_result']['result'][2]['@state'] != '1') {
+			$return['status'] = false;
+			$return['message'] = '未決済';
+			return $return;
+		}
+		$return['status'] = true;
 		return $return;
 	}
 }

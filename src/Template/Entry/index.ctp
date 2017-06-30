@@ -297,10 +297,10 @@
               </td>
             </tr>
             <tr>
-              <th>電話番号<br/>(ハイフンあり)</th>
+              <th>電話番号<br/>(ハイフンなし)</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('User.tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
+                  <?php echo $this->Form->text('User.tel',['class'=>'input','placeholder'=>'09011112222']);?>
                   <?php echo $this->Form->error('User.tel')?>
                 </p>
               </td>

@@ -176,7 +176,7 @@
                 <?=$entities['Offer']->course_name?>
               </td>
             </tr>
-            <?php } else if($data['course_kind'] == 2) {?>
+            <?php } else if($entities['Offer']->course_kind == 2) {?>
             <tr>
               <th>練習場地域</th>
               <td>
@@ -195,6 +195,7 @@
               <td>
                 <?=nl2br($entities['Offer']->message)?>
               </td>
+            </tr>
           </tbody>
         </table>
 

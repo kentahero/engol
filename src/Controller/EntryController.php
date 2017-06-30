@@ -14,6 +14,7 @@
  */
 namespace App\Controller;
 
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Exception\NotFoundException;
 use Cake\I18n\Time;
@@ -27,6 +28,9 @@ use App\Model\Entity\Offer;
 class EntryController extends AppController
 {
 
+	/**
+	 * 画面共通処理
+	 */
 	private function common() {
 
 		$entities = $this->request->session()->read('form_data');
@@ -90,6 +94,10 @@ class EntryController extends AppController
 
 	}
 
+	/**
+	 * 入力画面
+	 * @throws NotFoundException
+	 */
 	public function index() {
 
 		$offerGroupId = $this->request->getQuery('group_id');
@@ -124,6 +132,10 @@ class EntryController extends AppController
 		$this->set('group',$group);
 	}
 
+	/**
+	 * 確認画面
+	 * @throws NotFoundException
+	 */
 	public function confirm() {
 
 		$data = $this->request->getData();
@@ -211,6 +223,11 @@ class EntryController extends AppController
 			$coursePref = $tablePref->get($entities['Offer']['course_prefecture_cd']);
 			$entities['Offer']['course_prefecture_name'] = $coursePref->name;
 		}
+		if (!empty($entities['Offer']['training_prefecture_cd'])) {
+			$tablePref = TableRegistry::get('Prefectures');
+			$coursePref = $tablePref->get($entities['Offer']['training_prefecture_cd']);
+			$entities['Offer']['training_prefecture_name'] = $coursePref->name;
+		}
 		$entities['Group'] = $group;
 		$this->set('entities',$entities);
 		//セッションにデータ書き込み
@@ -224,6 +241,11 @@ class EntryController extends AppController
 
 	}
 
+	/**
+	 * 完了画面
+	 * @throws InternalErrorException
+	 * @throws Exception
+	 */
 	public function complete() {
 
 		$entities= $this->request->session()->read('form_data');
@@ -256,6 +278,7 @@ class EntryController extends AppController
 				}
 			} else {
 				$user = $member;
+				$entities['User'] = $user;
 			}
 			//オファーの登録
 			$tableOffer = TableRegistry::get('Offers');
@@ -269,7 +292,7 @@ class EntryController extends AppController
 
 			$entities['member'] = $member;
 			//申込者へのメール送信
-			$emailUser = new EMail();
+			$emailUser = new EMail($this->mailConf);
 			$emailUser
 				->setTemplate('user')
 				->setTo($user->email)
@@ -277,7 +300,7 @@ class EntryController extends AppController
 				->setViewVars($entities)
 				->send();
 			//登録ゴルファーへのメール
-			$emailComp = new EMail();
+			$emailComp = new EMail($this->mailConf);
 			$emailComp
 				->setTemplate('offer')
 				->setSubject('【エンゴル】オファーの申し込みがありました')
@@ -290,7 +313,7 @@ class EntryController extends AppController
 				}
 			}
 			//運営へのメール
-			$emailAdmin = new EMail();
+			$emailAdmin = new EMail($this->mailConf);
 			$emailAdmin
 				->setTemplate('admin')
 				->setTo('info@engol.jp')
@@ -304,11 +327,15 @@ class EntryController extends AppController
 			debug($e);
 			throw $e;
 		}
-		//$this->request->session()->delete('form_data');
+		$this->request->session()->delete('form_data');
 	}
 
 	private function courseApi($prefecture_cd,$page,$courses) {
 		//楽天APIの呼び出し
+		$options = [];
+		if (!Configure::read('debug')) {
+			$options['ssl_cafile'] = '/etc/pki/tls/certs/ca-bundle.crt';
+		}
 		$http = new Client();
 		$response = $http->get(
 				'https://app.rakuten.co.jp/services/api/Gora/GoraGolfCourseSearch/20131113',
@@ -319,10 +346,7 @@ class EntryController extends AppController
 						'page'=>$page,
 						'areaCode'=>$prefecture_cd,
 						'sort'=>'50on'
-				],
-				[
-						'ssl_cafile' => '/etc/pki/tls/certs/ca-bundle.crt'
-				]);
+				],$options);
 		$json = json_decode($response->body(),true);
 		//debug($json);
 

@@ -7,7 +7,7 @@ class Offer extends Entity {
 
 	const STATUS_OFFER = 0;
 	const STATUS_ACCEPT = 1;
-	const STATUS_PAYED = 2;
+	const STATUS_PAID = 2;
 	const STATUS_CLOSE = 3;
 	const STATUS_REDUCE = 5;
 	const STATUS_CANCEL = 9;
@@ -20,7 +20,7 @@ class Offer extends Entity {
 				return 'オファーを申し込みました';
 			case self::STATUS_ACCEPT:
 				return 'オファーが承諾されました';
-			case self::STATUS_PAYED:
+			case self::STATUS_PAID:
 				return 'ご成約が完了しました';
 			case self::STATUS_CLOSE:
 				return 'ラウンドが完了しました';
@@ -40,7 +40,7 @@ class Offer extends Entity {
 				return 'オファーを承諾しました';
 			case self::STATUS_REDUCE:
 				return 'オファーを拒否しました';
-			case self::STATUS_PAYED:
+			case self::STATUS_PAID:
 				return 'ご成約が完了ました。';
 			case self::STATUS_CLOSE:
 				return 'ラウンドが完了しました';

@@ -69,7 +69,7 @@ class MemberController extends AppController
 				}
 				$this->redirect('/member/');
 			} else {
-
+				$this->set('error','メールアドレスまたはパスワードに誤りがあります');
 			}
 		}
 	}
@@ -130,6 +130,7 @@ class MemberController extends AppController
 			$service = new CompanionService();
 			$group = $service->getCompanionPairGroup($offer->receive_group_id);
 			$this->set('group',$group);
+			$this->set('amount',$this->calcAmount($group));
 		} else {
 			//受信、送信ではない場合不正アクセス
 			throw new NotFoundException();
@@ -152,7 +153,6 @@ class MemberController extends AppController
 		}
 
 		$offerTable = TableRegistry::get('Offers');
-		//$offer = $offerTable->find()->where(['id'=>$offerId,'receive_group_id'=>$member->group_id])->first();
 		$offer = $offerTable->find('all')->where(['Offers.id'=>$offerId])->contain(['CoursePrefectures','TrainingPrefectures',
 				'OfferUsers'=>function ($query) {
 					return $query->select()->contain(['Prefectures']);
@@ -176,8 +176,7 @@ class MemberController extends AppController
 		$offer->amount = $amount['total'];
 
 		if ($offerTable->save($offer)) {
-			//debug($offer);
-			$emailUser = new EMail();
+			$emailUser = new EMail($this->mailConf);
 			$emailUser
 				->setTemplate('accept')
 				->setTo($offer->offer_user->email)
@@ -197,8 +196,15 @@ class MemberController extends AppController
 		if (!$offerId) {
 			throw new NotFoundException();
 		}
-
-		if ($this->statusChange(Offer::STATUS_REDUCE)) {
+		$offer = $this->statusChange($offerId,Offer::STATUS_REDUCE);
+		if ($offer) {
+			$mail = new EMail($this->mailConf);
+			$mail
+				->setTemplate('reduce')
+				->setTo($offer->offer_user->email)
+				->setSubject('【エンゴル】オファーが拒否されました')
+				->setViewVars(['offer'=>$offer])
+				->send();
 			$this->redirect('/member/detail?offer_id='.$offerId);
 		}
 	}
@@ -208,7 +214,7 @@ class MemberController extends AppController
 	 */
 	public function cancel() {
 		$offerId = $this->request->getQuery('offer_id');
-		if ($this->statusChange(Offer::STATUS_CANCEL)) {
+		if ($this->statusChange($offerId,Offer::STATUS_CANCEL)) {
 			$this->redirect('/member/detail?offer_id='.$offerId);
 		}
 	}
@@ -238,23 +244,72 @@ class MemberController extends AppController
 		if ($offer->offer_user_id != $member->id) {
 			throw new NotFoundException();
 		}
+		//イプシロンへの連携
 		$service = new EpsilonService();
 		$vo = $service->createVO($offer);
 		$res = $service->start($vo);
-		debug($res);
-
 		if ($res['status']) {
 			$this->redirect($res['message']);
 			return;
 		}
 		$this->set('error',$res['message']);
 	}
+
 	/**
 	 * カード決済完了
 	 */
 	public function paid() {
-		$data = $this->request->getData();
-		debug($data);
+		$data = $this->request->getQuery();
+		if (!isset($data['order_number']) || !isset($data['trans_code'])) {
+			throw new NotFoundException();
+		}
+		$offerTable = TableRegistry::get('Offers');
+		$offer = $offerTable->find('all')->where(['Offers.id'=>$data['order_number']])->contain(['CoursePrefectures','TrainingPrefectures',
+				'OfferUsers'=>function ($query) {
+					return $query->select()->contain(['Prefectures']);
+				},
+				'ReceiveGroups'=>function($query) {
+					return $query->select()->contain(['Users']);
+				}
+			])->first();
+
+		if (!$offer) {
+			$this->set('error','該当注文なし');
+			return;
+		}
+		if ($offer->status != Offer::STATUS_ACCEPT) {
+			$this->set('error','オファーステータスが不一致');
+			return;
+		}
+		//イプシロンに決済の問い合わせ
+		$service = new EpsilonService();
+		$res = $service->confirm($data);
+		if (!$res['status']) {
+			$this->set('error',$res['message']);
+			return;
+		}
+		$offer->status = Offer::STATUS_PAID;
+		if ($offerTable->save($offer)) {
+
+			$emailUser = new EMail($this->mailConf);
+			$emailUser
+				->setTemplate('paid')
+				->setTo($offer->offer_user->email)
+				->setSubject('【エンゴル】お支払いが完了しました')
+				->setViewVars(['offer'=>$offer])
+				->send();
+
+			foreach($offer->receive_group->users as $user) {
+				$emailComp = new EMail($this->mailConf);
+				$emailComp
+					->setTemplate('paid_comp')
+					->setTo($user->email)
+					->setSubject('【エンゴル】ご成約が完了しました')
+					->setViewVars(['offer'=>$offer])
+					->send();
+			}
+			$this->redirect('/member/detail?offer_id='.$offer->id);
+		}
 	}
 
 	/**
@@ -267,16 +322,13 @@ class MemberController extends AppController
 		}
 	}
 
-	private function statusChange($status) {
-		$offerId = $this->request->getData('offer_id');
-		if (!$offerId) {
-			throw new NotFoundException();
-		}
-		$member = parent::isMember();
+	private function statusChange($offerId,$status) {
+
+		$member = $this->request->session()->read('member');
 		if (!$member) {
-			throw new NotFoundException();
+			throw new NotFoundException('ログインしていない');
 		}
-		$condition['id'] = $offerId;
+		$condition['Offers.id'] = $offerId;
 		switch($status) {
 			case Offer::STATUS_ACCEPT:
 			case Offer::STATUS_REDUCE:
@@ -291,21 +343,30 @@ class MemberController extends AppController
 				break;
 		}
 		$offerTable = TableRegistry::get('Offers');
-		$offer = $offerTable->find()->where($condition)->first();
+		$offer = $offerTable->find()->where($condition)
+			->contain(['CoursePrefectures','TrainingPrefectures','OfferUsers',
+					'ReceiveGroups'=>function($query) {
+						return $query->select()->contain(['Users']);
+					}
+			])->first();
 		if (!$offer) {
-			throw new NotFoundException();
+			throw new NotFoundException('該当オファーデータがない');
 		}
 		$offer->status = $status;
-		return $offerTable->save($offer);
+		if ($offerTable->save($offer)) {
+			return $offer;
+		}
+		return null;
 	}
 
 	private function calcAmount($group) {
 		$amount = ['user_amount'=>0,'play_amount'=>0,'site_amount'=>0,'total'=>0];
 		foreach($group->users as $user) {
 			$amount['user_amount'] += $user->companion_info->amount;
-			$total+= $amount['user_amount'];
+			if ($user->companion_info->play_amount_kind == '2') { //プレイ費を相手に負担してもらう場合のみ
+				$amount['play_amount'] += PLAY_AMOUNT;
+			}
 		}
-		$amount['play_amount'] = count($group->users) * PLAY_AMOUNT;
 		$amount['site_amount'] = count($group->users) * SITE_AMOUNT;
 		$amount['total'] = $amount['user_amount'] + $amount['play_amount'] + $amount['site_amount'];
 

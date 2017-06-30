@@ -47,7 +47,7 @@
       <div class="is-clearfix">
         <ul class="is-pulled-left basic-info <?=$user->sex_class?>">
           <li class="name"><?=$user->nickname?>さん</li>
-          <li class="age"><?=$user->display_age?>歳(<?=$user->sex_name?>)</li>
+          <li class="age"><?=$user->display_age?>歳台(<?=$user->sex_name?>)</li>
           <li class="current-pref"><?=$user->prefecture->name?></li>
         </ul>
         <div class="status bvc is-pulled-right">ログイン：本日</div>
@@ -88,11 +88,11 @@
             </tr>
             <tr>
               <th>ゴルフ場エリア</th>
-              <td>大阪府 枚方市</td>
+              <td><?=$user->companion_info->course_prefecture->name?></td>
             </tr>
             <tr>
               <th>ゴルフ練習場エリア</th>
-              <td>大阪府 茨木市</td>
+              <td><?=$user->companion_info->training_prefecture->name?></td>
             </tr>
             <tr>
               <th>ゴルフ歴</th>
@@ -105,6 +105,10 @@
             <tr>
               <th>設定料金</th>
               <td><?=number_format($user->companion_info->amount)?>円</td>
+            </tr>
+            <tr>
+              <th>プレイ費</th>
+              <td><?=$user->companion_info->play_amount_kind_name?></td>
             </tr>
             <?php if ($user->pair) {?>
             <tr>

@@ -189,6 +189,9 @@ return [
             'tls' => null,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
         ],
+    	'debug' => [
+    		'className'=>'Debug'
+    	]
     ],
 
     /**
@@ -207,6 +210,13 @@ return [
             'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
+    	'debug' => [
+    		'transport' => 'debug',
+    		'from' => 'info@engol.jp',
+    		'charset' => 'utf-8',
+    		'log'=>true
+    		//'headerCharset' => 'utf-8',
+    	]
     ],
 
     /**
