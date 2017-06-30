@@ -1,5 +1,5 @@
 <?php $this->assign('title','ゴルフのお相手を探すならエンゴル');?>
-<?php $this->assign('description','エンゴルはゴルフのお相手を気軽に探せるサイトです。ゴルフ場でラウンドしたいけど相手が居なくて困っている方。複数人で楽しくプレイしたい方。教えてもらう相手を探している方はすぐにお相手が見つかります');?>
+<?php $this->assign('description','エンゴルはゴルフのお相手を気軽に探せるサイトです。ゴルフ場でラウンドしたいけど相手が居なくて困っている方。複数人で楽しくプレイしたい方。ゴルフを通じて出会いを求めておられる方ぜひご利用下さい');?>
 <section class="main-content">
   <section class="main-visual">
     <h1 class="top-keyword">
