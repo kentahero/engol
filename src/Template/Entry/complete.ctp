@@ -1,3 +1,6 @@
+<?php $this->assign('title','オファー申し込み完了ページ')?>
+<?php $this->assign('description','エンゴルはゴルフのお相手を気軽に探せるサイトです。ゴルフ場でラウンドしたいけど相手が居なくて困っている方。複数人で楽しくプレイしたい方。教えてもらう相手を探している方はすぐにお相手が見つかります');?>
+
 <section class="main-content detail-page">
   <section class="profile-pic-area">
     <section class="bg-green profile-title-block">

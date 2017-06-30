@@ -1,3 +1,6 @@
+<?php $this->assign('title','免責事項');?>
+<?php $this->assign('description','エンゴルはゴルフのお相手を気軽に探せるサイトです。ゴルフ場でラウンドしたいけど相手が居なくて困っている方。複数人で楽しくプレイしたい方。教えてもらう相手を探している方はすぐにお相手が見つかります');?>
+
 <section class="main-content">
 <div class="brcb-area bg-green mb20">
   <ul class="brcb">

@@ -36,8 +36,6 @@ class TopController extends AppController
 		$service = new CompanionService();
 		$recommend = $service->getReccomend();
 		$this->set('recommend',$recommend);
-
-		$this->set('title','ゴルフのお相手を探すならエンゴル');
 	}
 
 	public function getCityList() {

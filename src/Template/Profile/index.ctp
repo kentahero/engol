@@ -1,4 +1,6 @@
- <?= $this->Html->script('detail_app', array('inline' => false)); ?>
+<?php $this->assign('title','ゴルファー「'.$user->nickname.'さん」のプロフィール')?>
+<?php $this->assign('description',$user->companion_info->course_prefecture->name.'にお住まいのゴルファー「'.$user->nickname.'さん」の詳細情報。お気に入りのお相手が見つかります')?>
+<?= $this->Html->script('detail_app', array('inline' => false)); ?>
 <section class="main-content detail-page">
   <section class="profile-pic-area">
     <section class="bg-green profile-title-block">
