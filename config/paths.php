@@ -60,8 +60,8 @@ define('TESTS', ROOT . DS . 'tests' . DS);
  * Path to the temporary files directory.
  */
 define('TMP', ROOT . DS . 'tmp' . DS);
-define('IMAGE_PIC', WWW_ROOT . 'img' . DS . 'pic');
-define('IMAGE_TMP', IMAGE_PIC. DS.'tmp'.DS);
+define('IMAGE_PIC', WWW_ROOT . 'img' . DS . 'pic'.DS);
+define('IMAGE_TMP', IMAGE_PIC. 'tmp'.DS);
 
 /**
  * Path to the logs directory.

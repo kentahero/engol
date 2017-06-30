@@ -17,9 +17,11 @@ namespace App\Controller;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
 use Cake\I18n\Time;
+use Cake\Mailer\Email;
 use Cake\Filesystem\File;
 use Cake\Utility\Text;
 use Cake\Network\Exception\NotFoundException;
+use Cake\Network\Exception\InternalErrorException;
 
 /**
  * 登録ゴルファーコントローラー
@@ -123,13 +125,16 @@ class GolferEntryController extends AppController
 		}
 		//一時画像の移動
 		$uuid = Text::uuid();
+		$imageCount = 0;
 		for($i=1;$i<=3;$i++) {
 			$moved = $this->moveTmpImages($data['CompanionInfo']['image'.$i],$uuid.'-'.$i);
 			if ($moved) {
 				$data['CompanionInfo']['image'.$i]['path'] = $moved['path'];
 				$data['CompanionInfo']['image'.$i]['url'] = $moved['url'];
+				$imageCount++;
 			}
 		}
+		$data['CompanionInfo']['image'] = $imageCount;
 		$tableComp = TableRegistry::get('CompanionInfos');
 		$tableComp->validator('default')->offsetUnset('round_week_ar');
 		$tableComp->validator('default')->offsetUnset('training_week_ar');
@@ -202,14 +207,13 @@ class GolferEntryController extends AppController
 					$tableGroup = TableRegistry::get('UserGroups');
 					$group = $tableGroup->newEntity();
 					$group->name = $entities['User']['nickname'].'グループ';
-					$groupId = $group->id;
 					if (!$tableGroup->save($group)) {
 						throw new InternalErrorException('グループテーブルの保存に失敗');
 					}
+					$groupId = $group->id;
 				}
 				//ユーザーの登録
 				$tableUser = TableRegistry::get('Users');
-				//$user = $tableUser->newEntity((array)$entities['User'],['validate' => false]);
 				$user = $entities['User'];
 				$user->group_id = $groupId;
 				$user->companion_flg = '1';
@@ -222,7 +226,6 @@ class GolferEntryController extends AppController
 			}
 			//ゴルファーの登録
 			$tableComp = TableRegistry::get('CompanionInfos');
-			//$offer =$tableOffer->newEntity((array)$entities['Offer'],['validate' => false]);
 			$golfer = $entities['CompanionInfo'];
 			$golfer->user_id = $user->id;
 			if (!$tableComp->save($golfer)) {
@@ -232,24 +235,24 @@ class GolferEntryController extends AppController
 			$this->moveImage($golfer->image1['path'],$user->id,1);
 			if ($golfer->image2['name'])$this->moveImage($golfer->image2['path'],$user->id,2);
 			if ($golfer->image3['name'])$this->moveImage($golfer->image3['path'],$user->id,3);
-			/*
 
 			$entities['member'] = $member;
 			//登録ゴルファーへのメール
 			$emailComp = new EMail($this->mailConf);
 			$emailComp
-				->setTemplate('offer')
-				->setSubject('【エンゴル】オファーの申し込みがありました')
+				->setTemplate('golfer')
+				->setTo($user->email)
+				->setSubject('【エンゴル】ゴルファー登録が完了しました')
 				->setViewVars($entities);
 			//運営へのメール
 			$emailAdmin = new EMail($this->mailConf);
 			$emailAdmin
-				->setTemplate('admin')
+				->setTemplate('golfer')
 				->setTo('info@engol.jp')
-				->setSubject('【エンゴル】オファー申し込みがありました')
+				->setSubject('【エンゴル】ゴルファー登録がありました')
 				->setViewVars($entities)
 				->send();
-			*/
+
 			$connection->commit();
 
 		} catch(Exception $e) {
@@ -257,10 +260,7 @@ class GolferEntryController extends AppController
 			debug($e);
 			throw $e;
 		}
-		$this->request->session()->delete('form_data');
-
-
-
+		$this->request->session()->delete('golfer_form_data');
 	}
 
 	private function moveTmpImages($image,$uuid) {
@@ -279,7 +279,7 @@ class GolferEntryController extends AppController
 		if ($imagePath) {
 			$ext = pathinfo($imagePath,PATHINFO_EXTENSION);
 			$file = new File($imagePath);
-			$file->copy(IMAGE_PIC.$userId.$no.$ext);
+			$file->copy(IMAGE_PIC.'pic_'.$userId.'_'.$no.'.'.$ext);
 		}
 	}
-	}
+}

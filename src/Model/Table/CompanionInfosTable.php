@@ -7,7 +7,20 @@ use Cake\ORM\TableRegistry;
 
 class CompanionInfosTable extends Table {
 
-
+	public function initialize(array $config) {
+		$this->belongsTo('CoursePrefectures',
+				[
+						'className'=>'Prefectures',
+						'foreignKey'=>'course_prefecture_cd',
+						'propertyName'=>'course_prefecture'
+				]);
+		$this->belongsTo('TrainingPrefectures',
+				[
+						'className'=>'Prefectures',
+						'foreignKey'=>'training_prefecture_cd',
+						'propertyName'=>'training_prefecture'
+				]);
+	}
 	/**
 	 *
 	 * @param Validator $validator

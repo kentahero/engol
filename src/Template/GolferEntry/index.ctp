@@ -123,7 +123,7 @@
         <table class="table input-table">
           <tbody style="border-bottom:0px">
             <tr>
-              <th>メールアドレス</th>
+              <th>メールアドレス</br>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('User.email',['class'=>'input','placeholder'=>'info@engol.jp']);?>
@@ -141,7 +141,7 @@
               </td>
             </tr>
             <tr>
-              <th>パスワード</th>
+              <th>パスワード</br>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->password('User.password',['class'=>'input']);?>
@@ -159,7 +159,7 @@
               </td>
             </tr>
             <tr>
-              <th>お名前(姓)</th>
+              <th>お名前(姓)</br>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('User.first_name',['class'=>'input','placeholder'=>'田中']);?>
@@ -168,7 +168,7 @@
               </td>
             </tr>
             <tr>
-              <th>お名前(名)</th>
+              <th>お名前(名)</br>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('User.last_name',['class'=>'input','placeholder'=>'太郎']);?>
@@ -177,7 +177,7 @@
               </td>
             </tr>
             <tr>
-              <th>お名前（カナ性）</th>
+              <th>お名前（カナ性）</br>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('User.first_kana',['class'=>'input','placeholder'=>'タナカ']);?>
@@ -186,7 +186,7 @@
               </td>
             </tr>
             <tr>
-              <th>お名前（カナ名）</th>
+              <th>お名前（カナ名）</br>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('User.last_kana',['class'=>'input','placeholder'=>'タロウ']);?>
@@ -214,8 +214,7 @@
             </tr>
             <tr>
               <th>
-                生年月日
-                <!-- <input type="text" value="" class="birthday-picker none"/> -->
+                生年月日</br>(公開されません)
               </th>
               <td class="required">
                 <p class="control bvc date">
@@ -234,7 +233,7 @@
               </td>
             </tr>
             <tr>
-              <th>郵便番号<br/>(ハイフンなし)</th>
+              <th>郵便番号(ハイフンなし)<br/>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('User.postal',['class'=>'input','placeholder'=>'5634445']);?>
@@ -254,7 +253,7 @@
               </td>
             </tr>
             <tr>
-              <th>住所(市区町村)</th>
+              <th>住所(市区町村)</br>(公開されません)</th>
               <td class="required">
                 <p class="control">
                   <span class="select">
@@ -265,7 +264,7 @@
               </td>
             </tr>
             <tr>
-              <th>住所(町名番地)</th>
+              <th>住所(町名番地)</br>(公開されません)</th>
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('User.address1',['class'=>'input','placeholder'=>'1丁目2-3']);?>
@@ -274,7 +273,7 @@
               </td>
             </tr>
             <tr>
-              <th>住所(建物名・部屋番号)</th>
+              <th>住所(建物名・部屋番号)</br>(公開されません)</th>
               <td>
                 <p class="control">
                   <?php echo $this->Form->text('User.address2',['class'=>'input','placeholder'=>'天神橋マンション201']);?>
@@ -283,10 +282,10 @@
               </td>
             </tr>
             <tr>
-              <th>電話番号<br/>(ハイフンあり)</th>
+              <th>電話番号(ハイフンなし)<br/>(公開されません)</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('User.tel',['class'=>'input','placeholder'=>'090-1111-2222']);?>
+                  <?php echo $this->Form->text('User.tel',['class'=>'input','placeholder'=>'09011112222']);?>
                   <?php echo $this->Form->error('User.tel')?>
                 </p>
               </td>
@@ -477,7 +476,7 @@
         <table class="table input-table mb50">
           <tbody style="border-bottom:0px">
           <tr>
-            <th>金融機関名</th>
+            <th>金融機関名</br>(公開されません)</th>
             <td class="required">
               <p class="control">
 			    <?php echo $this->Form->text('CompanionInfo.payment_bank',['class'=>'input','placeholder'=>'三井住友銀行']);?>
@@ -486,7 +485,7 @@
             </td>
           </tr>
           <tr>
-            <th>支店番号</th>
+            <th>支店名</br>(公開されません)</th>
             <td class="required">
               <p class="control">
 			    <?php echo $this->Form->text('CompanionInfo.payment_shop_name',['class'=>'input','placeholder'=>'天満支店']);?>
@@ -495,7 +494,7 @@
             </td>
           </tr>
           <tr>
-            <th>口座種別</th>
+            <th>口座種別</br>(公開されません)</th>
             <td class="required">
               <p class="control">
 			    <?php echo $this->Form->radio('CompanionInfo.payment_bank_kind',[['value'=>'1','text'=>'普通'],['value'=>'2','text'=>'当座']]);?>
@@ -504,7 +503,7 @@
             </td>
           </tr>
           <tr>
-            <th>口座番号</th>
+            <th>口座番号</br>(公開されません)</th>
             <td class="required">
               <p class="control">
 			    <?php echo $this->Form->text('CompanionInfo.payment_no',['class'=>'input','placeholder'=>'12345678']);?>
@@ -513,7 +512,7 @@
             </td>
           </tr>
           <tr>
-            <th>口座名義</th>
+            <th>口座名義</br>(公開されません)</th>
             <td class="required">
               <p class="control">
 			    <?php echo $this->Form->text('CompanionInfo.payment_name',['class'=>'input','placeholder'=>'ヤマダ　タロウ']);?>

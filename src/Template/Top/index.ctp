@@ -24,6 +24,13 @@
   </section>
   <section class="sub-visual-description">
   </section>
+  <a href="/golfer-entry/index">
+  <section class="staff-area">
+    <i class="ci img-golf-player"></i>
+    ゴルファーとして登録する
+    <i class="ci img-golf-player"></i>
+  </section>
+  </a>
   <div class="bg-green">
     <section class="container pb20">
       <h2 class="title-content has-text-centered"><b class="strong-color-red">3 Step</b>で<b>オファー</b>ができる！</h2>

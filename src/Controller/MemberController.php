@@ -363,8 +363,10 @@ class MemberController extends AppController
 		$amount = ['user_amount'=>0,'play_amount'=>0,'site_amount'=>0,'total'=>0];
 		foreach($group->users as $user) {
 			$amount['user_amount'] += $user->companion_info->amount;
+			if ($user->companion_info->play_amount_kind == '2') { //プレイ費を相手に負担してもらう場合のみ
+				$amount['play_amount'] += PLAY_AMOUNT;
+			}
 		}
-		$amount['play_amount'] = count($group->users) * PLAY_AMOUNT;
 		$amount['site_amount'] = count($group->users) * SITE_AMOUNT;
 		$amount['total'] = $amount['user_amount'] + $amount['play_amount'] + $amount['site_amount'];
 

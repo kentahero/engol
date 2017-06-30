@@ -92,7 +92,8 @@ class UsersTable extends Table {
 			->add('address2','length',['rule'=>['maxLength',256],'message'=>'256文字以内で入力して下さい']);
 		$validator
 			->notEmpty('tel','連絡先電話番号を入力して下さい')
-			->add('tel','tel',['rule'=>['custom','/\d{2,4}-\d{2,4}-\d{4}/'],'message'=>'ハイフンありの電話番号形式で入力して下さい']);
+			->add('tel','numeric',['rule'=>'numeric','message'=>'ハイフンなしの数字のみで入力して下さい']);
+			//->add('tel','tel',['rule'=>['custom','/\d{2,4}-\d{2,4}-\d{4}/'],'message'=>'ハイフンありの電話番号形式で入力して下さい']);
 		$validator
 			->notEmpty('offer_year_1','希望日を入れて下さい')
 			->notEmpty('offer_month_1','希望日を入力して下さい');

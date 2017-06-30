@@ -218,7 +218,7 @@
             <tr>
               <th>プレイ費</th>
               <td class="required">
-                <?=$entities['CompanionInfo']->play_amount_kind?>
+                <?=$entities['CompanionInfo']->play_amount_kind_name?>
               </td>
             </tr>
             <tr>
@@ -229,7 +229,56 @@
             </tr>
           </tbody>
         </table>
-
+        <div class="mb10">
+          <span class="">
+            <i class="ci img-ball"></i>
+          </span>
+          <h2 class="profile-title male bvc">お振込先情報</h2>
+        </div>
+		<table class="table input-table mb50">
+          <tbody style="border-bottom:0px">
+          <tr>
+            <th>金融機関名</th>
+            <td class="required">
+              <p class="control">
+			    <?=$entities['CompanionInfo']->payment_bank?>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <th>支店名</th>
+            <td class="required">
+              <p class="control">
+			    <?=$entities['CompanionInfo']->payment_shop_name?>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <th>口座種別</th>
+            <td class="required">
+              <p class="control">
+			    <?=$entities['CompanionInfo']->payment_bank_kind_name?>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <th>口座番号</th>
+            <td class="required">
+              <p class="control">
+			    <?=$entities['CompanionInfo']->payment_no?>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <th>口座名義</th>
+            <td class="required">
+              <p class="control">
+			    <?=$entities['CompanionInfo']->payment_name?>
+              </p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
         <!--
         <div class="mb20">
           <div class="mb10">
@@ -243,7 +292,6 @@
           </p>
         </div>
         -->
-
         <button type="submit" class="button">
           <span>オファー申し込みする</span>
           <span class="icon is-medium right">
