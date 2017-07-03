@@ -305,7 +305,7 @@
               <th>写真１</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->file('CompanionInfo.image1');?>
+                  <?php echo $this->Form->file('CompanionInfo.image1',['accept'=>'image/*']);?>
                   <?php echo $this->Form->error('CompanionInfo.image1')?>
                 </p>
               </td>
@@ -314,7 +314,7 @@
               <th>写真２</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->file('CompanionInfo.image2');?>
+                  <?php echo $this->Form->file('CompanionInfo.image2',['accept'=>'image/*']);?>
                   <?php echo $this->Form->error('CompanionInfo.image2')?>
                 </p>
               </td>
@@ -323,7 +323,7 @@
               <th>写真３</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->file('CompanionInfo.image3');?>
+                  <?php echo $this->Form->file('CompanionInfo.image3',['accept'=>'image/*']);?>
                   <?php echo $this->Form->error('CompanionInfo.image3')?>
                 </p>
               </td>

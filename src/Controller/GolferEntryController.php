@@ -277,7 +277,7 @@ class GolferEntryController extends AppController
 
 	private function moveImage($imagePath,$userId,$no) {
 		if ($imagePath) {
-			$ext = pathinfo($imagePath,PATHINFO_EXTENSION);
+			$ext = mb_strtolower(pathinfo($imagePath,PATHINFO_EXTENSION));
 			$file = new File($imagePath);
 			$file->copy(IMAGE_PIC.'pic_'.$userId.'_'.$no.'.'.$ext);
 		}

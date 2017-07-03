@@ -279,19 +279,6 @@
           </tr>
           </tbody>
         </table>
-        <!--
-        <div class="mb20">
-          <div class="mb10">
-            <span class="">
-              <i class="ci img-flag-male"></i>
-            </span>
-            <h2 class="profile-title male bvc">メッセージ</h2>
-          </div>
-          <p class="mt20">
-            <?=nl2br($data['message'])?>
-          </p>
-        </div>
-        -->
         <button type="submit" class="button">
           <span>オファー申し込みする</span>
           <span class="icon is-medium right">
