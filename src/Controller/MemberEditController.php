@@ -28,7 +28,7 @@ use Cake\Network\Exception\InternalErrorException;
  * @author toshikazu.matsumoto
  *
  */
-class GolferEntryController extends AppController
+class MemberEditController extends AppController
 {
 	private function common() {
 
@@ -78,14 +78,20 @@ class GolferEntryController extends AppController
 	}
 	public function index() {
 
+		$member = $this->request->session()->read('member');
+		if (!$member) {
+			throw new NotFoundException();
+		}
+		$entities['User'] = $member;
+
+		if ($member->companion_flg == '1') {
+
+			$tableComp = TableRegistry::get('CompanionInfos');
+			$golfer = $tableComp->find()->where(['user_id'=>$member->id])->first();
+			$entities['CompanionInfo'] = $golfer;
+		}
 		$this->common();
-
-		$tableUser = TableRegistry::get('Users');
-		$user = $tableUser->newEntity();
-		$tableComp = TableRegistry::get('CompanionInfos');
-		$golfer = $tableComp->newEntity();
-
-		$this->set('entities',['User'=>$user,'CompanionInfo'=>$golfer]);
+		$this->set('entities',$entities);
 	}
 
 	public function confirm() {

@@ -2,25 +2,9 @@ $(function(){
 
   //都道府県選択時のイベント
   $('#prefecture_cd').change(function() {
-	//市区町村プルダウンの選択を初期化
-	$('#city_cd option').remove();
-	$('#city_cd optgroup').remove();
-	$('#city_cd').append($('<option>').html("市区町村").val(""));
-
-	//ajaxで市区町村リスト取得
-	$.ajax({
-		type: "POST",
-		url: "/top/get_city_list",
-		data: { is_json: 1,prefecture_cd: $('#prefecture_cd').val()}
-	}).done(function( res ) {
-		for(var i in res.cities){
-			$option = $('<option>').val(i).text(res.cities[i]);
-			//市区町村項目を追加
-			$('#city_cd').append($option);
-		}
-	});
+	  getCityList('');
   });
-
+  //コース選択時のイベント
   $('input[name="Offer[course_kind]"]:radio').change( function() {
 	  var course_kind = $('input[name="Offer[course_kind]"]:checked').val();
 	  if (course_kind == "1") {
@@ -46,9 +30,67 @@ $(function(){
 	  getCourseList(1);
   });
 
+  //住所検索ボタン押下時のイベント
+  $('#search_postal').click(function(){
+	 var zip = $('#postal').val();
+	 if (zip == '') {
+		 return;
+	 }
+	 $.ajax({
+		 type : 'get',
+	     url : 'https://maps.googleapis.com/maps/api/geocode/json',
+	     crossDomain : true,
+	     dataType : 'json',
+	     data : {
+	    	 address : zip,
+	    	 language : 'ja',
+	    	 sensor : false
+	     },
+		 success : function(resp){
+			 if(resp.status == "OK"){
+				 // APIのレスポンスから住所情報を取得
+				 var obj = resp.results[0].address_components;
+				 if (obj.length < 5) {
+					 alert('正しい郵便番号を入力してください');
+					 return false;
+				 }
+				 text_selector('#prefecture_cd',obj[3]['long_name']); // 都道府県
+				 getCityList(obj[2]['long_name']);
+				 $('#address1').val(obj[1]['long_name']); // 番地
+	        }else{
+	        	alert('住所情報が取得できませんでした');
+	        	return false;
+	        }
+	     }
+	 });
+  });
+
   $('input[name="Offer[course_kind]"]:radio').change();
 
 });
+
+function getCityList(selected_city) {
+	//市区町村プルダウンの選択を初期化
+	$('#city_cd option').remove();
+	$('#city_cd optgroup').remove();
+	$('#city_cd').append($('<option>').html("市区町村").val(""));
+
+	//ajaxで市区町村リスト取得
+	$.ajax({
+		type: "POST",
+		url: "/top/get_city_list",
+		data: { is_json: 1,prefecture_cd: $('#prefecture_cd').val()}
+	}).done(function( res ) {
+		for(var i in res.cities){
+			$option = $('<option>').val(i).text(res.cities[i]);
+			//市区町村項目を追加
+			$('#city_cd').append($option);
+		}
+		if (selected_city != '') {
+			text_selector('#city_cd',selected_city);
+		}
+	});
+}
 
 function getCourseList(page) {
 	$.ajax({

@@ -33,7 +33,7 @@ class MemberController extends AppController
 		if ($member) {
 			$tableOffer = TableRegistry::get('Offers');
 			$offers = $tableOffer->find()
-				->where(['OR'=>['receive_group_id'=>$member->group_id,'offer_user_id'=>$member->id],'Offers.deleted'=>0])
+				->where(['OR'=>['Offers.receive_group_id'=>$member->group_id,'offer_user_id'=>$member->id],'Offers.deleted'=>0])
 				->order('Offers.created DESC')
 				->contain([
 					'OfferUsers'=>function ($query) {

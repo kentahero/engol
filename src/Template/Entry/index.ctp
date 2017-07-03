@@ -253,7 +253,8 @@
               <th>郵便番号<br/>(ハイフンなし)</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->text('User.postal',['class'=>'input','placeholder'=>'5634445']);?>
+                  <?php echo $this->Form->text('User.postal',['class'=>'input','placeholder'=>'5634445','id'=>'postal','style'=>'width:50%']);?>
+                  <input type="button" value="住所検索" id='search_postal'/>
                   <?php echo $this->Form->error('User.postal')?>
                 </p>
               </td>
@@ -284,7 +285,7 @@
               <th>住所(町名番地)</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->text('User.address1',['class'=>'input','placeholder'=>'1丁目2-3']);?>
+                  <?php echo $this->Form->text('User.address1',['class'=>'input','placeholder'=>'1丁目2-3','id'=>'address1']);?>
                   <?php echo $this->Form->error('User.address1')?>
                 </p>
               </td>

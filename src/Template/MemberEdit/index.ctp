@@ -76,7 +76,7 @@
     <section class="bg-green profile-title-block">
       <ul class="brcb">
         <li class="strong"><a href="/">トップ</a></li>
-        <li class="strong"><a href="/profile/search">ゴルファー登録</a></li>
+        <li class="strong"><a href="/profile/search">プロフィール編集</a></li>
         <!-- <li><a href="">入力</a></li> -->
       </ul>
       <!--
@@ -113,7 +113,6 @@
           入力項目にエラーがあります。各項目を確認の上、再度入力して下さい。
         </div>
         <?php }?>
-        <?php if (!isset($member)) { ?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -293,7 +292,7 @@
             </tr>
          </tbody>
         </table>
-        <?php } ?>
+        <?php if ($entities['User']->companion_flg == '1') {?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -523,22 +522,7 @@
           </tr>
           </tbody>
         </table>
-        <div class="mb20 consent-area">
-          <h2 class="profile-title male bvc">個人情報保護方針への同意</h2>
-          <p class="control">
-            <textarea class="textarea">
-            <?= $this->element('privacy_text');?>
-            </textarea>
-          </p>
-          <p class="control">
-            <div class="has-text-centered">
-              <?php echo $this->Form->checkbox('User.agree',['id'=>'consent'])?>
-              <label for="consent">同意します</label>
-              <?php echo $this->Form->error('User.agree')?>
-            </div>
-          </p>
-        </div>
-
+        <?php }?>
         <button type="submit" class="button">
           <span>入力内容を確認する</span>
           <span class="icon is-medium right">

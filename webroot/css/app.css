@@ -2926,4 +2926,39 @@ i.img-meeting:before {
   vertical-align: middle !important;
 }
 
+/*
+ * menu設定
+ */
+#menu ul{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+#menu li{
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+#menu li a{
+	display: block;
+	border-left: 8px solid #474655;
+	border-top: 1px solid #474655;
+	border-right: 1px solid #474655;
+	border-bottom: 1px solid #474655;
+	background-color: #fff;
+	padding: 3px 10px;
+	text-decoration: none;
+	color: #333;
+	width: 150px;
+	margin: 1px 0px;
+	text-align: left;
+	font-size: 14px;
+}
+#menu li a:hover{
+	border-left: 8px solid #474655;
+	border-top: 1px solid #474655;
+	border-right: 1px solid #474655;
+	border-bottom: 1px solid #474655;
+	background-color: #d7efd7;
+}
 /*# sourceMappingURL=app.css.map */

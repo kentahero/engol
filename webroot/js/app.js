@@ -54,4 +54,29 @@ $(function() {
       // });
     }
   );
+  /*
+  $('#navigation').slimmenu({
+	resizeWidth: '800',
+	collapserTitle: 'Main Menu',
+	animSpeed: 'medium',
+	easingEffect: null,
+	indentChildren: false,
+	childrenIndenter: '&nbsp;'
+  });
+  */
+  /*
+  $('#menu').slicknav({
+	  label:''
+	  //prependTo:'nav'
+  });
+  */
+  $(".drawer").drawer();
 });
+
+function text_selector( parentSelector, childtext ) {
+	$.each($("select"+parentSelector+" "+"option:contains('"+childtext+"')" ),function(){
+		if($(this).text().trim()==childtext){
+			$(this).parent('select').val($(this).val());
+		}
+	});
+}
