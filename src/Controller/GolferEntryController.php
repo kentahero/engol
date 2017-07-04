@@ -115,8 +115,9 @@ class GolferEntryController extends AppController
 					$data['User']);
 			$entities['User'] = $user;
 		}
-		$data['CompanionInfo']['round_week'] = '';
-		$data['CompanionInfo']['training_week'] = '';
+		$data['CompanionInfo']['round_week'] = implode(',',$data['CompanionInfo']['round_week_ar']);
+		$data['CompanionInfo']['training_week'] = implode(',',$data['CompanionInfo']['training_week_ar']);
+		/*
 		foreach ($data['CompanionInfo']['round_week_ar'] as $round_week) {
 			if ($round_week != '0')$data['CompanionInfo']['round_week']=$data['CompanionInfo']['round_week'].$round_week.'、';
 			if ($round_week == 'ALL') {
@@ -131,6 +132,7 @@ class GolferEntryController extends AppController
 				break;
 			}
 		}
+		*/
 
 		//一時画像の移動
 		$uuid = Text::uuid();
@@ -228,12 +230,13 @@ class GolferEntryController extends AppController
 				$user = $entities['User'];
 				$user->group_id = $groupId;
 				$user->companion_flg = '1';
-				if (!$tableUser->save($user)) {
-					throw new InternalErrorException('ユーザーテーブルの保存に失敗');
-				}
 			} else { //ログイン済みの場合
 				$user = $member;
+				$user->companion_flg = '1';
 				$entities['User'] = $user;
+			}
+			if (!$tableUser->save($user)) {
+				throw new InternalErrorException('ユーザーテーブルの保存に失敗');
 			}
 			//ゴルファーの登録
 			$tableComp = TableRegistry::get('CompanionInfos');

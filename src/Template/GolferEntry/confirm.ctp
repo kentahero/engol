@@ -176,13 +176,13 @@
             <tr>
               <th>ラウンド曜日</th>
               <td class="required">
-                <?=$entities['CompanionInfo']->round_week?>
+                <?=$entities['CompanionInfo']->round_week_str?>
               </td>
             </tr>
             <tr>
               <th>練習場曜日</th>
               <td class="required">
-                <?=$entities['CompanionInfo']->training_week?>
+                <?=$entities['CompanionInfo']->training_week_str?>
               </td>
             </tr>
             <tr>
@@ -280,7 +280,7 @@
           </tbody>
         </table>
         <button type="submit" class="button">
-          <span>オファー申し込みする</span>
+          <span>登録する</span>
           <span class="icon is-medium right">
               <i class="ci img-next"></i>
           </span>

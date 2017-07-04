@@ -17,11 +17,10 @@
   <section class="container">
     <div class="profile-area">
       <section class="profile-main-block">
-        <?php echo $this->Form->create($entities,['type'=>'post','url'=>['controller'=>'GolferEntry','action'=>'complete']]);?>
+        <?php echo $this->Form->create($entities,['type'=>'post','url'=>['controller'=>'MemberEdit','action'=>'complete']]);?>
         <div class="confirm-msg-area mb10">
           登録内容を確認
         </div>
-        <?php if (!isset($member)) {?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -34,20 +33,6 @@
               <th>メールアドレス</th>
               <td>
                 <?=$entities['User']->email?>
-              </td>
-            </tr>
-            <!--
-            <tr>
-              <th>メール種別</th>
-              <td>
-                <?=$entities['User']->email_kind_name?>
-              </td>
-            </tr>
-            -->
-            <tr>
-              <th>パスワード</th>
-              <td>
-                ●●●●●●●●●●●●
               </td>
             </tr>
             <tr>
@@ -118,9 +103,9 @@
                 <?=$entities['User']->tel?>
               </td>
             </tr>
-            <?php }?>
 		  </tbody>
 		</table>
+		<?php if ($entities['User']->companion_flg == '1') {?>
 		<div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -176,13 +161,13 @@
             <tr>
               <th>ラウンド曜日</th>
               <td class="required">
-                <?=$entities['CompanionInfo']->round_week?>
+                <?=$entities['CompanionInfo']->round_week_str?>
               </td>
             </tr>
             <tr>
               <th>練習場曜日</th>
               <td class="required">
-                <?=$entities['CompanionInfo']->training_week?>
+                <?=$entities['CompanionInfo']->training_week_str?>
               </td>
             </tr>
             <tr>
@@ -229,6 +214,7 @@
             </tr>
           </tbody>
         </table>
+        <?php if($entities['CompanionInfo']->amount != 0 || $entities['CompanionInfo']->play_amount_kind == '2') {?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -279,8 +265,10 @@
           </tr>
           </tbody>
         </table>
+        <?php }?>
+        <?php }?>
         <button type="submit" class="button">
-          <span>オファー申し込みする</span>
+          <span>変更する</span>
           <span class="icon is-medium right">
               <i class="ci img-next"></i>
           </span>

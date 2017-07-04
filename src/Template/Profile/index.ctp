@@ -82,11 +82,11 @@
             </tr>
             <tr>
               <th>ラウンド(曜日)</th>
-              <td><?=$user->companion_info->round_week?></td>
+              <td><?=$user->companion_info->round_week_str?></td>
             </tr>
             <tr>
               <th>練習場(曜日)</th>
-              <td><?=$user->companion_info->training_week?></td>
+              <td><?=$user->companion_info->training_week_str?></td>
             </tr>
             <tr>
               <th>ゴルフ場エリア</th>

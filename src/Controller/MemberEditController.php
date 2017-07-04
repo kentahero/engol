@@ -30,6 +30,8 @@ use Cake\Network\Exception\InternalErrorException;
  */
 class MemberEditController extends AppController
 {
+	private $member = null;
+
 	private function common() {
 
 		$entities = $this->request->session()->read('form_data');
@@ -40,12 +42,14 @@ class MemberEditController extends AppController
 		$this->set('prefs',$prefs);
 
 		$prefectureCd = '';
-		if ($this->request->getData('User.prefecture_cd')) {
+		if ($this->member->prefecture_cd) {
+			$prefectureCd = $this->member->prefecture_cd;
+		} else if ($this->request->getData('User.prefecture_cd')) {
 			$prefectureCd= $this->request->getData('User.prefecture_cd');
 		} else if (isset($entities['User']) && $entities['User']->prefecture_cd) {
 			$prefectureCd= $entities['User']->prefecture_cd;
 		}
-		if ($prefectureCd!= '') {
+		if ($prefectureCd != '') {
 			$tableCity = TableRegistry::get('Cities');
 			$cities = $tableCity->find('list')->where(['prefecture_cd'=>$prefectureCd])->all();
 			$this->set('cities',$cities);
@@ -76,18 +80,25 @@ class MemberEditController extends AppController
 		}
 		$this->set('days',$days);
 	}
+
 	public function index() {
 
-		$member = $this->request->session()->read('member');
-		if (!$member) {
-			throw new NotFoundException();
+		$this->member = $this->request->session()->read('member');
+		if (!$this->member) {
+			throw new NotFoundException('ログインされていません');
 		}
-		$entities['User'] = $member;
+		$entities['User'] = $this->member;
+		$entities['User']->email_confirm = $this->member->email;
+		$entities['User']->birth_year = date_format($this->member->birth,'Y');
+		$entities['User']->birth_month = date_format($this->member->birth,'m');
+		$entities['User']->birth_day = date_format($this->member->birth,'d');
 
-		if ($member->companion_flg == '1') {
+		if ($this->member->companion_flg == '1') { //ゴルファー登録している場合
 
 			$tableComp = TableRegistry::get('CompanionInfos');
-			$golfer = $tableComp->find()->where(['user_id'=>$member->id])->first();
+			$golfer = $tableComp->find()->where(['user_id'=>$this->member->id])->first();
+			$golfer['round_week_ar']= explode(',',$golfer->round_week);
+			$golfer['training_week_ar']= explode(',',$golfer->training_week);
 			$entities['CompanionInfo'] = $golfer;
 		}
 		$this->common();
@@ -97,47 +108,37 @@ class MemberEditController extends AppController
 	public function confirm() {
 
 		$data = $this->request->getData();
-		$member = $this->request->session()->read('member');
-
+		$this->member = $this->request->session()->read('member');
+		/*
 		if (!$this->request->is('post')) {
-			throw new NotFoundException();
+			throw new NotFoundException('フォームの不正遷移');
+		}
+		*/
+		if (!$this->member) {
+			$this->redirect('/member/login');
+			return;
 		}
 		$this->common();
 
 		$entities = [];
-		//バリデーション実行
-		if (!$member) { //未ログインの場合
+		//-------------------------------------
+		//会員登録のバリデーション実行
+		//-------------------------------------
+		$data['User']['birth'] = null;
+		if (!empty($data['User']['birth_year'])&&!empty($data['User']['birth_month'])&&!empty($data['User']['birth_day'])) {
+			$data['User']['birth'] = $data['User']['birth_year'].'-'.$data['User']['birth_month'].'-'.$data['User']['birth_day'];
+		}
+		$data['User']['agree'] = '1';
+		$tableUser = TableRegistry::get('Users');
+		$tableUser->validator('default')->offsetUnset('agree');
+		$user = $tableUser->patchEntity($this->member,$data['User']);
+		$entities['User'] = $user;
 
-			//-------------------------------------
-			//会員登録のバリデーション実行
-			//-------------------------------------
-			$data['User']['birth'] = null;
-			if (!empty($data['User']['birth_year'])&&!empty($data['User']['birth_month'])&&!empty($data['User']['birth_day'])) {
-				$data['User']['birth'] = $data['User']['birth_year'].'-'.$data['User']['birth_month'].'-'.$data['User']['birth_day'];
-			}
-			$tableUser = TableRegistry::get('Users');
-			$user = $tableUser->patchEntity(
-					$tableUser->newEntity(),
-					$data['User']);
-			$entities['User'] = $user;
-		}
-		$data['CompanionInfo']['round_week'] = '';
-		$data['CompanionInfo']['training_week'] = '';
-		foreach ($data['CompanionInfo']['round_week_ar'] as $round_week) {
-			if ($round_week != '0')$data['CompanionInfo']['round_week']=$data['CompanionInfo']['round_week'].$round_week.'、';
-			if ($round_week == 'ALL') {
-				$data['CompanionInfo']['round_week'] = 'いつでも';
-				break;
-			}
-		}
-		foreach ($data['CompanionInfo']['training_week_ar'] as $training_week) {
-			if ($training_week != '0')$data['CompanionInfo']['training_week']=$data['CompanionInfo']['training_week'].$training_week.'、';
-			if ($training_week == 'ALL') {
-				$data['CompanionInfo']['training_week'] = 'いつでも';
-				break;
-			}
-		}
-
+		//-------------------------------------
+		//ゴルファー情報のバリデーション実行
+		//-------------------------------------
+		$data['CompanionInfo']['round_week'] = implode(',', $data['CompanionInfo']['round_week_ar']);
+		$data['CompanionInfo']['training_week'] = implode(',', $data['CompanionInfo']['training_week_ar']);
 		//一時画像の移動
 		$uuid = Text::uuid();
 		$imageCount = 0;
@@ -151,6 +152,7 @@ class MemberEditController extends AppController
 		}
 		$data['CompanionInfo']['image'] = $imageCount;
 		$tableComp = TableRegistry::get('CompanionInfos');
+		$golfer = $tableComp->find()->where(['user_id'=>$this->member->id])->first();
 		$tableComp->validator('default')->offsetUnset('round_week_ar');
 		$tableComp->validator('default')->offsetUnset('training_week_ar');
 		if ($data['CompanionInfo']['round_week'] != '') $tableComp->validator('default')->offsetUnset('training_week');
@@ -162,8 +164,7 @@ class MemberEditController extends AppController
 			$tableComp->validator('default')->offsetUnset('payment_no');
 			$tableComp->validator('default')->offsetUnset('payment_name');
 		}
-
-		$golfer = $tableComp->newEntity($data['CompanionInfo']);
+		$golfer = $tableComp->patchEntity($golfer,$data['CompanionInfo']);
 		$entities['CompanionInfo'] = $golfer;
 
 		//---------------------------------
@@ -186,12 +187,11 @@ class MemberEditController extends AppController
 			$entities['CompanionInfo']['training_prefecture_name'] = $coursePref->name;
 		}
 
-
 		$this->set('entities',$entities);
 		//セッションにデータ書き込み
-		$this->request->session()->write('golfer_form_data',$entities);
+		$this->request->session()->write('form_data',$entities);
 
-		if ((!$member && $user->errors()) || $golfer->errors()) {
+		if ($user->errors() || $golfer->errors()) {
 			//バリデーションエラーがあった場合は入力画面表示
 			$this->set('error',true);
 			$this->render('index');
@@ -200,58 +200,50 @@ class MemberEditController extends AppController
 
 	public function complete() {
 
-		$entities= $this->request->session()->read('golfer_form_data');
+		$entities= $this->request->session()->read('form_data');
 
 		if (!$entities) {
 			throw new InternalErrorException('セッション情報消失');
+		}
+		$this->member = $this->request->session()->read('member');
+		if (!$this->member) {
+			$this->redirect('/member/login');
+			return;
 		}
 		//トランザクションの開始
 		$connection = ConnectionManager::get('default');
 		$connection->begin();
 		try {
-			$member = $this->request->session()->read('member');
-			if (!$member) { //未ログインの場合新規登録
-				$tableUser = TableRegistry::get('Users');
-				if ($entities['CompanionInfo']->pair_email)  { //ペアのメールアドレス入力済みの場合
-					$pair = $tableUser->find()->where(['email'=>$entities['CompanionInfo']->pair_email,'deleted'=>0])->first();
-					if ($pair) {
-						$groupId = $pair->group_id;
-					} else {
-						throw Exception('指定のペアのメールアドレスなし');
-					}
+			$tableUser = TableRegistry::get('Users');
+			if ($entities['CompanionInfo']->pair_email)  { //ペアのメールアドレス入力済みの場合
+				$pair = $tableUser->find()->where(['email'=>$entities['CompanionInfo']->pair_email,'deleted'=>0])->first();
+				if ($pair) {
+					$groupId = $pair->group_id;
 				} else {
-					//グループの登録
-					$tableGroup = TableRegistry::get('UserGroups');
-					$group = $tableGroup->newEntity();
-					$group->name = $entities['User']['nickname'].'グループ';
-					if (!$tableGroup->save($group)) {
-						throw new InternalErrorException('グループテーブルの保存に失敗');
-					}
-					$groupId = $group->id;
+					throw Exception('指定のペアのメールアドレスなし');
 				}
-				//ユーザーの登録
-				$tableUser = TableRegistry::get('Users');
-				$user = $entities['User'];
-				$user->group_id = $groupId;
-				$user->companion_flg = '1';
-				if (!$tableUser->save($user)) {
-					throw new InternalErrorException('ユーザーテーブルの保存に失敗');
+			}
+			//ユーザーの登録
+			$tableUser = TableRegistry::get('Users');
+			$user = $entities['User'];
+			$user->group_id = $groupId;
+			$user->companion_flg = '1';
+			if (!$tableUser->save($user)) {
+				throw new InternalErrorException('ユーザーテーブルの保存に失敗');
+			}
+			if ($member->companion_flg == '1') {
+				//ゴルファーの登録
+				$tableComp = TableRegistry::get('CompanionInfos');
+				$golfer = $entities['CompanionInfo'];
+				$golfer->user_id = $user->id;
+				if (!$tableComp->save($golfer)) {
+					throw new InternalErrorException('ゴルファーテーブルの保存に失敗');
 				}
-			} else { //ログイン済みの場合
-				$user = $member;
-				$entities['User'] = $user;
+				//画像の本登録
+				$this->moveImage($golfer->image1['path'],$user->id,1);
+				if ($golfer->image2['name'])$this->moveImage($golfer->image2['path'],$user->id,2);
+				if ($golfer->image3['name'])$this->moveImage($golfer->image3['path'],$user->id,3);
 			}
-			//ゴルファーの登録
-			$tableComp = TableRegistry::get('CompanionInfos');
-			$golfer = $entities['CompanionInfo'];
-			$golfer->user_id = $user->id;
-			if (!$tableComp->save($golfer)) {
-				throw new InternalErrorException('ゴルファーテーブルの保存に失敗');
-			}
-			//画像の本登録
-			$this->moveImage($golfer->image1['path'],$user->id,1);
-			if ($golfer->image2['name'])$this->moveImage($golfer->image2['path'],$user->id,2);
-			if ($golfer->image3['name'])$this->moveImage($golfer->image3['path'],$user->id,3);
 
 			$entities['member'] = $member;
 			//登録ゴルファーへのメール
@@ -277,7 +269,7 @@ class MemberEditController extends AppController
 			debug($e);
 			throw $e;
 		}
-		$this->request->session()->delete('golfer_form_data');
+		$this->request->session()->delete('form_data');
 	}
 
 	private function moveTmpImages($image,$uuid) {

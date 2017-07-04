@@ -16,9 +16,9 @@ use Cake\Utility\Xml;
 class EpsilonService extends AppService {
 
 	const DEBUG_ORDER_URL = 'https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi';
-	const PRODUCTION_ORDER_URL = '';
+	const PRODUCTION_ORDER_URL = ' https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi';
 	const DEBUG_CONFIRM_URL = 'https://beta.epsilon.jp/cgi-bin/order/getsales2.cgi';
-	const PRODUCTION_CONFIRM_URL = '';
+	const PRODUCTION_CONFIRM_URL = 'https://secure.epsilon.jp/cgi-bin/order/getsales2.cgi';
 	const CONTRACT_CODE = '64985980';
 	const ITEM_CODE = 'IT001';
 	const ST_CODE = '10000-0000-00000-00000-00000-00000-00000';
@@ -55,11 +55,13 @@ class EpsilonService extends AppService {
 	public function start($vo) {
 		$return = ['status'=>0,'message'=>''];
 		$options = [];
+		$url = self::DEBUG_ORDER_URL;
 		if (!Configure::read('debug')) {
 			$options['ssl_cafile'] = '/etc/pki/tls/certs/ca-bundle.crt';
+			$url = self::PRODUCTION_ORDER_URL;
 		}
 		$http = new Client();
-		$response = $http->post(self::DEBUG_ORDER_URL,$vo,$options);
+		$response = $http->post($url,$vo,$options);
 		if (!$response->isOk()) {
 			$return['status'] = false;
 			$return['message'] = '通信失敗';
@@ -88,12 +90,14 @@ class EpsilonService extends AppService {
 	public function confirm($data) {
 		$return = ['status'=>0,'message'=>''];
 		$options = [];
+		$url = self::DEBUG_CONFIRM_URL;
 		if (!Configure::read('debug')) {
 			$options['ssl_cafile'] = '/etc/pki/tls/certs/ca-bundle.crt';
+			$url = self::PRODUCTION_CONFIRM_URL;
 		}
 		$http = new Client();
 		$response = $http->post(
-				self::DEBUG_CONFIRM_URL,
+				$url,
 				['contract_code'=>self::CONTRACT_CODE,'trans_code'=>$data['trans_code']],
 				$options);
 		if (!$response->isOk()) {

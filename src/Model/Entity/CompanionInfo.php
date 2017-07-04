@@ -5,7 +5,9 @@ use Cake\ORM\Entity;
 
 class CompanionInfo extends Entity {
 
-	protected $_virtual = ['play_amount_kind_name','payment_bank_kind_name'];
+	const WEEK_ARRAY = ['月','火','水','木','金','土','日'];
+
+	protected $_virtual = ['play_amount_kind_name','payment_bank_kind_name','round_week_str','training_week_str'];
 
 	protected function _getPlayAmountKindName() {
 		switch($this->_properties['play_amount_kind']) {
@@ -23,4 +25,33 @@ class CompanionInfo extends Entity {
 		return '';
 	}
 
+	protected function _getRoundWeekStr() {
+		if (!$this->getWeekStr('round_week')) {
+			return '設定なし';
+		}
+		return $this->getWeekStr('round_week');
+	}
+
+	protected function _getTrainingWeekStr() {
+		if (!$this->getWeekStr('training_week')) {
+			return '設定なし';
+		}
+		return $this->getWeekStr('training_week');
+	}
+
+	private function getWeekStr($property) {
+
+		$weeks = '';
+		$ar = explode(',',$this->_properties[$property]);
+		foreach($ar as $key=>$val) {
+			if ($val == '1') {
+				$weeks = $weeks . self::WEEK_ARRAY[$key]. ',';
+			}
+			if ($val == 'ALL') {
+				return 'いつでも';
+			}
+		}
+		$weeks = rtrim($weeks,',');
+		return $weeks;
+	}
 }

@@ -32,13 +32,16 @@
       </div>
     </div>
   </div>
-  <nav class="drawer-nav" id="menu" style="width:150px">
+  <nav class="drawer-nav" id="menu" style="width:200px">
+    <div style="text-align:center;background:#d0f0e1">会員メニュー</div>
     <ul class="drawer-menu">
       <!-- ドロワーメニューの中身 -->
       <li><a href="/member/index">メールボックス</a></li>
+      <li><a href="/profile/index/<?=$member->id?>">プロフィール確認</a></li>
       <li><a href="/member-edit/index">プロフィール変更</a></li>
       <li><a href="/member/logout">ログアウト</a></li>
       <li><a href="#">パスワード変更</a></li>
+      <li><a href="#">ゴルファー情報非公開</a></li>
       <li><a href="#">退会</a></li>
     </ul>
   </nav>
