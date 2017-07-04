@@ -41,7 +41,9 @@
       <li><a href="/member-edit/index">プロフィール変更</a></li>
       <li><a href="/member/logout">ログアウト</a></li>
       <li><a href="#">パスワード変更</a></li>
+      <?php if($member->companion_flg == '1') {?>
       <li><a href="#">ゴルファー情報非公開</a></li>
+      <?php }?>
       <li><a href="#">退会</a></li>
     </ul>
   </nav>
