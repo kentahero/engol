@@ -278,17 +278,23 @@
               <th>写真１</th>
               <td class="required">
                 <p class="control">
-                  <img src="/img/pic/<?=$member->id?>_1 width="100"/><br/>
-                  <?php echo $this->Form->file('CompanionInfo.image1',['accept'=>'image/*']);?>
+                  <img src="/img/pic/<?=$entities['CompanionInfo']['image_file1']?>" width="100"/><br/>
+                  <?php echo $this->Form->hidden('CompanionInfo.image_file1',['value'=>$entities['CompanionInfo']['image_file1']]);?>
+                  <?php echo $this->Form->file('CompanionInfo.image_up1',['accept'=>'image/*']);?>
                   <?php echo $this->Form->error('CompanionInfo.image1')?>
                 </p>
               </td>
             </tr>
+
             <tr>
               <th>写真２</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->file('CompanionInfo.image2',['accept'=>'image/*']);?>
+                  <?if($entities['CompanionInfo']['image_file2']){?>
+                  <img src="/img/pic/<?=$entities['CompanionInfo']['image_file2']?>" width="100"/><br/>
+                  <?php echo $this->Form->hidden('CompanionInfo.image_file2',['value'=>$entities['CompanionInfo']['image_file2']]);?>
+                  <?}?>
+                  <?php echo $this->Form->file('CompanionInfo.image_up2',['accept'=>'image/*']);?>
                   <?php echo $this->Form->error('CompanionInfo.image2')?>
                 </p>
               </td>
@@ -297,7 +303,11 @@
               <th>写真３</th>
               <td>
                 <p class="control">
-                  <?php echo $this->Form->file('CompanionInfo.image3',['accept'=>'image/*']);?>
+                  <?if($entities['CompanionInfo']['image_file2']){?>
+                  <img src="/img/pic/<?=$entities['CompanionInfo']['image_file3']?>" width="100"/><br/>
+                  <?php echo $this->Form->hidden('CompanionInfo.image_file3',['value'=>$entities['CompanionInfo']['image_file3']]);?>
+                  <?}?>
+                  <?php echo $this->Form->file('CompanionInfo.image_up3',['accept'=>'image/*']);?>
                   <?php echo $this->Form->error('CompanionInfo.image3')?>
                 </p>
               </td>

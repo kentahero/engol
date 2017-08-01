@@ -117,22 +117,22 @@
             <tr>
               <th>画像1</th>
               <td class="required">
-                <img src="<?=$entities['CompanionInfo']['image1']['url']?>" width="200"/>
+                <img src="<?=$entities['CompanionInfo']['image_url1']?>" width="200"/>
               </td>
             </tr>
-            <?php if($entities['CompanionInfo']['image2']['name']) {?>
+            <?php if($entities['CompanionInfo']['image_url2']) {?>
             <tr>
               <th>画像2</th>
               <td>
-                <img src="<?=$entities['CompanionInfo']['image2']['url']?>" width="200"/>
+                <img src="<?=$entities['CompanionInfo']['image_url2']?>" width="200"/>
               </td>
             </tr>
             <?php }?>
-            <?php if($entities['CompanionInfo']['image3']['name']) {?>
+            <?php if($entities['CompanionInfo']['image_url3']) {?>
             <tr>
               <th>画像3</th>
               <td>
-                <img src="<?=$entities['CompanionInfo']['image3']['url']?>" width="200"/>
+                <img src="<?=$entities['CompanionInfo']['image_url3']?>" width="200"/>
               </td>
             </tr>
             <?php }?>

@@ -55,8 +55,7 @@ class CompanionInfosTable extends Table {
 			->add('pair_email','validFormat',['rule'=>'email','message'=>'メールアドレスの形式で入力して下さい'])
 			->add('pair_email','custom',['rule'=>[$this,'existsEmail'],'message'=>'このアドレスでは登録されていません']);
 		$validator
-			->notEmpty('image1','プロフィール画像を少なくとも一つはアップロードして下さい');
-
+			->notEmpty('image_file1','プロフィール画像を少なくとも一つはアップロードして下さい');
 		$validator
 			->notEmpty('payment_bank','金融機関名を入力して下さい')
 			->notEmpty('payment_shop_name','支店名を入力して下さい')
