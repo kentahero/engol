@@ -143,11 +143,14 @@ class MemberEditController extends AppController
 		$uuid = Text::uuid();
 		$imageCount = 0;
 		for($i=1;$i<=3;$i++) {
-			$moved = $this->moveTmpImages($data['CompanionInfo']['image'.$i],$uuid.'-'.$i);
+			$moved = $this->moveTmpImages($data['CompanionInfo']['image_up'.$i],$uuid.'-'.$i);
 			if ($moved) {
-				$data['CompanionInfo']['image'.$i]['path'] = $moved['path'];
-				$data['CompanionInfo']['image'.$i]['url'] = $moved['url'];
+				$data['CompanionInfo']['image_url'.$i] = $moved['url'];
+				$data['CompanionInfo']['image_file'.$i] = $moved['file'];
+				$data['CompanionInfo']['image_moved'.$i] = true;
 				$imageCount++;
+			} else {
+				$data['CompanionInfo']['image_url'.$i] = '/img/pic/'.$data['CompanionInfo']['image_file'.$i];
 			}
 		}
 		$data['CompanionInfo']['image'] = $imageCount;
@@ -236,13 +239,13 @@ class MemberEditController extends AppController
 				$tableComp = TableRegistry::get('CompanionInfos');
 				$golfer = $entities['CompanionInfo'];
 				$golfer->user_id = $user->id;
+				//画像の本登録
+				if ($golfer->image_moved1)$golfer->image_file1 = $this->moveImage($golfer->image_file1,$user->id,1);
+				if ($golfer->image_moved2)$golfer->image_file2 = $this->moveImage($golfer->image_file2,$user->id,2);
+				if ($golfer->image_moved3)$golfer->image_file3 = $this->moveImage($golfer->image_file3,$user->id,3);
 				if (!$tableComp->save($golfer)) {
 					throw new InternalErrorException('ゴルファーテーブルの保存に失敗');
 				}
-				//画像の本登録
-				$this->moveImage($golfer->image1['path'],$user->id,1);
-				if ($golfer->image2['name'])$this->moveImage($golfer->image2['path'],$user->id,2);
-				if ($golfer->image3['name'])$this->moveImage($golfer->image3['path'],$user->id,3);
 			}
 
 			$entities['member'] = $member;
@@ -279,16 +282,19 @@ class MemberEditController extends AppController
 			$file = new File($image['tmp_name']);
 			$file->copy(IMAGE_TMP.$uuid.'.'.$ext);
 
-			return ['url'=>'/img/pic/tmp/'.$uuid.'.'.$ext,'path'=>IMAGE_TMP.$uuid.'.'.$ext];
+			return ['url'=>'/img/pic/tmp/'.$uuid.'.'.$ext,'path'=>IMAGE_TMP.$uuid.'.'.$ext,'file'=>$uuid.'.'.$ext];
 		}
 		return null;
 	}
 
-	private function moveImage($imagePath,$userId,$no) {
-		if ($imagePath) {
+	private function moveImage($imageFile,$userId,$no) {
+		if ($imageFile) {
+			$imagePath = IMAGE_TMP.$imageFile;
 			$ext = mb_strtolower(pathinfo($imagePath,PATHINFO_EXTENSION));
 			$file = new File($imagePath);
 			$file->copy(IMAGE_PIC.'pic_'.$userId.'_'.$no.'.'.$ext);
+			return 'pic_'.$userId.'_'.$no.'.'.$ext;
 		}
+		return '';
 	}
 }

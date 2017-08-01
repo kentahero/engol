@@ -107,7 +107,7 @@ class UsersTable extends Table {
 
 	public function duplicateEmail($value, $context) {
 		$condition = ['email'=>$value,'deleted'=>0];
-		if ($context['data']['id']) {
+		if (isset($context['data']['id'])) {
 			$condition['id !='] = $context['data']['id'];
 		}
 		$count = $this->find('all')->where($condition)->count();
@@ -132,7 +132,7 @@ class UsersTable extends Table {
 	}
 	public function duplicateNickname($value, $context) {
 		$condition = ['nickname'=>$value,'deleted'=>0];
-		if ($context['data']['id']) {
+		if (isset($context['data']['id'])) {
 			$condition['id !='] = $context['data']['id'];
 		}
 		$count = $this->find('all')->where($condition)->count();

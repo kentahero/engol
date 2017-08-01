@@ -101,7 +101,6 @@ class GolferEntryController extends AppController
 		$entities = [];
 		//バリデーション実行
 		if (!$member) { //未ログインの場合
-
 			//-------------------------------------
 			//会員登録のバリデーション実行
 			//-------------------------------------
@@ -115,33 +114,20 @@ class GolferEntryController extends AppController
 					$data['User']);
 			$entities['User'] = $user;
 		}
+
+		//---------------------------------
+		//ゴルファー情報のバリデーション
+		//---------------------------------
 		$data['CompanionInfo']['round_week'] = implode(',',$data['CompanionInfo']['round_week_ar']);
 		$data['CompanionInfo']['training_week'] = implode(',',$data['CompanionInfo']['training_week_ar']);
-		/*
-		foreach ($data['CompanionInfo']['round_week_ar'] as $round_week) {
-			if ($round_week != '0')$data['CompanionInfo']['round_week']=$data['CompanionInfo']['round_week'].$round_week.'、';
-			if ($round_week == 'ALL') {
-				$data['CompanionInfo']['round_week'] = 'いつでも';
-				break;
-			}
-		}
-		foreach ($data['CompanionInfo']['training_week_ar'] as $training_week) {
-			if ($training_week != '0')$data['CompanionInfo']['training_week']=$data['CompanionInfo']['training_week'].$training_week.'、';
-			if ($training_week == 'ALL') {
-				$data['CompanionInfo']['training_week'] = 'いつでも';
-				break;
-			}
-		}
-		*/
-
 		//一時画像の移動
 		$uuid = Text::uuid();
 		$imageCount = 0;
 		for($i=1;$i<=3;$i++) {
-			$moved = $this->moveTmpImages($data['CompanionInfo']['image'.$i],$uuid.'-'.$i);
+			$moved = $this->moveTmpImages($data['CompanionInfo']['image_up'.$i],$uuid.'-'.$i);
 			if ($moved) {
-				$data['CompanionInfo']['image'.$i]['path'] = $moved['path'];
-				$data['CompanionInfo']['image'.$i]['url'] = $moved['url'];
+				$data['CompanionInfo']['image_url'.$i] = $moved['url'];
+				$data['CompanionInfo']['image_file'.$i] = $moved['file'];
 				$imageCount++;
 			}
 		}
@@ -181,7 +167,6 @@ class GolferEntryController extends AppController
 			$coursePref = $tablePref->get($entities['CompanionInfo']['training_prefecture_cd']);
 			$entities['CompanionInfo']['training_prefecture_name'] = $coursePref->name;
 		}
-
 
 		$this->set('entities',$entities);
 		//セッションにデータ書き込み
@@ -242,13 +227,14 @@ class GolferEntryController extends AppController
 			$tableComp = TableRegistry::get('CompanionInfos');
 			$golfer = $entities['CompanionInfo'];
 			$golfer->user_id = $user->id;
+			//画像の本登録
+			$golfer->image_file1 = $this->moveImage($golfer->image_file1,$user->id,1);
+			if ($golfer->image_file2)$golfer->image_file2 = $this->moveImage($golfer->image_file2,$user->id,2);
+			if ($golfer->image_file3)$golfer->image_file3 = $this->moveImage($golfer->image_file3,$user->id,3);
+
 			if (!$tableComp->save($golfer)) {
 				throw new InternalErrorException('ゴルファーテーブルの保存に失敗');
 			}
-			//画像の本登録
-			$this->moveImage($golfer->image1['path'],$user->id,1);
-			if ($golfer->image2['name'])$this->moveImage($golfer->image2['path'],$user->id,2);
-			if ($golfer->image3['name'])$this->moveImage($golfer->image3['path'],$user->id,3);
 
 			$entities['member'] = $member;
 			//登録ゴルファーへのメール
@@ -271,7 +257,6 @@ class GolferEntryController extends AppController
 
 		} catch(Exception $e) {
 			$connection->rollback();
-			debug($e);
 			throw $e;
 		}
 		$this->request->session()->delete('golfer_form_data');
@@ -284,16 +269,19 @@ class GolferEntryController extends AppController
 			$file = new File($image['tmp_name']);
 			$file->copy(IMAGE_TMP.$uuid.'.'.$ext);
 
-			return ['url'=>'/img/pic/tmp/'.$uuid.'.'.$ext,'path'=>IMAGE_TMP.$uuid.'.'.$ext];
+			return ['url'=>'/img/pic/tmp/'.$uuid.'.'.$ext,'path'=>IMAGE_TMP.$uuid.'.'.$ext,'file'=>$uuid.'.'.$ext];
 		}
 		return null;
 	}
 
-	private function moveImage($imagePath,$userId,$no) {
-		if ($imagePath) {
+	private function moveImage($imageFile,$userId,$no) {
+		if ($imageFile) {
+			$imagePath = IMAGE_TMP.$imageFile;
 			$ext = mb_strtolower(pathinfo($imagePath,PATHINFO_EXTENSION));
 			$file = new File($imagePath);
 			$file->copy(IMAGE_PIC.'pic_'.$userId.'_'.$no.'.'.$ext);
+			return 'pic_'.$userId.'_'.$no.'.'.$ext;
 		}
+		return '';
 	}
 }
