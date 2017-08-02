@@ -26,6 +26,9 @@ use App\Service\EpsilonService;
 class MemberController extends AppController
 {
 
+	/**
+	 * メールボックス画面
+	 */
 	public function index() {
 
 		$member = $this->request->session()->read('member');
@@ -49,6 +52,9 @@ class MemberController extends AppController
 		}
 	}
 
+	/**
+	 * ログイン画面
+	 */
 	public function login() {
 
 		if ($this->request->is('post')) {
@@ -56,7 +62,7 @@ class MemberController extends AppController
 			$password = $this->request->getData('password');
 
 			$tableUser = TableRegistry::get('Users');
-			$member = $tableUser->find('all')->where(['email'=>$email,'password'=>$password])->first();
+			$member = $tableUser->find('all')->where(['email'=>$email,'password'=>$password,'deleted'=>'0'])->first();
 			if ($member) {
 				$this->request->session()->write('member',$member);
 
@@ -74,6 +80,9 @@ class MemberController extends AppController
 		}
 	}
 
+	/**
+	 * ログアウト処理
+	 */
 	public function logout() {
 		$member = $this->request->session()->read('member');
 		if ($member) {
@@ -82,9 +91,77 @@ class MemberController extends AppController
 		$this->redirect('/');
 	}
 
+	/**
+	 * パスワード再発行
+	 */
 	public function forgot() {
 		$email = $this->request->getData('email');
 		$birth = $this->request->getData('birth');
+
+		if (!$this->request->is('post')) {
+			return;
+		}
+
+		if (empty($email) || empty($birth)) {
+			$this->set('error','メールアドレス、誕生日を入力して下さい');
+			return;
+		}
+		if (!preg_match('/^([0-9]{8})$/', $birth)) {
+			$this->set('error','誕生日を8桁の数値で入力して下さい');
+			return;
+		}
+		$tableUser = TableRegistry::get('Users');
+		$user = $tableUser->find()->where(['email'=>$email,'birth'=>$birth,'deleted'=>'0'])->first();
+		if (!$user) {
+			$this->set('error','メールアドレスまたは誕生日に誤りがあります');
+			return;
+		}
+		//登録ゴルファーへのメール
+		$email = new EMail($this->mailConf);
+		$email
+			->setTemplate('password')
+			->setTo($user->email)
+			->setSubject('【エンゴル】パスワード通知')
+			->setViewVars(['user'=>$user])
+			->send();
+
+		$this->render('resent');
+	}
+
+	public function changePassword() {
+		if (!$this->request->is('post')) {
+			return;
+		}
+		$member = $this->request->session()->read('member');
+		if (!$member) {
+			$this->redirect('/member/login');
+			return;
+		}
+		$now = $this->request->getData('now');
+		$new = $this->request->getData('new');
+		$confirm = $this->request->getData('new_confirm');
+
+		if (empty($now) || empty($new) || empty($confirm)) {
+			$this->set('error','現在のパスワード、新しいパスワードを全て入力して下さい');
+			return;
+		}
+
+		if ($member->password != $now) {
+			$this->set('error','現在のパスワードが間違っています');
+			return;
+		}
+
+		if ($new != $confirm) {
+			$this->set('error','パスワードの確認が一致しません');
+			return;
+		}
+
+		$tableUser = TableRegistry::get('Users');
+		$user = $tableUser->get($member->id);
+		$user->password = $new;
+		$tableUser->save($user);
+		$this->request->session()->delete('member');
+		$this->render('password_changed');
 	}
 
 	public function common() {
@@ -320,6 +397,51 @@ class MemberController extends AppController
 		if ($this->statusChange(Offer::STATUS_CLOSE)) {
 			$this->redirect('/member/detail?offer_id='.$offerId);
 		}
+	}
+
+	/**
+	 * ゴルファー情報非公開
+	 */
+	public function unpublish() {
+	}
+	public function unpublished() {
+
+		$member = $this->request->session()->read('member');
+
+		if (!$member) {
+			$this->redirect('/member/login');
+			return;
+		}
+
+		$tableUser = TableRegistry::get('Users');
+		$user = $tableUser->get($member->id);
+		$user->companion_flg = '0';
+		$tableUser->save($user);
+		$this->request->session()->write('member',$user);
+
+		$this->redirect('/member/index');
+	}
+
+	/**
+	 * 退会
+	 */
+	public function resign() {
+
+	}
+	public function resigned() {
+		$member = $this->request->session()->read('member');
+
+		if (!$member) {
+			$this->redirect('/member/login');
+			return;
+		}
+
+		$tableUser = TableRegistry::get('Users');
+		$user = $tableUser->get($member->id);
+		$user->deleted = '1';
+		$tableUser->save($user);
+		$this->request->session()->delete('member');
+		$this->redirect('/');
 	}
 
 	private function statusChange($offerId,$status) {

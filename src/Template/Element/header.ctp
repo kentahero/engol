@@ -37,14 +37,16 @@
     <ul class="drawer-menu">
       <!-- ドロワーメニューの中身 -->
       <li><a href="/member/index">メールボックス</a></li>
+      <?php if($member->companion_flg == '1') {?>
       <li><a href="/profile/index/<?=$member->id?>">プロフィール確認</a></li>
+      <?php }?>
       <li><a href="/member-edit/index">プロフィール変更</a></li>
       <li><a href="/member/logout">ログアウト</a></li>
-      <li><a href="#">パスワード変更</a></li>
+      <li><a href="/member/change-password">パスワード変更</a></li>
       <?php if($member->companion_flg == '1') {?>
-      <li><a href="#">ゴルファー情報非公開</a></li>
+      <li><a href="/member/unpublish">ゴルファー情報非公開</a></li>
       <?php }?>
-      <li><a href="#">退会</a></li>
+      <li><a href="/member/resign">退会</a></li>
     </ul>
   </nav>
 </header>

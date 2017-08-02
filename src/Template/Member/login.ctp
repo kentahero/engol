@@ -9,9 +9,9 @@
     <?= $this->Form->hidden('group_id')?>
     <div class="profile-area">
       <section class="profile-main-block">
-      　<?php if ($this->Form->errors) { ?>
+      　<?php if (isset($error)) { ?>
         <div class="error-msg-area mb10">
-          入力項目にエラーがあります
+          <?=$error?>
         </div>
         <?php }?>
         <div class="mb10">

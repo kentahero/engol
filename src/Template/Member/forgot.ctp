@@ -6,12 +6,11 @@
 <section class="main-content detail-page">
   <section class="container">
     <?php echo $this->Form->create(null,['type'=>'post']);?>
-    <?= $this->Form->hidden('group_id')?>
     <div class="profile-area">
       <section class="profile-main-block">
-      　<?php if ($this->Form->errors) { ?>
+      　<?php if (isset($error)) { ?>
         <div class="error-msg-area mb10">
-          入力項目にエラーがあります
+          <?=$error?>
         </div>
         <?php }?>
         <div class="mb10">
@@ -23,7 +22,7 @@
         <table class="table input-table mb30">
           <tbody>
             <tr>
-              <th>Eメール</th>
+              <th>メールアドレス</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('email',['class'=>'input','placeholder'=>'info@engol.jp']);?>
