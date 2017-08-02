@@ -445,6 +445,7 @@
             </tr>
           </tbody>
         </table>
+        <?php if (!isset($member)) { ?>
         <div class="mb20 consent-area">
           <h2 class="profile-title male bvc">個人情報保護方針への同意</h2>
           <p class="control">
@@ -460,7 +461,7 @@
             </div>
           </p>
         </div>
-
+		<?php } ?>
         <button type="submit" class="button">
           <span>入力内容を確認する</span>
           <span class="icon is-medium right">

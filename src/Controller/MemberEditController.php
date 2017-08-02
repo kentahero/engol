@@ -99,6 +99,11 @@ class MemberEditController extends AppController
 			$golfer = $tableComp->find()->where(['user_id'=>$this->member->id])->first();
 			$golfer['round_week_ar']= explode(',',$golfer->round_week);
 			$golfer['training_week_ar']= explode(',',$golfer->training_week);
+			for($i=1;$i<=$golfer->image;$i++) {
+				if ($golfer['image_file'.$i]) {
+					$golfer['image_url'.$i] = '/img/pic/'.$golfer['image_file'.$i];
+				}
+			}
 			$entities['CompanionInfo'] = $golfer;
 		}
 		$this->common();
@@ -149,8 +154,9 @@ class MemberEditController extends AppController
 				$data['CompanionInfo']['image_file'.$i] = $moved['file'];
 				$data['CompanionInfo']['image_moved'.$i] = true;
 				$imageCount++;
-			} else {
+			} else if ($data['CompanionInfo']['image_file'.$i]){
 				$data['CompanionInfo']['image_url'.$i] = '/img/pic/'.$data['CompanionInfo']['image_file'.$i];
+				$imageCount++;
 			}
 		}
 		$data['CompanionInfo']['image'] = $imageCount;
@@ -218,6 +224,7 @@ class MemberEditController extends AppController
 		$connection->begin();
 		try {
 			$tableUser = TableRegistry::get('Users');
+			/*
 			if ($entities['CompanionInfo']->pair_email)  { //ペアのメールアドレス入力済みの場合
 				$pair = $tableUser->find()->where(['email'=>$entities['CompanionInfo']->pair_email,'deleted'=>0])->first();
 				if ($pair) {
@@ -226,15 +233,14 @@ class MemberEditController extends AppController
 					throw Exception('指定のペアのメールアドレスなし');
 				}
 			}
+			*/
 			//ユーザーの登録
-			$tableUser = TableRegistry::get('Users');
 			$user = $entities['User'];
-			$user->group_id = $groupId;
-			$user->companion_flg = '1';
+			//$user->group_id = $groupId;
 			if (!$tableUser->save($user)) {
 				throw new InternalErrorException('ユーザーテーブルの保存に失敗');
 			}
-			if ($member->companion_flg == '1') {
+			if ($this->member->companion_flg == '1') {
 				//ゴルファーの登録
 				$tableComp = TableRegistry::get('CompanionInfos');
 				$golfer = $entities['CompanionInfo'];
@@ -247,8 +253,8 @@ class MemberEditController extends AppController
 					throw new InternalErrorException('ゴルファーテーブルの保存に失敗');
 				}
 			}
-
-			$entities['member'] = $member;
+			/*
+			$entities['member'] = $this->member;
 			//登録ゴルファーへのメール
 			$emailComp = new EMail($this->mailConf);
 			$emailComp
@@ -264,7 +270,7 @@ class MemberEditController extends AppController
 				->setSubject('【エンゴル】ゴルファー登録がありました')
 				->setViewVars($entities)
 				->send();
-
+			*/
 			$connection->commit();
 
 		} catch(Exception $e) {

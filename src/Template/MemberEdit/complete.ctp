@@ -18,7 +18,7 @@
     <div class="profile-area">
       <section class="profile-main-block">
         <div class="confirm-msg-area mb10">
-          ゴルファー登録が完了しました。
+          ゴルファー情報の変更が完了しました。
         </div>
         <div class="entry-complete-area mb10">
           <p>お相手からオファーが申し込まれましたらログインして返答をして下さい</p>
