@@ -1,3 +1,4 @@
+  <?php if (!isset($member) || $member['companion_flg'] != '1') {?>
   <a href="/golfer-entry/index">
   <section class="staff-area">
     <i class="ci img-golf-player"></i>
@@ -5,7 +6,7 @@
     <i class="ci img-golf-player"></i>
   </section>
   </a>
-
+  <?php } ?>
   <section class="other-area">
     <ul>
       <li><a href="/pages/use">ご利用の流れ</a></li>

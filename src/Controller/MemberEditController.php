@@ -142,7 +142,8 @@ class MemberEditController extends AppController
 		//-------------------------------------
 		//ゴルファー情報のバリデーション実行
 		//-------------------------------------
-		if ($this->member->companion_flg== '1') {
+		$golfer = null;
+		if ($this->member->companion_flg == '1') {
 			$data['CompanionInfo']['round_week'] = implode(',', $data['CompanionInfo']['round_week_ar']);
 			$data['CompanionInfo']['training_week'] = implode(',', $data['CompanionInfo']['training_week_ar']);
 			//一時画像の移動
@@ -202,7 +203,7 @@ class MemberEditController extends AppController
 		//セッションにデータ書き込み
 		$this->request->session()->write('form_data',$entities);
 
-		if ($user->errors() || $golfer->errors()) {
+		if ($user->errors() || ($golfer && $golfer->errors())) {
 			//バリデーションエラーがあった場合は入力画面表示
 			$this->set('error',true);
 			$this->render('index');
