@@ -5,7 +5,6 @@
     <h1 class="top-keyword">
       <p>もっと<span>ゴルフをエンジョイ</span>しよう！</p>
       <p>ゴルフから始まる<span>新しい出会い！</span></p>
-      <p>※当サイトは只今オープン準備中となります。8月オープン予定</p>
     </h1>
     <div class="conv-button-block">
       <a href="/profile/search" class="conv-button">
