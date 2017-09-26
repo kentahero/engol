@@ -30,7 +30,7 @@
       <div class="card mrl5">
         <div class="card-image">
           <figure class="image is-square">
-            <img src="/img/pic/pic_<?=$user->id?>_<?=$i?>.jpg" alt="Image">
+            <img src="/img/pic/<?$user->companion_info['image_file'.$i]" alt="Image">
           </figure>
         </div>
       </div>

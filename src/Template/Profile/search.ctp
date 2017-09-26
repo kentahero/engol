@@ -128,7 +128,7 @@
                 <div class="card-image">
                   <figure class="image is-4by3">
                     <?php if($user->companion_info->image != 0) {?>
-                    <img src="/img/pic/pic_<?=$user->id?>_1.jpg" alt="Image">
+                    <img src="/img/pic/<?=$user->companion_info['image_file1']?>" alt="Image">
                     <?php }else{?>
                     <img src="/img/pic/nophoto.png" alt="Image">
                     <?php }?>
