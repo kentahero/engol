@@ -30,7 +30,7 @@
       <div class="card mrl5">
         <div class="card-image">
           <figure class="image is-square">
-            <img src="/img/pic/<?$user->companion_info['image_file'.$i]" alt="Image">
+            <img src="/img/pic/<?=$user->companion_info['image_file'.$i]?>" alt="Image">
           </figure>
         </div>
       </div>
@@ -123,7 +123,7 @@
                       <div class="card-image">
                         <figure class="image is-4by3">
                           <?php if($user->pair->companion_info->image != 0) {?>
-                          <img src="/img/pic/pic_<?=$user->pair->id?>_1.jpg" alt="Image">
+                          <img src="/img/pic/<?=$user->pair->companion_info['image_file1']?>" alt="Image">
                           <?php }else{?>
                           <img src="/img/pic/nophoto.png" alt="Image">
                           <?php }?>
