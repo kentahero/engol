@@ -56,7 +56,7 @@ class CompanionService extends AppService {
 	 */
 	public function getReccomend() {
 		$CompanionInfos = TableRegistry::get("Users");
-		$query = $CompanionInfos->find('all')->contain(['CompanionInfos'])->order('CompanionInfos.offer_count DESC')->limit(10);
+		$query = $CompanionInfos->find('all')->where(['Users.deleted'=>'0'])->contain(['CompanionInfos'])->order('CompanionInfos.offer_count DESC')->limit(10);
 		return $query->all();
 	}
 
