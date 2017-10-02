@@ -376,14 +376,14 @@
               <th>ラウンド可能曜日</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.0',['class'=>'checkbox','value'=>'1','id'=>'round_week1']);?><label for="round_week1">月</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.1',['class'=>'checkbox','value'=>'1','id'=>'round_week2']);?><label for="round_week2">火</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.2',['class'=>'checkbox','value'=>'1','id'=>'round_week3']);?><label for="round_week3">水</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.3',['class'=>'checkbox','value'=>'1','id'=>'round_week4']);?><label for="round_week4">木</label><br/>
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.4',['class'=>'checkbox','value'=>'1','id'=>'round_week5']);?><label for="round_week5">金</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.5',['class'=>'checkbox','value'=>'1','id'=>'round_week6']);?><label for="round_week6">土</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.6',['class'=>'checkbox','value'=>'1','id'=>'round_week7']);?><label for="round_week7">日</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.7',['class'=>'checkbox','value'=>'ALL','id'=>'round_week8']);?><label for="round_week8">いつでも</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.0',['class'=>'checkbox','value'=>'1','id'=>'round_week1']);?><label for="round_week1" onclick="">月</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.1',['class'=>'checkbox','value'=>'1','id'=>'round_week2']);?><label for="round_week2" onclick="">火</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.2',['class'=>'checkbox','value'=>'1','id'=>'round_week3']);?><label for="round_week3" onclick="">水</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.3',['class'=>'checkbox','value'=>'1','id'=>'round_week4']);?><label for="round_week4" onclick="">木</label><br/>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.4',['class'=>'checkbox','value'=>'1','id'=>'round_week5']);?><label for="round_week5" onclick="">金</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.5',['class'=>'checkbox','value'=>'1','id'=>'round_week6']);?><label for="round_week6" onclick="">土</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.6',['class'=>'checkbox','value'=>'1','id'=>'round_week7']);?><label for="round_week7" onclick="">日</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.round_week_ar.7',['class'=>'checkbox','value'=>'ALL','id'=>'round_week8']);?><label for="round_week8" onclick="">いつでも</label>
                   <?php echo $this->Form->error('CompanionInfo.round_week')?>
                 </p>
               </td>
@@ -392,14 +392,14 @@
               <th>練習場可能曜日</th>
               <td class="required">
                 <p class="control">
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.0',['class'=>'checkbox','value'=>'1','id'=>'training_week1']);?><label for="training_week1">月</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.1',['class'=>'checkbox','value'=>'1','id'=>'training_week2']);?><label for="training_week2">火</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.2',['class'=>'checkbox','value'=>'1','id'=>'training_week3']);?><label for="training_week3">水</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.3',['class'=>'checkbox','value'=>'1','id'=>'training_week4']);?><label for="training_week4">木</label><br/>
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.4',['class'=>'checkbox','value'=>'1','id'=>'training_week5']);?><label for="training_week5">金</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.5',['class'=>'checkbox','value'=>'1','id'=>'training_week6']);?><label for="training_week6">土</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.6',['class'=>'checkbox','value'=>'1','id'=>'training_week7']);?><label for="training_week7">日</label>
-                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.7',['class'=>'checkbox','value'=>'ALL','id'=>'training_week8']);?><label for="training_week8">いつでも</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.0',['class'=>'checkbox','value'=>'1','id'=>'training_week1']);?><label for="training_week1" onclick="">月</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.1',['class'=>'checkbox','value'=>'1','id'=>'training_week2']);?><label for="training_week2" onclick="">火</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.2',['class'=>'checkbox','value'=>'1','id'=>'training_week3']);?><label for="training_week3" onclick="">水</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.3',['class'=>'checkbox','value'=>'1','id'=>'training_week4']);?><label for="training_week4" onclick="">木</label><br/>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.4',['class'=>'checkbox','value'=>'1','id'=>'training_week5']);?><label for="training_week5" onclick="">金</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.5',['class'=>'checkbox','value'=>'1','id'=>'training_week6']);?><label for="training_week6" onclick="">土</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.6',['class'=>'checkbox','value'=>'1','id'=>'training_week7']);?><label for="training_week7" onclick="">日</label>
+                  <?php echo $this->Form->checkbox('CompanionInfo.training_week_ar.7',['class'=>'checkbox','value'=>'ALL','id'=>'training_week8']);?><label for="training_week8" onclick="">いつでも</label>
                   <?php echo $this->Form->error('CompanionInfo.training_week')?>
                 </p>
               </td>
