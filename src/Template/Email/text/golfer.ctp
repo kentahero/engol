@@ -38,9 +38,9 @@
 
 ■平均スコア：<?=$CompanionInfo->average_score?>
 
-■ラウンド曜日：<?=$CompanionInfo->round_week?>
+■ラウンド曜日：<?=$CompanionInfo->round_week_str?>
 
-■練習場曜日：<?=$CompanionInfo->training_week?>
+■練習場曜日：<?=$CompanionInfo->training_week_str?>
 
 ■ゴルフ場エリア：<?=$CompanionInfo->course_prefecture_name?>
 

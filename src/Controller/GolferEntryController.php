@@ -118,8 +118,12 @@ class GolferEntryController extends AppController
 		//---------------------------------
 		//ゴルファー情報のバリデーション
 		//---------------------------------
-		$data['CompanionInfo']['round_week'] = implode(',',$data['CompanionInfo']['round_week_ar']);
-		$data['CompanionInfo']['training_week'] = implode(',',$data['CompanionInfo']['training_week_ar']);
+		if (isset($data['CompanionInfo']['round_week_ar'])&&is_array($data['CompanionInfo']['round_week_ar'])) {
+			$data['CompanionInfo']['round_week'] = implode(',',$data['CompanionInfo']['round_week_ar']);
+		}
+		if (isset($data['CompanionInfo']['training_week_ar'])&&is_array($data['CompanionInfo']['training_week_ar'])) {
+			$data['CompanionInfo']['training_week'] = implode(',',$data['CompanionInfo']['training_week_ar']);
+		}
 		//一時画像の移動
 		$uuid = Text::uuid();
 		$imageCount = 0;
