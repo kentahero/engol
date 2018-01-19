@@ -96,6 +96,7 @@
     </section> -->
   </section>
   <section class="container">
+    <div class="has-text-centered">登録する際には<a href="/pages/attention">こちら</a>の注意事項をお読みください</div>
     <?php if (!isset($member)) { ?>
     <a href="/member/login" class="button mb30" style="width:95%; max-width:1024px; ">
       <span style="font-size:0.9em">既に会員登録されている方はコチラ</span>
@@ -303,7 +304,7 @@
         <table class="table input-table">
           <tbody style="border-bottom:0px">
             <tr>
-              <th>写真１</th>
+              <th>写真</th>
               <td class="required">
                 <p class="control">
                   <?php if ($entities['CompanionInfo']['image_url1']) {?>
@@ -316,6 +317,7 @@
                 </p>
               </td>
             </tr>
+            <?php /* ?>
             <tr>
               <th>写真２</th>
               <td>
@@ -344,6 +346,7 @@
                 </p>
               </td>
             </tr>
+            <?php */?>
           </tbody>
         </table>
         <div class="mb10">
@@ -444,6 +447,7 @@
                 </p>
               </td>
             </tr>
+            <?php /* ?>
             <tr>
               <th>設定料金</th>
               <td>
@@ -455,6 +459,8 @@
             </tr>
             <tr>
               <th colspan="2" style="font-size:.8em">※設定料金を設定するとオファーが減る可能性がありますのでご注意ください。主にコーチなどの方が対象です。</th>
+            </tr>
+            <?php */ ?>
             <tr>
               <th>プレイ費</th>
               <td class="required">
@@ -464,8 +470,8 @@
                 </p>
               </td>
             </tr>
-             <tr>
-              <th colspan="2" style="font-size:.8em">※プレイ費をお相手に負担して頂くとオファーが減る可能性がありますのでご注意ください。</th>
+            <tr>
+              <th colspan="2" style="font-size:.8em">※プレイ費をお相手に負担して頂くとオファーが減る可能性がありますのでご注意ください。現地にてお相手に支払頂いてください。</th>
             <tr>
             <tr>
               <th>ペアの方のメールアドレス</th>
@@ -481,6 +487,7 @@
             <tr>
           </tbody>
         </table>
+        <?php /* ?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -538,6 +545,7 @@
           </tr>
           </tbody>
         </table>
+        <?php */ ?>
         <div class="mb20 consent-area">
           <h2 class="profile-title male bvc">個人情報保護方針への同意</h2>
           <p class="control">

@@ -126,14 +126,16 @@ class GolferEntryController extends AppController
 		}
 		//一時画像の移動
 		$uuid = Text::uuid();
-		$imageCount = 0;
+		$imageCount = 1;
 		for($i=1;$i<=3;$i++) {
-			$moved = $this->moveTmpImages($data['CompanionInfo']['image_up'.$i],$uuid.'-'.$i);
-			if ($moved) {
-				$data['CompanionInfo']['image_url'.$i] = $moved['url'];
-				$data['CompanionInfo']['image_file'.$i] = $moved['file'];
-				$imageCount++;
-			}
+		    if (isset($data['CompanionInfo']['image_up'.$i])) {
+    			$moved = $this->moveTmpImages($data['CompanionInfo']['image_up'.$i],$uuid.'-'.$i);
+    			if ($moved) {
+    				$data['CompanionInfo']['image_url'.$i] = $moved['url'];
+    				$data['CompanionInfo']['image_file'.$i] = $moved['file'];
+    				$imageCount++;
+    			}
+		    }
 		}
 		$data['CompanionInfo']['image'] = $imageCount;
 		$tableComp = TableRegistry::get('CompanionInfos');
@@ -141,13 +143,13 @@ class GolferEntryController extends AppController
 		$tableComp->validator('default')->offsetUnset('training_week_ar');
 		if ($data['CompanionInfo']['round_week'] != '') $tableComp->validator('default')->offsetUnset('training_week');
 		if ($data['CompanionInfo']['training_week'] != '') $tableComp->validator('default')->offsetUnset('round_week');
-		if (empty($data['CompanionInfo']['amount']) && $data['CompanionInfo']['play_amount_kind'] != '2') {
+		//if (empty($data['CompanionInfo']['amount']) && $data['CompanionInfo']['play_amount_kind'] != '2') {
 			$tableComp->validator('default')->offsetUnset('payment_bank');
 			$tableComp->validator('default')->offsetUnset('payment_shop_name');
 			$tableComp->validator('default')->offsetUnset('payment_bank_kind');
 			$tableComp->validator('default')->offsetUnset('payment_no');
 			$tableComp->validator('default')->offsetUnset('payment_name');
-		}
+		//}
 
 		$golfer = $tableComp->newEntity($data['CompanionInfo']);
 		$entities['CompanionInfo'] = $golfer;

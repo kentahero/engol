@@ -209,12 +209,14 @@
                 <?=$entities['CompanionInfo']->job?>
               </td>
             </tr>
+            <?php /* ?>
             <tr>
               <th>設定料金</th>
               <td class="required">
                 <?=$entities['CompanionInfo']->amount?>
               </td>
             </tr>
+            <?php */ ?>
             <tr>
               <th>プレイ費</th>
               <td class="required">
@@ -229,6 +231,7 @@
             </tr>
           </tbody>
         </table>
+        <?php /* ?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -279,6 +282,7 @@
           </tr>
           </tbody>
         </table>
+        <?php */ ?>
         <button type="submit" class="button">
           <span>登録する</span>
           <span class="icon is-medium right">

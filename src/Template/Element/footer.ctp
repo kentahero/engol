@@ -18,6 +18,7 @@
       <?php } ?>
     </ul>
     <ul>
+      <li><a href="/pages/attention">注意事項</a></li>
       <li><a href="/pages/terms">利用規約</a></li>
       <li><a href="/pages/company">運営者情報</a></li>
       <li><a href="/pages/privacy">個人情報保護方針</a></li>

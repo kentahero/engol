@@ -8,11 +8,12 @@
       <div class="reserve-description">
           <dl style="width:100%;height:initial">
             <dt style="width:100%;position:relative;padding:0px;height:initial">
-              <span class="bvc" style="text-align:left">engolでお支払い頂く代金は<br/><b>「1.お相手のプレイ費」<br/>「2.お相手の設定料金」<br/>「3.サービス利用料」<br/></b>の合計額となります。</span>
+              <span class="bvc" style="text-align:left">engolでお支払い頂く代金は<br/><b>お相手の人数に合わせたサービス利用料<br/></b>の合計額となります。</span>
             </dt>
           </dl>
       </div>
     </section>
+  <!--
   <div class="bg-green">
     <section class="container">
       <div class="reserve-description">
@@ -62,22 +63,39 @@
       </div>
     </section>
   </div>
+  -->
   <div class="bg-green">
     <section class="container">
       <div class="reserve-description">
         <div class="float-inner" style="padding:5px">
           <dl style="width:100%;height:initial">
             <dt class="bvc" style="width:100%;position:relative;padding-top:0px;height:initial">
-              <img src="/img/icon-plus.png" alt="" style="width:70px"/>
-              <h5 class="reserve-baloon mb10">3. サイト利用料金</h5>
-              <span class="bvc" style="text-align:left">サイトの利用料金がお相手お一人に付きまして<b>5,000円</b>となります。</span>
-              <span class="bvc" style="text-align:left">お相手がペアへのお申込みの場合は合計で<b>10,000円</b>となります。</span>
+              <!--<img src="/img/icon-plus.png" alt="" style="width:70px"/>-->
+              <h5 class="reserve-baloon mb10">サイト利用料金</h5>
+              <span class="bvc" style="text-align:left">サイトの利用料金がお相手お一人に付きまして<b>3,000円</b>となります。</span>
+              <span class="bvc" style="text-align:left">お相手がペアへのお申込みの場合は合計で<b>6,000円</b>となります。</span>
+              <span class="bvc" style="text-align:left">お相手とマッチングが成功した後にクレジットカードにてお支払い頂きます</span>
             </dt>
             <!--
             <dd class="bvc">
               <img src="/img/reserve_step_01.png" alt="" />
             </dd>
             -->
+          </dl>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="bg-green">
+    <section class="container style="padding:0px">
+      <div class="reserve-description">
+        <div class="float-inner" style="padding:5px">
+          <dl style="width:100%;height:initial">
+            <dt class="bvc" style="width:100%;position:relative;padding-top:0px;height:initial">
+              <h5 class="reserve-baloon mb10">ゴルフ場、練習場でのプレイ費用について</h5>
+              <span class="bvc" style="text-align:left">お相手のプロフィールでプレイ費用を「相手に支払ってもらう」と表示されている方は</span>
+              <span class="bvc" style="text-align:left">現地にてお相手分のプレイ費用もお支払いください。練習場での貸玉費用も同様です。</span>
+            </dt>
           </dl>
         </div>
       </div>

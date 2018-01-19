@@ -120,6 +120,7 @@ use App\Model\Entity\Offer;
         <?php if ($offer->status == Offer::STATUS_ACCEPT) {?>
         <p>お支払料金</p>
         <table class="table is-bordered">
+          <? php /* ?>
           <tr>
             <th>お相手のプレイ料金</th>
             <td style="text-align:right;padding-right:10px;"><?=number_format($amount['play_amount'])?>円</td>
@@ -128,6 +129,7 @@ use App\Model\Entity\Offer;
             <th>お相手の設定料金</th>
             <td  style="text-align:right;padding-right:10px;"><?=number_format($amount['user_amount'])?>円</td>
           </tr>
+          <?php */ ?>
           <tr>
             <th>サイト利用料金</th>
             <td  style="text-align:right;padding-right:10px;"><?=number_format($amount['site_amount'])?>円</td>
