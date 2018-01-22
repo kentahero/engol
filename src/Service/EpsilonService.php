@@ -96,6 +96,7 @@ class EpsilonService extends AppService {
 			$url = self::PRODUCTION_CONFIRM_URL;
 		}
 		$http = new Client();
+		$this->log('CARD AUTH URL='.$url);
 		$response = $http->post(
 				$url,
 				['contract_code'=>self::CONTRACT_CODE,'trans_code'=>$data['trans_code']],
