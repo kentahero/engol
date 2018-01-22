@@ -55,7 +55,11 @@ $(function(){
 					 return false;
 				 }
 				 text_selector('#prefecture_cd',obj[3]['long_name']); // 都道府県
-				 getCityList(obj[2]['long_name']);
+				 if (obj.length == 5) {
+					 getCityList(obj[2]['long_name']);
+				 } else if (obj.length == 6) {
+					 getCityList(obj[3]['long_name'] + obj[2]['long_name']);
+				 }
 				 $('#address1').val(obj[1]['long_name']); // 番地
 	        }else{
 	        	alert('住所情報が取得できませんでした');
