@@ -54,10 +54,11 @@ $(function(){
 					 alert('正しい郵便番号を入力してください');
 					 return false;
 				 }
-				 text_selector('#prefecture_cd',obj[3]['long_name']); // 都道府県
 				 if (obj.length == 5) {
+					 text_selector('#prefecture_cd',obj[3]['long_name']); // 都道府県
 					 getCityList(obj[2]['long_name']);
 				 } else if (obj.length == 6) {
+					 text_selector('#prefecture_cd',obj[4]['long_name']); // 都道府県
 					 getCityList(obj[3]['long_name'] + obj[2]['long_name']);
 				 }
 				 $('#address1').val(obj[1]['long_name']); // 番地
