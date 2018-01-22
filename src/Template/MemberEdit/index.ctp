@@ -285,7 +285,7 @@
                 </p>
               </td>
             </tr>
-
+			<?php /* ?>
             <tr>
               <th>写真２</th>
               <td>
@@ -312,6 +312,7 @@
                 </p>
               </td>
             </tr>
+            <?php */?>
           </tbody>
         </table>
         <div class="mb10">
@@ -412,6 +413,7 @@
                 </p>
               </td>
             </tr>
+            <?php /* ?>
             <tr>
               <th>設定料金</th>
               <td>
@@ -423,6 +425,8 @@
             </tr>
             <tr>
               <th colspan="2" style="font-size:.8em">※設定料金を設定するとオファーが減る可能性がありますのでご注意ください。主にコーチなどの方が対象です。</th>
+            </tr>
+            <?php */ ?>
             <tr>
               <th>プレイ費</th>
               <td class="required">
@@ -449,6 +453,7 @@
             <tr>
           </tbody>
         </table>
+        <?php /* ?>
         <div class="mb10">
           <span class="">
             <i class="ci img-ball"></i>
@@ -506,6 +511,7 @@
           </tr>
           </tbody>
         </table>
+        <?php */ ?>
         <?php }?>
         <button type="submit" class="button">
           <span>入力内容を確認する</span>

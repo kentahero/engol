@@ -104,10 +104,12 @@
               <th>職業</th>
               <td><?=$user->companion_info->job?></td>
             </tr>
+            <?php /* ?>
             <tr>
               <th>設定料金</th>
               <td><?=number_format($user->companion_info->amount)?>円</td>
             </tr>
+            <?php */ ?>
             <tr>
               <th>プレイ費</th>
               <td><?=$user->companion_info->play_amount_kind_name?></td>

@@ -150,16 +150,18 @@ class MemberEditController extends AppController
 			$uuid = Text::uuid();
 			$imageCount = 0;
 			for($i=1;$i<=3;$i++) {
-				$moved = $this->moveTmpImages($data['CompanionInfo']['image_up'.$i],$uuid.'-'.$i);
-				if ($moved) {
-					$data['CompanionInfo']['image_url'.$i] = $moved['url'];
-					$data['CompanionInfo']['image_file'.$i] = $moved['file'];
-					$data['CompanionInfo']['image_moved'.$i] = true;
-					$imageCount++;
-				} else if ($data['CompanionInfo']['image_file'.$i]){
-					$data['CompanionInfo']['image_url'.$i] = '/img/pic/'.$data['CompanionInfo']['image_file'.$i];
-					$imageCount++;
-				}
+			    if (isset($data['CompanionInfo']['image_up'.$i])) {
+				    $moved = $this->moveTmpImages($data['CompanionInfo']['image_up'.$i],$uuid.'-'.$i);
+    				if ($moved) {
+    					$data['CompanionInfo']['image_url'.$i] = $moved['url'];
+    					$data['CompanionInfo']['image_file'.$i] = $moved['file'];
+    					$data['CompanionInfo']['image_moved'.$i] = true;
+    					$imageCount++;
+    				} else if ($data['CompanionInfo']['image_file'.$i]){
+    					$data['CompanionInfo']['image_url'.$i] = '/img/pic/'.$data['CompanionInfo']['image_file'.$i];
+    					$imageCount++;
+    				}
+			    }
 			}
 			$data['CompanionInfo']['image'] = $imageCount;
 			$tableComp = TableRegistry::get('CompanionInfos');

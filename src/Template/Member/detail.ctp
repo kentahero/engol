@@ -118,7 +118,7 @@ use App\Model\Entity\Offer;
           </tbody>
         </table>
         <?php if ($offer->status == Offer::STATUS_ACCEPT) {?>
-        <p>お支払料金</p>
+        <p>お支払料金 ※料金をお支払頂くまでご成約となりません</p>
         <table class="table is-bordered">
           <tr>
             <th>サイト利用料金</th>
@@ -131,13 +131,50 @@ use App\Model\Entity\Offer;
         </table>
         <a href="/member/pay?offer_id=<?=$offer->id?>">
         <button type="submit" class="button">
-          <span>料金のお支払</span>
+          <span>クレジットカードでのお支払(JCB/AMEXのみ)</span>
           <span class="icon is-medium right">
               <i class="ci img-next"></i>
           </span>
         </button>
         </a>
-        <p style="text-align:center">料金をお支払頂くまでご成約となりません</p>
+        <br/>
+        <a href="javascript:void(0)" onClick="$('#bank_info').show()">
+        <button type="button" class="button">
+          <span>銀行振込でのお支払</span>
+          <span class="icon is-medium right">
+              <i class="ci img-next"></i>
+          </span>
+        </button>
+        </a>
+        <div id="bank_info" style="display:none">
+          <p>以下の口座にお振込みをお願いいたします。お振込み確認後にメールにてご成約のご連絡を差し上げます。</p>
+          <table class="table is-bordered">
+            <tr>
+              <th>金融機関名</th>
+              <td  style="text-align:right;padding-right:10px;">りそな銀行 (0010)</td>
+            </tr>
+            <tr style="background:#00000">
+              <th>支店名</th>
+              <td  style="text-align:right;padding-right:10px;">天六支店 (112)</td>
+            </tr>
+            <tr style="background:#00000">
+              <th>口座種別</th>
+              <td  style="text-align:right;padding-right:10px;">普通</td>
+            </tr>
+            <tr style="background:#00000">
+              <th>口座番号</th>
+              <td  style="text-align:right;padding-right:10px;">329550</td>
+            </tr>
+            <tr style="background:#00000">
+              <th>口座名義</th>
+              <td  style="text-align:right;padding-right:10px;">株式会社ティーエイチツー</td>
+            </tr>
+            <tr style="background:#00000">
+              <th>口座名義(カナ)</th>
+              <td  style="text-align:right;padding-right:10px;">カ）テイーエイチツー</td>
+            </tr>
+          </table>
+        </div>
        <?php } else if ($offer->status != Offer::STATUS_REDUCE && $offer->status != Offer::STATUS_CANCEL) {?>
         <button type="submit" class="button">
           <span>このオファーをキャンセル</span>

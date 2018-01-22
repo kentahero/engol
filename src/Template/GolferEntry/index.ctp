@@ -124,7 +124,7 @@
         <table class="table input-table">
           <tbody style="border-bottom:0px">
             <tr>
-              <th>メールアドレス</br>(公開されません)</th>
+              <th>メールアドレス</br>(オファー成立後にお相手に通知されます)</th>
               <td class="required">
                 <p class="control">
                   <?php echo $this->Form->text('User.email',['class'=>'input','placeholder'=>'info@engol.jp']);?>

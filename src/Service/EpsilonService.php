@@ -16,7 +16,7 @@ use Cake\Utility\Xml;
 class EpsilonService extends AppService {
 
 	const DEBUG_ORDER_URL = 'https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi';
-	const PRODUCTION_ORDER_URL = ' https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi';
+	const PRODUCTION_ORDER_URL = 'https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi';
 	const DEBUG_CONFIRM_URL = 'https://beta.epsilon.jp/cgi-bin/order/getsales2.cgi';
 	const PRODUCTION_CONFIRM_URL = 'https://secure.epsilon.jp/cgi-bin/order/getsales2.cgi';
 	const CONTRACT_CODE = '64985980';
@@ -96,7 +96,6 @@ class EpsilonService extends AppService {
 			$url = self::PRODUCTION_CONFIRM_URL;
 		}
 		$http = new Client();
-		$this->log('CARD AUTH URL='.$url);
 		$response = $http->post(
 				$url,
 				['contract_code'=>self::CONTRACT_CODE,'trans_code'=>$data['trans_code']],
