@@ -32,8 +32,8 @@ class CompanionService extends AppService {
 					'35'=>['lower'=>35,'upper'=>39],
 					'40'=>['lower'=>40,'upper'=>0]
 			];
-			$companionCond['display_age >='] = $ageTable[$conditions['age']]['lower'];
-			if ($ageTable[$conditions['age']]['upper']!=0)$companionCond['display_age <='] = $ageTable[$conditions['age']]['upper'];
+			$companionCond['(YEAR(CURDATE())-YEAR(birth)) - (RIGHT(CURDATE(),5)<RIGHT(birth,5)) >='] = $ageTable[$conditions['age']]['lower'];
+			if ($ageTable[$conditions['age']]['upper']!=0)$companionCond['(YEAR(CURDATE())-YEAR(birth)) - (RIGHT(CURDATE(),5)<RIGHT(birth,5)) <='] = $ageTable[$conditions['age']]['upper'];
 		}
 		$userQuery = $UsersTable->find('all')->select(['group_id'])->where($companionCond);
 
