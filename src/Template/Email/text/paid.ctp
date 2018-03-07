@@ -12,7 +12,6 @@
 ---------------------------
 ■決定日付：<?php echo $offer->play_date->i18nFormat('YYYY年MM月dd日', 'Asia/Tokyo')?>
 
-
 <?php if($offer->course_kind == 1) {?>
 ■プレイ場所：<?=$offer->course_prefecture->name?> <?=$offer->course_name?>
 
@@ -20,6 +19,12 @@
 ■プレイ場所：<?=$offer->training_prefecture->name?> <?=$offer->training_name?>
 
 <?php }?>
+
+■お相手の連絡先：
+<?php foreach($offer->receive_group->users as $user) {?>
+<?=$user->email?>
+<?php }?>
+
 
 ※本メールにお心当たりがない場合には以下にお問い合わせ下さい
 　EMail: info@engol.jp

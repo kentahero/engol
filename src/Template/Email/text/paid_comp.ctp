@@ -16,6 +16,9 @@
 
 <?php }?>
 
+■お相手の連絡先：<?=$offer->offer_user->email?>
+
+
 ※本メールにお心当たりがない場合には以下にお問い合わせ下さい
 　EMail: info@engol.jp
 

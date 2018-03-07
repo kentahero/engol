@@ -49,7 +49,7 @@
       <div class="is-clearfix">
         <ul class="is-pulled-left basic-info <?=$user->sex_class?>">
           <li class="name"><?=$user->nickname?>さん</li>
-          <li class="age"><?=$user->display_age?>歳台(<?=$user->sex_name?>)</li>
+          <li class="age"><?=$user->display_age?>歳代(<?=$user->sex_name?>)</li>
           <li class="current-pref"><?=$user->prefecture->name?></li>
         </ul>
         <div class="status bvc is-pulled-right">ログイン：本日</div>
@@ -133,7 +133,7 @@
                       </div>
                       <div class="user-attr <?=$user->pair->sex_class?>">
                         <p class="name"><?=$this->Text->truncate($user->pair->nickname,12)?>さん</p>
-                        <p class="age"><?=$user->pair->display_age?>歳(<?=$user->pair->sex_name?>)</p>
+                        <p class="age"><?=$user->pair->display_age?>代(<?=$user->pair->sex_name?>)</p>
                         <p class="current-pref"><?=$user->pair->prefecture->name?></p>
                       </div>
                     </a>

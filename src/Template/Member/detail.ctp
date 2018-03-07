@@ -40,7 +40,7 @@ use App\Model\Entity\Offer;
           </span>
           <h2 class="profile-title male bvc">オファー状態：<?=$offer->offer_title?></h2>
         </div>
-        <table class="table input-table mb50">
+        <table class="table input-table mb20">
           <tbody>
             <?php if ($offer->status == Offer::STATUS_OFFER || $offer->status == Offer::STATUS_REDUCE) {?>
             <tr>
@@ -118,7 +118,12 @@ use App\Model\Entity\Offer;
           </tbody>
         </table>
         <?php if ($offer->status == Offer::STATUS_ACCEPT) {?>
-        <p>お支払料金 ※料金をお支払頂くまでご成約となりません</p>
+        <div class="mb10">
+          <span class="">
+            <i class="ci img-ball"></i>
+          </span>
+          <h2 class="profile-title male bvc">お支払料金 ※料金をお支払頂くまでご成約となりません</h2>
+        </div>
         <table class="table is-bordered">
           <tr>
             <th>サイト利用料金</th>
@@ -129,14 +134,21 @@ use App\Model\Entity\Offer;
             <td  style="text-align:right;padding-right:10px;"><?=number_format($amount['total'])?>円</td>
           </tr>
         </table>
-        <a href="/member/pay?offer_id=<?=$offer->id?>">
-        <button type="submit" class="button">
-          <span>クレジットカードでのお支払(JCB/AMEXのみ)</span>
-          <span class="icon is-medium right">
+        <form action="https://credit.j-payment.co.jp/gateway/payform.aspx" method="POST">
+          <input type="hidden" name="aid" value="114442"/>
+          <input type="hidden" name="pt" value="1"/>
+          <input type="hidden" name="am" value="<?=$amount['site_amount']?>"/>
+          <input type="hidden" name="tx" value="0"/>
+          <input type="hidden" name="sf" value="0"/>
+          <input type="hidden" name="jb" value="CAPTURE"/>
+          <input type="hidden" name="cod" value="<?=$offer->id?>"/>
+          <button type="submit" class="button">
+            <span>クレジットカードでのお支払</span>
+            <span class="icon is-medium right">
               <i class="ci img-next"></i>
-          </span>
-        </button>
-        </a>
+            </span>
+          </button>
+        </form>
         <br/>
         <a href="javascript:void(0)" onClick="$('#bank_info').show()">
         <button type="button" class="button">
@@ -175,7 +187,20 @@ use App\Model\Entity\Offer;
             </tr>
           </table>
         </div>
-       <?php } else if ($offer->status != Offer::STATUS_REDUCE && $offer->status != Offer::STATUS_CANCEL) {?>
+       <?php } else if ($offer->status == Offer::STATUS_PAID) {?>
+       <div class="mb10">
+          <h2 class="profile-title male bvc">お相手の人数分も含めてゴルフ場をご自身でご予約下さい。</h2>
+       </div>
+       <script language="javascript" src="//ad.jp.ap.valuecommerce.com/servlet/jsbanner?sid=3342893&pid=885108466"></script>
+       <noscript>
+         <a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3342893&pid=885108466" target="_blank" rel="nofollow">
+           <img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3342893&pid=885108466" border="0">
+         </a>
+       </noscript>
+       <?php } ?>
+       <br/>
+       <br/>
+       <?php if ($offer->status != Offer::STATUS_REDUCE && $offer->status != Offer::STATUS_CANCEL) {?>
         <button type="submit" class="button">
           <span>このオファーをキャンセル</span>
           <span class="icon is-medium right">

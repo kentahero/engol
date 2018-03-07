@@ -28,7 +28,7 @@
               </div>
               <div class="user-attr <?=$user->sex_class?>">
                 <p class="name"><?=$this->Text->truncate($user->nickname,11)?></p>
-                <p class="age"><?=$user->display_age?>歳(<?=$user->sex_name?>)</p>
+                <p class="age"><?=$user->display_age?>代(<?=$user->sex_name?>)</p>
                 <p class="current-pref"><?=$user->prefecture->name?></p>
               </div>
             </a>

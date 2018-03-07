@@ -1,5 +1,5 @@
 <?php $this->assign('title','ゴルフのお相手を探すならエンゴル');?>
-<?php $this->assign('description','エンゴルはゴルフのお相手を気軽に探せるサイトです。ゴルフ場でラウンドしたいけど相手が居なくて困っている方。複数人で楽しくプレイしたい方。ゴルフを通じて出会いを求めておられる方ぜひご利用下さい');?>
+<?php $this->assign('description','エンゴルはゴルフの相手を気軽に探せるサイトです。ゴルフ場でラウンドしたいけど相手が居なくて困っている方。複数人で楽しくプレイしたい方。ゴルフを通じて出会いを求めておられる方ぜひご利用下さい');?>
 <section class="main-content">
   <section class="main-visual">
     <h1 class="top-keyword">
@@ -134,11 +134,10 @@
           <span class="select mb10 is-pulled-left">
             <select class="" name="age">
               <option value='' disabled selected style='display:none;'>年齢を選択</option>
-              <option value="20">20歳～24歳</option>
-              <option value="25">25歳～29歳</option>
-              <option value="30">30歳～34歳</option>
-              <option value="35">35歳～39歳</option>
-              <option value="40">40歳～</option>
+              <option value="20">20歳～29歳</option>
+              <option value="30">30歳～39歳</option>
+              <option value="40">40歳～49歳</option>
+              <option value="50">50歳～</option>
             </select>
           </span>
           <span class="select is-pulled-right">
@@ -210,7 +209,7 @@
             </figure>
           </div>
           <div class="user-attr">
-            <p class="age"><?=$user->display_age?>歳</p>
+            <p class="age"><?=$user->display_age?>代</p>
             <p class="job"><?=$user->companion_info->job?></p>
             <p class="score">スコア <?=$user->companion_info->average_score?></p>
           </div>

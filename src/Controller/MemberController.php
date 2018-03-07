@@ -321,15 +321,6 @@ class MemberController extends AppController
 		if ($offer->offer_user_id != $member->id) {
 			throw new NotFoundException();
 		}
-		//イプシロンへの連携
-		$service = new EpsilonService();
-		$vo = $service->createVO($offer);
-		$res = $service->start($vo);
-		if ($res['status']) {
-			$this->redirect($res['message']);
-			return;
-		}
-		$this->set('error',$res['message']);
 	}
 
 	/**
@@ -337,11 +328,15 @@ class MemberController extends AppController
 	 */
 	public function paid() {
 		$data = $this->request->getQuery();
-		if (!isset($data['order_number']) || !isset($data['trans_code'])) {
-			throw new NotFoundException();
+		if (!isset($data['cod']) || !isset($data['rst'])) {
+		    throw new NotFoundException();
+		}
+		if ($data['rst'] != '1') {
+		    $this->set('error', '決済が失敗しました。再度決済を行ってください');
+		    return;
 		}
 		$offerTable = TableRegistry::get('Offers');
-		$offer = $offerTable->find('all')->where(['Offers.id'=>$data['order_number']])->contain(['CoursePrefectures','TrainingPrefectures',
+		$offer = $offerTable->find('all')->where(['Offers.id'=>$data['cod']])->contain(['CoursePrefectures','TrainingPrefectures',
 				'OfferUsers'=>function ($query) {
 					return $query->select()->contain(['Prefectures']);
 				},
@@ -358,17 +353,11 @@ class MemberController extends AppController
 			$this->set('error','オファーステータスが不一致');
 			return;
 		}
-		//イプシロンに決済の問い合わせ
-		$service = new EpsilonService();
-		$res = $service->confirm($data);
-		if (!$res['status']) {
-			$this->set('error',$res['message']);
-			return;
-		}
 		$offer->status = Offer::STATUS_PAID;
 		if ($offerTable->save($offer)) {
 
 			$emailUser = new EMail($this->mailConf);
+			// オファーした側へメール
 			$emailUser
 				->setTemplate('paid')
 				->setTo($offer->offer_user->email)
@@ -376,6 +365,7 @@ class MemberController extends AppController
 				->setViewVars(['offer'=>$offer])
 				->send();
 
+			// オファーされた側にメール
 			foreach($offer->receive_group->users as $user) {
 				$emailComp = new EMail($this->mailConf);
 				$emailComp

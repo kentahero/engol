@@ -126,7 +126,7 @@ class GolferEntryController extends AppController
 		}
 		//一時画像の移動
 		$uuid = Text::uuid();
-		$imageCount = 1;
+		$imageCount = 0;
 		for($i=1;$i<=3;$i++) {
 		    if (isset($data['CompanionInfo']['image_up'.$i])) {
     			$moved = $this->moveTmpImages($data['CompanionInfo']['image_up'.$i],$uuid.'-'.$i);

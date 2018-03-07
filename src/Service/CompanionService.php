@@ -26,11 +26,10 @@ class CompanionService extends AppService {
 		if (!empty($conditions['sex']))$companionCond['sex'] = $conditions['sex'];
 		if (!empty($conditions['age'])) {
 			$ageTable = [
-					'20'=>['lower'=>20,'upper'=>24],
-					'25'=>['lower'=>25,'upper'=>29],
-					'30'=>['lower'=>30,'upper'=>34],
-					'35'=>['lower'=>35,'upper'=>39],
-					'40'=>['lower'=>40,'upper'=>0]
+					'20'=>['lower'=>20,'upper'=>29],
+					'30'=>['lower'=>30,'upper'=>39],
+			        '40'=>['lower'=>40,'upper'=>49],
+					'50'=>['lower'=>50,'upper'=>0]
 			];
 			$companionCond['(YEAR(CURDATE())-YEAR(birth)) - (RIGHT(CURDATE(),5)<RIGHT(birth,5)) >='] = $ageTable[$conditions['age']]['lower'];
 			if ($ageTable[$conditions['age']]['upper']!=0)$companionCond['(YEAR(CURDATE())-YEAR(birth)) - (RIGHT(CURDATE(),5)<RIGHT(birth,5)) <='] = $ageTable[$conditions['age']]['upper'];

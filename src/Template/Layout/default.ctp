@@ -9,6 +9,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <?= $this->Html->meta('description',$this->fetch('description'))?>
 
+  <?= $this->html->meta('keywords', 'ゴルフ,出会い,相手,相手探し,仲間,マッチング')?>
+
   <title>ゴルフのお相手探しエンゴル | <?= $this->fetch('title') ?></title>
   <?= $this->Html->meta('icon') ?>
   <?= $this->Html->css(array('font-awesome.min','slick','slick-theme','drawer','bulma','app')) ?>

@@ -31,11 +31,10 @@
           <span class="select mb10 is-pulled-left">
             <?php echo $this->Form->select('age',
             	[
-            		['value'=>'20','text'=>'20歳～24歳'],
-            		['value'=>'25','text'=>'25歳～29歳'],
-            		['value'=>'30','text'=>'30歳～34歳'],
-            		['value'=>'35','text'=>'35歳～39歳'],
-            		['value'=>'40','text'=>'40歳～'],
+            		['value'=>'20','text'=>'20歳～29歳'],
+            		['value'=>'30','text'=>'30歳～39歳'],
+            		['value'=>'40','text'=>'40歳～49歳'],
+            		['value'=>'50','text'=>'50歳～'],
             	],
             	['empty'=>'年齢を選択']
             );?>
@@ -136,7 +135,7 @@
                 </div>
                 <div class="user-attr <?=$user->sex_class?>">
                   <p class="name"><?=$this->Text->truncate($user->nickname,11)?></p>
-                  <p class="age"><?=$user->display_age?>歳(<?=$user->sex_name?>)</p>
+                  <p class="age"><?=$user->display_age?>代(<?=$user->sex_name?>)</p>
                   <p class="current-pref"><?=$user->prefecture->name?></p>
                 </div>
               </a>
